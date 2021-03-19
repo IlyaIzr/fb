@@ -102,12 +102,14 @@ export default {
     },
     rows() {
       let res = [];
-      res = fieldsToRows(fbGlobal.fields, fbGlobal.values);
+      let fields = fbGlobal.newFields;
+      // console.log("computation of fields from form", { ...fields.name });
+      res = fieldsToRows(fields, fbGlobal.values);
       return res;
     },
-    title(){
-      return fbGlobal?.title
-    }
+    title() {
+      return fbGlobal?.title;
+    },
   },
   methods: {
     // Event Handlers
@@ -261,6 +263,25 @@ export default {
 
     fbGlobal.methods.component = this;
     fbGlobal.methods.element = this.$el;
+
+    // If no new fields defined, define before computation
+    if (!fbGlobal.newFields) {
+      Object.defineProperty(fbGlobal, "newFields", {
+        get() {
+          // console.log('returning newfields', {...this._newFields.name});
+          return self.settings.fields;
+        },
+        set(v) {
+          // console.log('setting newfields', {...v.name});
+          this._newFields = v;
+          self.settings.fields = v;
+        },
+      });
+      // Assign initial fields config
+      this.reactiveFields = {};
+      fbGlobal.newFields = this.settings.fields;
+
+    }
   },
   // updated(){
   //   console.log('im updated');
@@ -280,7 +301,13 @@ export default {
         console.log("Title deep change");
       },
       deep: true,
+    },
 
+    "fbGlobal.newFields": {
+      handler() {
+        console.log("newFields deep change");
+      },
+      deep: true,
     },
   },
 };
