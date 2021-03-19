@@ -35,7 +35,7 @@ export const formConfig = {
           label: 'new obj label',
           // row: 1,
           value: 'Bamby',
-          hint: undefined
+          // hint: undefined
         }
         fb.newFields.name.label = 'String change'
         

@@ -43,6 +43,8 @@
         @submit="onSubmit"
         @reset="onReset"
         @clear="onClear"
+        ref="fucker"
+        :key="r"
       />
     </q-form>
 
@@ -83,6 +85,9 @@ export default {
     return {
       methods: this.settings?.methods || {},
       fbGlobal,
+      f: 1,
+      rows: [],
+      r: 1,
     };
   },
   props: {
@@ -98,13 +103,6 @@ export default {
   computed: {
     valuesResponse() {
       let res = valueStore.state;
-      return res;
-    },
-    rows() {
-      let res = [];
-      let fields = fbGlobal.newFields;
-      // console.log("computation of fields from form", { ...fields.name });
-      res = fieldsToRows(fields, fbGlobal.values);
       return res;
     },
     title() {
@@ -231,6 +229,15 @@ export default {
     async submit() {
       this.onSubmit();
     },
+
+    rowsComputed() {
+      let res = [];
+      if (!this.f) return "fuck";
+      let fields = fbGlobal.newFields;
+      // console.log("computation of fields from form", { ...fields.name });
+      res = fieldsToRows(fields, fbGlobal.values);
+      return res;
+    },
   },
 
   beforeMount() {
@@ -265,23 +272,30 @@ export default {
     fbGlobal.methods.element = this.$el;
 
     // If no new fields defined, define before computation
-    if (!fbGlobal.newFields) {
-      Object.defineProperty(fbGlobal, "newFields", {
+    // if (!fbGlobal.newFields) {  //fires only once anyways but WATCH IT
+
+    fbGlobal.newFields = {};
+    Object.entries(this.settings.fields).forEach(([key, config]) => {
+      Object.defineProperty(fbGlobal.newFields, key, {
         get() {
-          // console.log('returning newfields', {...this._newFields.name});
-          return self.settings.fields;
+          return this["_" + key];
         },
-        set(v) {
-          // console.log('setting newfields', {...v.name});
-          this._newFields = v;
-          self.settings.fields = v;
+        set(conf) {
+          if (!this["_" + key]) this["_" + key] = {};
+          const res = { ...this["_" + key], ...conf };
+          this["_" + key] = res;
+          self.settings.fields[key] = res;
+          self.f += 1;
+          // console.log(key, { ...res }); //works as expected
         },
       });
-      // Assign initial fields config
-      this.reactiveFields = {};
-      fbGlobal.newFields = this.settings.fields;
+      // initial config setting
+      fbGlobal.newFields[key] = config;
+    });
 
-    }
+    // }
+
+    this.rows = this.rowsComputed();
   },
   // updated(){
   //   console.log('im updated');
@@ -296,9 +310,11 @@ export default {
       console.log("Title change");
     },
 
-    "settings.title": {
+    f: {
       handler() {
-        console.log("Title deep change");
+        const newRows = this.rowsComputed();
+        this.rows = newRows;
+        this.r += 1
       },
       deep: true,
     },

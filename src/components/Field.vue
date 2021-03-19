@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import SimpleInput from "./inputs/SimpleInput";
+import SimpleInput from "./inputs/SuperSimp";
 import { fbGlobal } from "src/arguments";
 
 export default {
@@ -59,11 +59,11 @@ export default {
         return inputType;
       }
     },
-    // childField() {
-    //   let res = {};
-    //   res = fbGlobal.fields[this.fieldInfo.key];
-    //   return res;
-    // },
+    childField() {
+      let res = {};
+      res = fbGlobal.fields[this.fieldInfo.key];
+      return res;
+    },
   },
   beforeMount() {
 
@@ -86,33 +86,20 @@ export default {
 
     // New fields turbo
     // Make a method, call before mount and from watcher handler
-    fbGlobal.newFields = fbGlobal.newFields || {};
 
-    Object.entries(fbGlobal.fields).forEach(([key, config]) => {
-      if (!fbGlobal.newFields[key])
-        Object.defineProperty(fbGlobal.newFields, key, {
-          get() {
-            return this["_" + key];
-          },
-          set(conf) {
-            if (!this["_" + key]) this["_" + key] = {};
-            const res = { ...this["_" + key], ...conf };
-            this["_" + key] = res;
-            self.fieldInfoData = res;
-            // console.log(key, { ...res });  //works as expected
-          },
-        });
-      // initial config setting
-      fbGlobal.newFields[key] = config;
-    });
+
   },
   watch: {
-    // "fieldInfo": {
-    //   handler(val) {
-    //     console.log("field info prop changed", val);
-    //   },
-    //   deep: true,
-    // },
+    "childField": {
+      handler(val) {
+        // console.log("field info prop changed", val);
+        // this.$forceUpdate()  // not working wtf
+        // this.$nextTick(()=>{
+        //   this.$children[0].$forceUpdate()
+        // })
+      },
+      deep: true,
+    },
   },
 };
 </script>

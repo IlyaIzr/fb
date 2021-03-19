@@ -43,19 +43,8 @@ export default {
   computed: {
     filtered() {
       let res = {};
-      res = this.fieldInfo; //reacts to updates from parent
+      // res = this.fieldInfo; //reacts to updates from parent
       res = fbGlobal.newFields[this.keyName]; //reacts to field{} key updates
-      // console.log("filtered fields", { ...res });
-      for (const [key, value] of Object.entries(res)) {
-        if (shouldEval(key, value)) {
-          res[key] = value(this);
-        } else res[key] = value
-      }
-      // end required fields with '*' automaticly
-      if (res.required || res.required === undefined) {
-        if (!res.label) res.label = "*";
-        else if (!res.label.endsWith(" *")) res.label = res.label + " *";
-      }
       // console.log(res);
       return res;
     },
@@ -111,7 +100,8 @@ export default {
           },
         });
         reactive.value = val;
-      } else reactive[key] = val;
+      } else ;
+      reactive[key] = val;
     });
 
     //Lowest priority with check
