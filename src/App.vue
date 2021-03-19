@@ -1,6 +1,6 @@
 <template>
   <div id="q-app" style="min-height: 100vh" class="bg-white">
-    <IsModal v-if="globalConfig" :settings="fbGlobal" :values="globalValues" />
+    <IsModal v-if="globalConfig" :settings="globalConfig" :values="globalValues" />
   </div>
 </template>
 
@@ -27,6 +27,7 @@ export default {
 
     Object.entries(this.globalConfig).forEach(([key, val]) => {
       if (key === "fields") {
+        // TODO cut off any fields assignment
         fbGlobal["initialFields"] = val;
       }
       fbGlobal[key] = val;

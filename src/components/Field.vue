@@ -4,7 +4,7 @@
       <SimpleInput
         v-if="inputType === 'simple'"
         :keyName="fieldInfo.key"
-        :fieldInfo="fieldInfo"
+        :fieldInfo="fieldInfoData"
       />
     </div>
   </div>
@@ -12,7 +12,6 @@
 
 <script>
 import SimpleInput from "./inputs/SimpleInput";
-import { valueStore } from "../store";
 import { fbGlobal } from "src/arguments";
 
 export default {
@@ -20,6 +19,7 @@ export default {
   data() {
     return {
       fbGlobal,
+      fieldInfoData: this.fieldInfo,
     };
   },
   props: {
@@ -59,24 +59,13 @@ export default {
         return inputType;
       }
     },
-    childField() {
-      let res = {};
-      res = fbGlobal.fields[this.fieldInfo.key];
-      return res;
-    },
+    // childField() {
+    //   let res = {};
+    //   res = fbGlobal.fields[this.fieldInfo.key];
+    //   return res;
+    // },
   },
   beforeMount() {
-    // Additional rest config, unified for all inputs
-    // this.fieldInfo.ref = "input";
-    // this.fieldInfo.name = this.fieldInfo.key;
-    // this.fieldInfo["clear-icon"] = "close";
-    // this.fieldInfo.required =
-    //   this.fieldInfo.required === undefined ? true : this.fieldInfo.required;
-    // this.fieldInfo.clearable =
-    //   this.fieldInfo.clearable === undefined ? true : this.fieldInfo.clearable;
-    // this.fieldInfo.visible =
-    //   this.fieldInfo.visible === undefined ? true : this.fieldInfo.visible;
-    valueStore.updateKeyValue(this.fieldInfo.key, this.fieldInfo.value);
 
     //  fbGlobal
     const self = this;
@@ -96,6 +85,7 @@ export default {
     };
 
     // New fields turbo
+    // Make a method, call before mount and from watcher handler
     fbGlobal.newFields = fbGlobal.newFields || {};
 
     Object.entries(fbGlobal.fields).forEach(([key, config]) => {
@@ -105,23 +95,21 @@ export default {
             return this["_" + key];
           },
           set(conf) {
-            if (!this["_" + key]) this["_" + key] = conf;
-            else this["_" + key] = { ...this["_" + key], ...conf };
-            // console.log("reconfigured", fbGlobal?.newFields?.["_" + key]);
+            if (!this["_" + key]) this["_" + key] = {};
+            const res = { ...this["_" + key], ...conf };
+            this["_" + key] = res;
+            self.fieldInfoData = res;
+            // console.log(key, { ...res });  //works as expected
           },
         });
       // initial config setting
       fbGlobal.newFields[key] = config;
     });
   },
-  // updated(){
-  //   console.log('Field has been updated');
-  // },
   watch: {
-    // Solution: pass field settings as props - drawbacks - setter description on wrong level
-    // "childField": {
+    // "fieldInfo": {
     //   handler(val) {
-    //     console.log("SOME HAPPS", val.key, val);
+    //     console.log("field info prop changed", val);
     //   },
     //   deep: true,
     // },

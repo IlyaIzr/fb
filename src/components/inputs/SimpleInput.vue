@@ -17,7 +17,6 @@ import {
   commonMethods,
   watchers,
   stringRules,
-  computed,
   shouldEval,
 } from "./extra";
 import { fbGlobal } from "src/arguments";
@@ -36,16 +35,35 @@ export default {
   },
   data() {
     return {
-      archiveRest: { ...fbGlobal.fields[this.keyName] },
-      isPassword: fbGlobal.fields[this.keyName].type === "password",
+      archiveRest: { ...fbGlobal.newFields[this.keyName] },
+      isPassword: fbGlobal.newFields[this.keyName].type === "password",
       fbGlobal,
     };
   },
   computed: {
-    ...computed,
+    filtered() {
+      let res = {};
+      res = this.fieldInfo; //reacts to updates from parent
+      res = fbGlobal.newFields[this.keyName]; //reacts to field{} key updates
+      // console.log("filtered fields", { ...res });
+      for (const [key, value] of Object.entries(res)) {
+        if (shouldEval(key, value)) {
+          res[key] = value(this);
+        } else res[key] = value
+      }
+      // end required fields with '*' automaticly
+      if (res.required || res.required === undefined) {
+        if (!res.label) res.label = "*";
+        else if (!res.label.endsWith(" *")) res.label = res.label + " *";
+      }
+      // console.log(res);
+      return res;
+    },
+
     rest() {
       let res = {};
-      res = fbGlobal.fields[this.keyName];
+      res = fbGlobal.newFields[this.keyName];
+      // console.log("res fields", { ...res });
       return res;
     },
   },
@@ -55,7 +73,6 @@ export default {
     ...stringRules,
   },
   beforeMount() {
-
     const commonAttributes = {
       hint: undefined,
       label: undefined,
@@ -67,19 +84,20 @@ export default {
     const reactive = {};
     const self = this;
 
+    const fields = fbGlobal.newFields;
+
     // Lower priority, user config, might not have required properties
-    Object.entries(fbGlobal.fields[this.keyName]).forEach(([key, val]) => {
-      if (shouldEval(key, val)) {
-        const res = val(fbGlobal, self);
-        // this["_" + key] = res;
-        this[key] = res;
-        reactive[key] = res;
-      } else reactive[key] = val;
-    });
+    // Object.entries(fields[this.keyName]).forEach(([key, val]) => {
+    //   if (shouldEval(key, val)) {
+    //     const res = val(fbGlobal, self);
+    //     // this["_" + key] = res;
+    //     this[key] = res;
+    //     reactive[key] = res;
+    //   } else reactive[key] = val;
+    // });
 
     // Higher priority, override, includes all required properties
-    // Solution - describe array of possible attributes
-    // this.fieldInfo.hint = "pre-setted hint"
+    // console.log({...this.fieldInfo});
     Object.entries(this.fieldInfo).forEach(([key, val]) => {
       if (key === "value") {
         Object.defineProperty(reactive, key, {
@@ -97,23 +115,23 @@ export default {
     });
 
     //Lowest priority with check
-    Object.entries(commonAttributes).forEach(([key, val]) => {
-      if (reactive[key] === undefined) reactive[key] = val;
-    });
+    // Object.entries(commonAttributes).forEach(([key, val]) => {
+    //   // console.log(this.fieldInfo.key, key, val); //WTF?
+    //   if (reactive[key] === undefined) reactive[key] = val;
+    // });
 
-    fbGlobal.fields[this.rest.key] = reactive;
+    fields[this.rest.key] = reactive;
   },
   watch: {
-
-    // rest: {
+    // "fieldInfo": {
     //   handler(val) {
-    //     console.log("SOME HAPPS", val.key, val);
+    //     console.log("field info prop changed", val);
     //   },
     //   deep: true,
     // },
-    filtered(){
-      console.log('fil changes');
-    }
+    // filtered() {
+    //   console.log("fil changes");
+    // },
   },
 };
 </script>

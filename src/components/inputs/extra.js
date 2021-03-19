@@ -123,31 +123,6 @@ export const stringRules = {
 }
 
 // Exeptions: Slider
-export const computed = {
-
-  filtered() {
-    let res = {};
-    res = this.rest ;
-    for (const [key, value] of Object.entries(res)) {
-      if (
-        typeof value === "function" &&
-        key !== "onInput" &&
-        key !== "onBlur" &&
-        key !== "onFocus"
-      ) {
-        res[key] = value(this);
-      }
-    }
-    // end required fields with '*' automaticly
-    if (res.required || res.required === undefined) {
-      if (!res.label) res.label = "*"
-      else if (!res.label.endsWith(" *")) res.label = res.label + " *"
-    }
-    // console.log(res);
-    return res;
-  },
-
-}
 
 // Exeptions: Multiple
 export const watchers = {
