@@ -28,7 +28,7 @@ export default {
   computed: {
     rest() {
       let res = {};
-      res = fbGlobal.newFields[this.keyName];
+      res = fbGlobal.fields[this.keyName];
       return res;
     },
   },
@@ -36,7 +36,7 @@ export default {
     onFocus(e) {
       if (this.rest?.onFocus) {
         const cb = this.rest.onFocus(fbGlobal);
-        if (typeof cb === "function") cb(this);
+        if (typeof cb === "function") cb(fbGlobal, this, e);
       }
     },
   },
@@ -48,23 +48,20 @@ export default {
       readonly: false,
     };
 
-    // fbGlobal
-    const reactive = {};
-    const self = this;
+  },
 
-    // const fields = fbGlobal.newFields;
-  },
-  watch: {
-    // "rest": {  // Never worls
-    //   handler(val) {
-    //     console.log("field info prop changed", val);
-    //   },
-    //   deep: true,
-    // },
-    // filtered() {
-    //   console.log("fil changes");
-    // },
-  },
+
+
+
+
+  // watch: {
+  //   "rest": {  // Never worls
+  //     handler(val) {
+  //       console.log("field info prop changed", val);
+  //     },
+  //     deep: true,
+  //   },
+  // },
 };
 </script>
 

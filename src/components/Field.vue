@@ -4,7 +4,7 @@
       <SimpleInput
         v-if="inputType === 'simple'"
         :keyName="fieldInfo.key"
-        :fieldInfo="fieldInfoData"
+        :fieldInfo="fieldInfo"
       />
     </div>
   </div>
@@ -18,8 +18,6 @@ export default {
   name: "FieldSorter",
   data() {
     return {
-      fbGlobal,
-      fieldInfoData: this.fieldInfo,
     };
   },
   props: {
@@ -84,22 +82,8 @@ export default {
       },
     };
 
-    // New fields turbo
-    // Make a method, call before mount and from watcher handler
 
 
-  },
-  watch: {
-    "childField": {
-      handler(val) {
-        // console.log("field info prop changed", val);
-        // this.$forceUpdate()  // not working wtf
-        // this.$nextTick(()=>{
-        //   this.$children[0].$forceUpdate()
-        // })
-      },
-      deep: true,
-    },
   },
 };
 </script>

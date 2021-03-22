@@ -233,7 +233,7 @@ export default {
     rowsComputed() {
       let res = [];
       if (!this.f) return "fuck";
-      let fields = fbGlobal.newFields;
+      let fields = fbGlobal.fields;
       // console.log("computation of fields from form", { ...fields.name });
       res = fieldsToRows(fields, fbGlobal.values);
       return res;
@@ -248,9 +248,10 @@ export default {
     );
 
     // fbGlobal
-    this.methods = this.methods ?? {};
     const self = this;
 
+    // Methods assignment, WIP
+    this.methods = this.methods ?? {};
     Object.keys(this.methods).forEach((key) => {
       const method = self.methods[key];
       // const methods = {}
@@ -271,12 +272,11 @@ export default {
     fbGlobal.methods.component = this;
     fbGlobal.methods.element = this.$el;
 
-    // If no new fields defined, define before computation
-    // if (!fbGlobal.newFields) {  //fires only once anyways but WATCH IT
+  // Fields assignment
 
-    fbGlobal.newFields = {};
+    fbGlobal.fields = {};
     Object.entries(this.settings.fields).forEach(([key, config]) => {
-      Object.defineProperty(fbGlobal.newFields, key, {
+      Object.defineProperty(fbGlobal.fields, key, {
         get() {
           return this["_" + key];
         },
@@ -285,16 +285,15 @@ export default {
           const res = { ...this["_" + key], ...conf };
           this["_" + key] = res;
           self.settings.fields[key] = res;
-          self.f += 1;
+          self.f += 1;  //Vue reactivity
           // console.log(key, { ...res }); //works as expected
         },
       });
       // initial config setting
-      fbGlobal.newFields[key] = config;
+      fbGlobal.fields[key] = config;
     });
 
-    // }
-
+    // assign rows once
     this.rows = this.rowsComputed();
   },
   // updated(){
@@ -319,9 +318,9 @@ export default {
       deep: true,
     },
 
-    "fbGlobal.newFields": {
+    "fbGlobal.fields": {
       handler() {
-        console.log("newFields deep change");
+        console.log("fields deep change");
       },
       deep: true,
     },
