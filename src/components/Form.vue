@@ -75,6 +75,7 @@ import Buttons from "./ButtonsOld";
 import { valueStore, vNodeStore } from "../store";
 import { fieldsToRows } from "./toRows";
 import { fbGlobal } from "src/arguments";
+import { shouldEval } from "./inputs/extra";
 export default {
   name: "Form",
   components: {
@@ -88,6 +89,7 @@ export default {
       fieldReactivity: 1,
       rows: [],
       updater: 1,
+      isMounted: false,
     };
   },
   props: {
@@ -269,10 +271,22 @@ export default {
     fbGlobal.methods.component = this;
     fbGlobal.methods.element = this.$el;
 
-  // Fields assignment
+    // Fields assignment
 
     fbGlobal.fields = {};
     Object.entries(this.settings.fields).forEach(([key, config]) => {
+      const reactiveHandler = {
+        set: function (targetObj, prop, value) {
+          // This lets vue watch objects even on new properties addition
+          if (!targetObj.watcher) targetObj.watcher = 1;
+          else targetObj.watcher += 1;
+          // default assignment
+          targetObj[prop] = value;
+          // Indicate success
+          return true;
+        },
+      };
+
       Object.defineProperty(fbGlobal.fields, key, {
         get() {
           return this["_" + key];
@@ -280,14 +294,22 @@ export default {
         set(conf) {
           if (!this["_" + key]) this["_" + key] = {};
           const res = { ...this["_" + key], ...conf };
-          this["_" + key] = res;
-          self.settings.fields[key] = res;
-          self.fieldReactivity += 1;  //Vue reactivity
+
+          // Wrap with reactivity and activate it
+          const reactiveWrap = new Proxy(res, reactiveHandler);
+          Object.entries(res).forEach(([key, val]) => {
+            reactiveWrap[key] = val;
+          });
+          self.settings.fields[key] = reactiveWrap;
+          this["_" + key] = reactiveWrap;
+          self.fieldReactivity += 1; //Vue reactivity
           // console.log(key, { ...res }); //works as expected
         },
       });
+
       // initial config setting
       fbGlobal.fields[key] = config;
+      // console.log(key, { ...config });
     });
 
     // assign rows once
@@ -298,7 +320,8 @@ export default {
   // },
 
   watch: {
-    "settings.title": function () { // Not borking
+    "settings.title": function () {
+      // Not borking
       console.log("Title change");
     },
 
@@ -306,11 +329,10 @@ export default {
       handler() {
         const newRows = this.rowsComputed();
         this.rows = newRows;
-        this.updater += 1
+        this.updater += 1;
       },
       deep: true,
     },
-
   },
 };
 </script>

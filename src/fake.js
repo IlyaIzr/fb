@@ -5,25 +5,21 @@ export const formConfig = {
       row: 1,
       value: 'Anton',
       hint: 'as',
+      label: function (formGlobal, component) { return component._uid },
       onFocus(fb) {
         // console.log(fb.title);
         // fb.title = "Peps"
         // console.log(fb.title);
 
-        
+
         fb.fields.name = {
           label: 'new obj label',
           // row: 1,
           value: 'Bamby',
           // hint: undefined
         }
-        fb.fields.name.label = 'String change'
-        fb.fields['e-mail'].hint = 'Changes only cause of global fields update'
-        
-        // fb.fields.login = {
-        //   label: 'its working functionality',
-        //   // row: 1, 
-        // }
+        fb.fields['e-mail'].hint = 'works now too'
+
 
       }
     },
