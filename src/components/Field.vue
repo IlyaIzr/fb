@@ -4,7 +4,6 @@
       <SimpleInput
         v-if="inputType === 'simple'"
         :keyName="fieldInfo.key"
-        :fieldInfo="fieldInfo"
       />
     </div>
   </div>

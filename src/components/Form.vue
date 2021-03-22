@@ -44,7 +44,7 @@
         @reset="onReset"
         @clear="onClear"
         ref="fucker"
-        :key="r"
+        :key="updater"
       />
     </q-form>
 
@@ -85,9 +85,9 @@ export default {
     return {
       methods: this.settings?.methods || {},
       fbGlobal,
-      f: 1,
+      fieldReactivity: 1,
       rows: [],
-      r: 1,
+      updater: 1,
     };
   },
   props: {
@@ -231,11 +231,8 @@ export default {
     },
 
     rowsComputed() {
-      let res = [];
-      if (!this.f) return "fuck";
-      let fields = fbGlobal.fields;
-      // console.log("computation of fields from form", { ...fields.name });
-      res = fieldsToRows(fields, fbGlobal.values);
+      if (!this.fieldReactivity) return "fuck";
+      const res = fieldsToRows(fbGlobal.fields, fbGlobal.values);
       return res;
     },
   },
@@ -285,7 +282,7 @@ export default {
           const res = { ...this["_" + key], ...conf };
           this["_" + key] = res;
           self.settings.fields[key] = res;
-          self.f += 1;  //Vue reactivity
+          self.fieldReactivity += 1;  //Vue reactivity
           // console.log(key, { ...res }); //works as expected
         },
       });
@@ -301,29 +298,19 @@ export default {
   // },
 
   watch: {
-    // nothing fires
-    "fbGlobal.title": function () {
-      console.log("Glob change");
-    },
-    "settings.title": function () {
+    "settings.title": function () { // Not borking
       console.log("Title change");
     },
 
-    f: {
+    fieldReactivity: {
       handler() {
         const newRows = this.rowsComputed();
         this.rows = newRows;
-        this.r += 1
+        this.updater += 1
       },
       deep: true,
     },
 
-    "fbGlobal.fields": {
-      handler() {
-        console.log("fields deep change");
-      },
-      deep: true,
-    },
   },
 };
 </script>

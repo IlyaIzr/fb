@@ -15,10 +15,6 @@ export default {
       type: String,
       required: true,
     },
-    fieldInfo: {
-      type: Object,
-      required: true,
-    },
   },
   data() {
     return {
