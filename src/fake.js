@@ -11,14 +11,13 @@ export const formConfig = {
         // fb.title = "Peps"
         // console.log(fb.title);
 
-
         fb.fields.name = {
           label: 'new obj label',
           row: 2,
           value: 'Bamby',
           // hint: undefined
         }
-        fb.fields['e-mail'].hint = 'works now too'
+        fb.fields['login'].hint = 'works now too'
 
 
       }
