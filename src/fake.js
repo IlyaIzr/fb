@@ -14,7 +14,7 @@ export const formConfig = {
 
         fb.fields.name = {
           label: 'new obj label',
-          // row: 1,
+          row: 2,
           value: 'Bamby',
           // hint: undefined
         }
