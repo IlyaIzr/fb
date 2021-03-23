@@ -43,6 +43,8 @@
         @submit="onSubmit"
         @reset="onReset"
         @clear="onClear"
+        ref="fucker"
+        :key="updater"
       />
     </q-form>
 
@@ -85,6 +87,8 @@ export default {
       fbGlobal,
       fieldReactivity: 1,
       rows: [],
+      updater: 1,
+      isMounted: false,
     };
   },
   props: {
@@ -281,6 +285,7 @@ export default {
       handler() {
         const newRows = this.rowsComputed();
         this.rows = newRows;
+        this.updater += 1;
       },
       deep: true,
     },

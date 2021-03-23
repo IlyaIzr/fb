@@ -19,7 +19,6 @@ export default {
   data() {
     return {
       fbGlobal,
-      feebee: null
     };
   },
   computed: {
@@ -38,16 +37,9 @@ export default {
     },
   },
   beforeMount() {
-    const commonAttributes = {
-      hint: undefined,
-      label: undefined,
-      clearable: true,
-      readonly: false,
-    };
-
     const field = fbGlobal.fields[this.keyName];
 
-    // Lower priority, user config, might not have required properties
+    // Validate props for this specific input. Example: define select value
     Object.entries(field).forEach(([key, val]) => {
       let assignment;
       if (shouldEval(key, val)) {
@@ -62,19 +54,6 @@ export default {
       }
       field[key] = assignment;
     });
-
-    const reactiveHandler = {
-      set: function (targetObj, prop, value) {
-        // extra actions
-        console.log("proxyed thing", prop, value);
-
-        // default assignment
-        targetObj[prop] = value;
-        // Indicate success
-        return true;
-      },
-    };
-    // fbGlobal.fields[this.keyName] = reactiveField
   },
 
   // watch: {

@@ -9,7 +9,7 @@ export const fieldsToRows = (fields = {}, values = {}) => {
   const unorderedRows = [];
   for (let [key, field] of Object.entries(fields)) {
 
-    // field = { ...field }   // to do or not? removes Proxy wrap
+    // field = { ...field }   // removes Proxy wrap, but also a connection to fbGlobal
 
     //Assign value from values source, or else assign default value if it's not in config
     if (values[key] !== undefined

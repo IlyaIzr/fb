@@ -30,16 +30,6 @@ export const formConfig = {
       // hint: ""
       // value: function (f, v) { return v._uid },
     },
-    lo2: {
-      row: 1,
-      order: 1,
-      label: 'extra dud 2'
-    },
-    lo3: {
-      row: 1,
-      order: 1,
-      label: 'extra dud 3'
-    },
     'e-mail': {
       label: 'E-mail',
       row: 2,
@@ -47,8 +37,8 @@ export const formConfig = {
     }
   },
   methods: {
-    onSubmit(t, vals, nodes) {
-      console.log(vals);
+    onSubmit(formGlobal, component, values) {
+      console.log(formGlobal.fields.name.value);
     }
   },
 
