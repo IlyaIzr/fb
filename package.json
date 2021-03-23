@@ -10,7 +10,7 @@
     "build": "quasar build",
     "postbuild": "node fsBuilder.js",
     "git": "git add . && git commit -m",
-    "postgit": "git push origin HEAD:master"
+    "postgit": "git push"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
