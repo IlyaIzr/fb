@@ -75,7 +75,6 @@ import Buttons from "./ButtonsOld";
 import { valueStore, vNodeStore } from "../store";
 import { fieldsToRows } from "./toRows";
 import { fbGlobal } from "src/arguments";
-import { shouldEval } from "./inputs/extra";
 export default {
   name: "Form",
   components: {
@@ -114,46 +113,6 @@ export default {
   methods: {
     // Event Handlers
     async onSubmit(e) {
-      // const res = await this.$refs.methods.validate();
-      // if (!res) return null;
-      // const valuesResponse = { ...this.valuesResponse };
-      // delete valuesResponse.watcher;
-      // // Remove service keys
-      // let seriveKeys = [];
-      // let multiKeys = [];
-      // this.settings.fields.map((field) => {
-      //   if (field.service || field.type === "html") seriveKeys.push(field.key);
-      //   else if (field.type === "multiple") {
-      //     multiKeys.push(field.key);
-      //     field.fields.map((miniF) => {
-      //       if (miniF.service || miniF.field?.type === "html")
-      //         seriveKeys.push(miniF.key);
-      //     });
-      //   }
-      // });
-      // const checkDates = (value) => {
-      //   if (typeof value === "object" && value.from && value.to) {
-      //     return { start: value.from, finish: value.to };
-      //   }
-      // };
-      // for (const [key, value] of Object.entries(valuesResponse)) {
-      //   if (seriveKeys.indexOf(key) > -1) delete valuesResponse[key];
-      //   // Check for calndar range object, in simple fields
-      //   const res = checkDates(value);
-      //   if (res) valuesResponse[key] = res;
-      //   // Case multiKey
-      //   if (multiKeys.indexOf(key) > -1) {
-      //     valuesResponse[key].map((multiRow) => {
-      //       for (const [miniKey, miniValue] of Object.entries(multiRow)) {
-      //         // Check for service keys in multiFields
-      //         if (seriveKeys.indexOf(miniKey) > -1) delete multiRow[miniKey];
-      //         // Calendar range in multiFields
-      //         const res = checkDates(miniValue);
-      //         if (res) multiRow[miniKey] = res;
-      //       }
-      //     });
-      //   }
-      // }
       if (this.methods.onSubmit) {
         const cb = await this.methods.onSubmit(
           this,
@@ -233,7 +192,7 @@ export default {
     },
 
     rowsComputed() {
-      if (!this.fieldReactivity) return "fuck";
+      if (!this.fieldReactivity) return "never";
       const res = fieldsToRows(fbGlobal.fields, fbGlobal.values);
       return res;
     },
@@ -315,9 +274,6 @@ export default {
     // assign rows once
     this.rows = this.rowsComputed();
   },
-  // updated(){
-  //   console.log('im updated');
-  // },
 
   watch: {
     "settings.title": function () {
