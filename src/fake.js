@@ -5,7 +5,7 @@ export const formConfig = {
       row: 1,
       value: 'Anton',
       hint: 'as',
-      label: function (formGlobal, component) { return component._uid },
+      // label: function (formGlobal, component) { return component._uid },
       onFocus(fb) {
         // console.log(fb.title);
         // fb.title = "Peps"

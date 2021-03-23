@@ -43,8 +43,6 @@
         @submit="onSubmit"
         @reset="onReset"
         @clear="onClear"
-        ref="fucker"
-        :key="updater"
       />
     </q-form>
 
@@ -85,10 +83,8 @@ export default {
     return {
       methods: this.settings?.methods || {},
       fbGlobal,
-      fieldReactivity: 1,
+      computeRawsTrigger: 1,
       rows: [],
-      updater: 1,
-      isMounted: false,
     };
   },
   props: {
@@ -114,11 +110,7 @@ export default {
     // Event Handlers
     async onSubmit(e) {
       if (this.methods.onSubmit) {
-        const cb = await this.methods.onSubmit(
-          this,
-          valueStore.state,
-          vNodeStore
-        );
+        const cb = await this.methods.onSubmit(fbGlobal, this, "values");
         if (cb && typeof cb === "function") cb(this);
       }
     },
@@ -192,7 +184,6 @@ export default {
     },
 
     rowsComputed() {
-      if (!this.fieldReactivity) return "never";
       const res = fieldsToRows(fbGlobal.fields, fbGlobal.values);
       return res;
     },
@@ -233,35 +224,39 @@ export default {
     // Fields assignment
 
     fbGlobal.fields = {};
-    Object.entries(this.settings.fields).forEach(([key, config]) => {
-      const reactiveHandler = {
-        set: function (targetObj, prop, value) {
-          // This lets vue watch objects even on new properties addition
-          if (!targetObj.watcher) targetObj.watcher = 1;
-          else targetObj.watcher += 1;
-          // default assignment
-          targetObj[prop] = value;
-          // Indicate success
-          return true;
-        },
-      };
+    const reactiveHandler = {
+      set: function (targetObj, prop, value) {
+        // This lets vue watch objects even on new properties addition
+        if (!targetObj.watcher) targetObj.watcher = 1;
+        else targetObj.watcher += 1;
+        // default assignment
+        targetObj[prop] = value;
+        // Indicate success
+        return true;
+      },
+    };
 
+    Object.entries(this.settings.fields).forEach(([key, config]) => {
       Object.defineProperty(fbGlobal.fields, key, {
         get() {
           return this["_" + key];
         },
         set(conf) {
           if (!this["_" + key]) this["_" + key] = {};
-          const res = { ...this["_" + key], ...conf };
-
-          // Wrap with reactivity and activate it
-          const reactiveWrap = new Proxy(res, reactiveHandler);
-          Object.entries(res).forEach(([key, val]) => {
-            reactiveWrap[key] = val;
+          // Mutate object to keep reactivity
+          Object.entries(conf).forEach(([prop, val]) => {
+            this["_" + key][prop] = val;
           });
-          self.settings.fields[key] = reactiveWrap;
-          this["_" + key] = reactiveWrap;
-          self.fieldReactivity += 1; //Vue reactivity
+
+          // Wrap with field-level reactivity
+          const reactiveField = new Proxy(this["_" + key], reactiveHandler);
+          // and activate it
+          Object.entries(this["_" + key]).forEach(([key, val]) => {
+            reactiveField[key] = val;
+          });
+          self.settings.fields[key] = reactiveField;
+          this["_" + key] = reactiveField;
+          self.computeRawsTrigger += 1; // This component reactivity, redraws rows
           // console.log(key, { ...res }); //works as expected
         },
       });
@@ -276,16 +271,11 @@ export default {
   },
 
   watch: {
-    "settings.title": function () {
-      // Not borking
-      console.log("Title change");
-    },
-
-    fieldReactivity: {
+    computeRawsTrigger: {
       handler() {
+        // console.log("form redraw happens");
         const newRows = this.rowsComputed();
         this.rows = newRows;
-        this.updater += 1;
       },
       deep: true,
     },

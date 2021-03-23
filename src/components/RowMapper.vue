@@ -34,8 +34,6 @@ export default {
       required: false,
     },
   },
-  beforeMount() {
-  },
 };
 </script>
 

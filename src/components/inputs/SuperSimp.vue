@@ -1,6 +1,6 @@
 <template>
   <div class="q-gutter-md">
-    <q-input v-bind="rest" @focus="onFocus"> </q-input>
+    <q-input v-bind="rest" @focus="onFocus" @input="onInput"> </q-input>
   </div>
 </template>
 
@@ -35,6 +35,15 @@ export default {
         if (typeof cb === "function") cb(fbGlobal, this, e);
       }
     },
+    onInput(val) {
+      let cb;
+      if (this.rest?.onInput) {
+        cb = this.rest.onInput(fbGlobal, this, val);
+      }
+      fbGlobal.fields[this.keyName].value = val;
+
+      if (typeof cb === "function") cb(fbGlobal, this, val);
+    },
   },
   beforeMount() {
     const field = fbGlobal.fields[this.keyName];
@@ -55,11 +64,15 @@ export default {
       field[key] = assignment;
     });
   },
+  
+  updated(){
+    // console.log({...fbGlobal.fields[this.keyName]});
+  },
 
   // watch: {
   //   "rest": {  // Works now
   //     handler(val) {
-  //       console.log("field info prop changed", val);
+  //       console.log("field info prop changed", {...val});
   //     },
   //     deep: true,
   //   },
