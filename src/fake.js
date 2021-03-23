@@ -13,7 +13,8 @@ export const formConfig = {
 
         fb.fields.name = {
           label: 'new obj label',
-          row: 2,
+          // row: 2,
+          order: 1,
           value: 'Bamby',
           // hint: undefined
         }
@@ -28,6 +29,16 @@ export const formConfig = {
       order: 1,
       // hint: ""
       // value: function (f, v) { return v._uid },
+    },
+    lo2: {
+      row: 1,
+      order: 1,
+      label: 'extra dud 2'
+    },
+    lo3: {
+      row: 1,
+      order: 1,
+      label: 'extra dud 3'
     },
     'e-mail': {
       label: 'E-mail',

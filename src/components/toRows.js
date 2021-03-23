@@ -58,7 +58,19 @@ export const fieldsToRows = (fields = {}, values = {}) => {
   const orderedFields = filteredRows.map(row => {
     const withoutOrder = []
     const ordered = []
-    row.forEach(field => field.order ? ordered[field.order - 1] = field : withoutOrder.push(field))
+    row.forEach(field => {
+      if (field.order) {
+        // Put field by it's order or to the closest vacant position
+        if (!ordered[field.order - 1]) ordered[field.order - 1] = field
+        else {
+          let count = 0
+          while (ordered[field.order + count]) {
+            count += 1
+          }
+          ordered[field.order + count] = field
+        }
+      } else withoutOrder.push(field)
+    })
     const fieldsFiltered = ordered.filter((field) => field != null)
     fieldsFiltered.push(...withoutOrder)
     return fieldsFiltered
