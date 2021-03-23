@@ -2,7 +2,7 @@
   <div style="min-width: min(75vw, 1800px)" class="fb-form">
     <!-- Close modal v-if it's modal -->
     <div
-      v-if="title"
+      v-if="settings.title"
       style="max-height: 8vh"
       class="fb-title-wrap fb-form-title-wrap q-px-md q-py-xs relative-position"
     >
@@ -101,9 +101,6 @@ export default {
     valuesResponse() {
       let res = valueStore.state;
       return res;
-    },
-    title() {
-      return fbGlobal?.title;
     },
   },
   methods: {

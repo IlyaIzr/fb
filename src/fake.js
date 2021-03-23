@@ -7,18 +7,14 @@ export const formConfig = {
       hint: 'as',
       // label: function (formGlobal, component) { return component._uid },
       onFocus(fb) {
-        // console.log(fb.title);
-        // fb.title = "Peps"
-        // console.log(fb.title);
-
-        fb.fields.name = {
-          label: 'new obj label',
-          // row: 2,
-          order: 1,
-          value: 'Bamby',
-          // hint: undefined
-        }
-        fb.fields['login'].hint = 'works now too'
+        // fb.fields.name = {
+        //   label: 'new obj label',
+        //   // row: 2,
+        //   order: 1,
+        //   value: 'Bamby',
+        //   // hint: undefined
+        // }
+        // fb.fields['login'].hint = 'works now too'
 
 
       }
