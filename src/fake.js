@@ -4,30 +4,22 @@ export const formConfig = {
       label: 'Ваше имя',
       row: 1,
       value: 'Anton',
+      hint: 'as',
+      label: function (formGlobal, component) { return component._uid },
       onFocus(fb) {
-        console.log(fb.title);
-        fb.title = "Peps"
-        console.log(fb.title);
-        fb.fields.name.label = 'New label'
-        fb.fields['e-mail'].value = function (fbGlobal, vNode) { return vNode._uid }
-        fb.fields['e-mail'].hint = 'Changes cause email value fires update'
-        // fb.fields.login.hint = 'not fires cause no setters exist for hint or fields.login '
-        // // console.log('login obj', fb.fields.login);
-        // fb.fields.name.hint = 'also fires because of label described setter'
+        // console.log(fb.title);
+        // fb.title = "Peps"
+        // console.log(fb.title);
 
-        // fb.fields.name = {
-        //   label: 'new obj label',
-        //   // row: 1,
-        //   value: 'Bamby',
-        // }
-        // console.log(fb.fields.name.label);
-        
-        // fb.newFields.name = {
-        //   label: 'new obj label',
-        //   // row: 1,
-        //   value: 'Bamby',
-        // }
-        console.log(fb.newFields.name);
+
+        fb.fields.name = {
+          label: 'new obj label',
+          // row: 1,
+          value: 'Bamby',
+          // hint: undefined
+        }
+        fb.fields['e-mail'].hint = 'works now too'
+
 
       }
     },

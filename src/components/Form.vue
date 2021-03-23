@@ -43,6 +43,8 @@
         @submit="onSubmit"
         @reset="onReset"
         @clear="onClear"
+        ref="fucker"
+        :key="updater"
       />
     </q-form>
 
@@ -83,6 +85,10 @@ export default {
     return {
       methods: this.settings?.methods || {},
       fbGlobal,
+      fieldReactivity: 1,
+      rows: [],
+      updater: 1,
+      isMounted: false,
     };
   },
   props: {
@@ -100,58 +106,13 @@ export default {
       let res = valueStore.state;
       return res;
     },
-    rows() {
-      let res = [];
-      res = fieldsToRows(fbGlobal.fields, fbGlobal.values);
-      return res;
+    title() {
+      return fbGlobal?.title;
     },
-    title(){
-      return fbGlobal?.title
-    }
   },
   methods: {
     // Event Handlers
     async onSubmit(e) {
-      // const res = await this.$refs.methods.validate();
-      // if (!res) return null;
-      // const valuesResponse = { ...this.valuesResponse };
-      // delete valuesResponse.watcher;
-      // // Remove service keys
-      // let seriveKeys = [];
-      // let multiKeys = [];
-      // this.settings.fields.map((field) => {
-      //   if (field.service || field.type === "html") seriveKeys.push(field.key);
-      //   else if (field.type === "multiple") {
-      //     multiKeys.push(field.key);
-      //     field.fields.map((miniF) => {
-      //       if (miniF.service || miniF.field?.type === "html")
-      //         seriveKeys.push(miniF.key);
-      //     });
-      //   }
-      // });
-      // const checkDates = (value) => {
-      //   if (typeof value === "object" && value.from && value.to) {
-      //     return { start: value.from, finish: value.to };
-      //   }
-      // };
-      // for (const [key, value] of Object.entries(valuesResponse)) {
-      //   if (seriveKeys.indexOf(key) > -1) delete valuesResponse[key];
-      //   // Check for calndar range object, in simple fields
-      //   const res = checkDates(value);
-      //   if (res) valuesResponse[key] = res;
-      //   // Case multiKey
-      //   if (multiKeys.indexOf(key) > -1) {
-      //     valuesResponse[key].map((multiRow) => {
-      //       for (const [miniKey, miniValue] of Object.entries(multiRow)) {
-      //         // Check for service keys in multiFields
-      //         if (seriveKeys.indexOf(miniKey) > -1) delete multiRow[miniKey];
-      //         // Calendar range in multiFields
-      //         const res = checkDates(miniValue);
-      //         if (res) multiRow[miniKey] = res;
-      //       }
-      //     });
-      //   }
-      // }
       if (this.methods.onSubmit) {
         const cb = await this.methods.onSubmit(
           this,
@@ -229,6 +190,12 @@ export default {
     async submit() {
       this.onSubmit();
     },
+
+    rowsComputed() {
+      if (!this.fieldReactivity) return "never";
+      const res = fieldsToRows(fbGlobal.fields, fbGlobal.values);
+      return res;
+    },
   },
 
   beforeMount() {
@@ -239,9 +206,10 @@ export default {
     );
 
     // fbGlobal
-    this.methods = this.methods ?? {};
     const self = this;
 
+    // Methods assignment, WIP
+    this.methods = this.methods ?? {};
     Object.keys(this.methods).forEach((key) => {
       const method = self.methods[key];
       // const methods = {}
@@ -261,26 +229,65 @@ export default {
 
     fbGlobal.methods.component = this;
     fbGlobal.methods.element = this.$el;
+
+    // Fields assignment
+
+    fbGlobal.fields = {};
+    Object.entries(this.settings.fields).forEach(([key, config]) => {
+      const reactiveHandler = {
+        set: function (targetObj, prop, value) {
+          // This lets vue watch objects even on new properties addition
+          if (!targetObj.watcher) targetObj.watcher = 1;
+          else targetObj.watcher += 1;
+          // default assignment
+          targetObj[prop] = value;
+          // Indicate success
+          return true;
+        },
+      };
+
+      Object.defineProperty(fbGlobal.fields, key, {
+        get() {
+          return this["_" + key];
+        },
+        set(conf) {
+          if (!this["_" + key]) this["_" + key] = {};
+          const res = { ...this["_" + key], ...conf };
+
+          // Wrap with reactivity and activate it
+          const reactiveWrap = new Proxy(res, reactiveHandler);
+          Object.entries(res).forEach(([key, val]) => {
+            reactiveWrap[key] = val;
+          });
+          self.settings.fields[key] = reactiveWrap;
+          this["_" + key] = reactiveWrap;
+          self.fieldReactivity += 1; //Vue reactivity
+          // console.log(key, { ...res }); //works as expected
+        },
+      });
+
+      // initial config setting
+      fbGlobal.fields[key] = config;
+      // console.log(key, { ...config });
+    });
+
+    // assign rows once
+    this.rows = this.rowsComputed();
   },
-  // updated(){
-  //   console.log('im updated');
-  // },
 
   watch: {
-    // nothing fires
-    "fbGlobal.title": function () {
-      console.log("Glob change");
-    },
     "settings.title": function () {
+      // Not borking
       console.log("Title change");
     },
 
-    "settings.title": {
+    fieldReactivity: {
       handler() {
-        console.log("Title deep change");
+        const newRows = this.rowsComputed();
+        this.rows = newRows;
+        this.updater += 1;
       },
       deep: true,
-
     },
   },
 };
