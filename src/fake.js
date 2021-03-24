@@ -4,17 +4,17 @@ export const formConfig = {
       label: 'Ваше имя',
       row: 1,
       value: 'Anton',
-      hint: 'as',
+      // hint: 'as',
       // label: function (formGlobal, component) { return component._uid },
       onFocus(fb) {
-        // fb.fields.name = {
-        //   label: 'new obj label',
-        //   // row: 2,
-        //   order: 1,
-        //   value: 'Bamby',
-        //   // hint: undefined
-        // }
-        // fb.fields['login'].hint = 'works now too'
+        fb.fields.name = {
+          label: 'new obj label',
+          // row: 2,
+          order: 1,
+          value: 'Bamby',
+          hint: 'new added hint'
+        }
+        fb.fields['login'].hint = 'works now too'
 
 
       }
@@ -34,9 +34,20 @@ export const formConfig = {
   },
   methods: {
     onSubmit(formGlobal, component, values) {
-      console.log(formGlobal.fields.name.value);
+      console.log(formGlobal);
+      console.log(values);
     }
   },
+
+  buttons: [  // buttons NOT required
+    {
+      type: 'submit', // required IF buttons declared
+      label: 'отправить', color: 'primary', class: 'customClassName' //not required
+    },
+    { type: 'reset', label: 'сбросить' },  // reset button not required
+    { type: 'close', label: 'x' },    
+    { type: 'clear', label: 'очистить' },  // not required
+  ],
 
   title: 'Dev title'
 }

@@ -69,14 +69,14 @@ export default {
     // console.log({...fbGlobal.fields[this.keyName]});
   },
 
-  // watch: {
-  //   "rest": {  // Works now
-  //     handler(val) {
-  //       console.log("field info prop changed", {...val});
-  //     },
-  //     deep: true,
-  //   },
-  // },
+  watch: {
+    "rest": {  // Works now
+      handler(val) {
+        console.log("field info prop changed", {...val});
+      },
+      deep: true,
+    },
+  },
 };
 </script>
 

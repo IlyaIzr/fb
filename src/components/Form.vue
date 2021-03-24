@@ -70,9 +70,8 @@
 <script>
 import RowMapper from "./RowMapper";
 import Buttons from "./ButtonsOld";
-import { valueStore, vNodeStore } from "../store";
 import { fieldsToRows } from "./toRows";
-import { fbGlobal } from "src/arguments";
+import { fbGlobal, initConfig } from "src/arguments";
 export default {
   name: "Form",
   components: {
@@ -98,75 +97,78 @@ export default {
     },
   },
   computed: {
-    valuesResponse() {
-      let res = valueStore.state;
-      return res;
-    },
   },
   methods: {
     // Event Handlers
     async onSubmit(e) {
+      const values = {};
+      Object.entries(fbGlobal.fields).forEach(([key, config]) => {
+        if (config.type === "multiple") {
+          return true;
+        }
+        key = String(key).replace("_", "");
+        values[key] = config.value;
+      });
+
       if (this.methods.onSubmit) {
-        const cb = await this.methods.onSubmit(fbGlobal, this, "values");
-        if (cb && typeof cb === "function") cb(this);
+        const cb = await this.methods.onSubmit(fbGlobal, this, values);
+        if (typeof cb === "function") cb(fbGlobal, this, values);
       }
     },
     async onReset() {
       let cb;
       if (this.methods.onReset) {
-        const res = await this.methods.onReset(
-          this,
-          { ...this.valuesResponse },
-          this.$refs.form,
-          vNodeStore
-        );
-        cb = res && res.cb;
+        cb = await this.methods.onReset(fbGlobal, this, values);
       }
-      vNodeStore.resetComponents();
-      if (cb && typeof cb === "function") cb(this);
+
+      Object.entries(fbGlobal.fields).forEach(([key, config]) => {
+        if (config.type === "multiple") {
+          return true;
+        }
+        key = String(key).replace("_", "");
+
+        Object.keys(fbGlobal.fields[key]).forEach((prop) => {
+          console.log(prop);
+          if (prop in initConfig.fields[key]) {
+            fbGlobal.fields[key][prop] = initConfig.fields[key][prop];
+          } else delete fbGlobal.fields[key][prop];
+        });
+        this.computeRawsTrigger += 1;
+      });
+
+      if (typeof cb === "function") cb(fbGlobal, this, values);
     },
     async onClear() {
-      let exeption;
       let cb;
       if (this.methods.onClear) {
-        const res = await this.methods.onClear(
-          this,
-          { ...this.valuesResponse },
-          this.$refs.form,
-          vNodeStore
-        );
-        exeption = res && res.exeption;
-        cb = res && res.cb;
+        cb = await this.methods.onClear(fbGlobal, this, values);
       }
-      valueStore.clearStore(exeption);
-      if (cb && typeof cb === "function") cb(this);
-      this.$nextTick(() => {
-        this.$refs.methods.resetValidation();
+
+      Object.entries(fbGlobal.fields).forEach(([key, config]) => {
+        if (config.type === "multiple") {
+          return true;
+        }
+
+        key = String(key).replace("_", "");
+        fbGlobal.fields[key].value = "";
       });
+      this.$nextTick(() => {
+        this.$refs.form.resetValidation();
+      });
+
+      if (typeof cb === "function") cb(fbGlobal, this, values);
     },
     async onValidateSuccess() {
       if (this.methods.onValidateSuccess) {
-        const cb = await this.methods.onValidateSuccess(
-          this,
-          { ...this.valuesResponse },
-          this.$refs.form,
-          vNodeStore
-        );
-        if (cb && typeof cb === "function") cb(this);
+        const cb = await this.methods.onValidateSuccess(fbGlobal, this, values);
+        if (typeof cb === "function") cb(fbGlobal, this, values);
       }
     },
     async onValidateError(err) {
-      vNodeStore.setComponent("firstFieldFailedValidation", err);
-      const f = this.methods.onValidateError || this.methods.onValidateError;
+      const f = this.methods.onValidateError || this.methods.onValidationError;
       if (f) {
-        const cb = await f(
-          this,
-          { ...this.valuesResponse },
-          this.$refs.form,
-          err,
-          vNodeStore
-        );
-        if (cb && typeof cb === "function") cb(this);
+        const cb = await f(fbGlobal, this, values, err);
+        if (typeof cb === "function") cb(fbGlobal, this, values);
       }
     },
 

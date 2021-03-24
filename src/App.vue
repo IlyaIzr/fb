@@ -11,7 +11,7 @@
 <script>
 import { formConfig, values } from "./fake";
 import IsModal from "./components/IsModal";
-import { fbGlobal } from "./arguments";
+import { fbGlobal, initConfig } from "./arguments";
 export default {
   name: "App",
   data() {
@@ -28,21 +28,24 @@ export default {
 
     // fbGlobal
     fbGlobal.watcher ||= 1;
-    const self = this
+    const self = this;
     Object.entries(this.globalConfig).forEach(([key, val]) => {
-      if (key !== "fields") {
-        Object.defineProperty(fbGlobal, key, {
-          get() {
-            return this["_" + key];
-          },
-          set(val) {
-            this["_" + key] = val;
-            fbGlobal.watcher += 1 //not using this ATM, but makes it observable 
-            self.globalConfig[key] = val
-          },
-        });
-        fbGlobal[key] = val;
+      if (key === "fields") {
+        initConfig.fields = { ...val };
+        return true;
       }
+
+      Object.defineProperty(fbGlobal, key, {
+        get() {
+          return this["_" + key];
+        },
+        set(val) {
+          this["_" + key] = val;
+          fbGlobal.watcher += 1; //not using this ATM, but makes it observable
+          self.globalConfig[key] = val;
+        },
+      });
+      fbGlobal[key] = val;
     });
     fbGlobal.values = this.globalValues;
     fbGlobal.component = this;
