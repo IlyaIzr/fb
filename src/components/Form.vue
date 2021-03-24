@@ -96,8 +96,7 @@ export default {
       required: false,
     },
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     // Event Handlers
     async onSubmit(e) {
@@ -128,10 +127,9 @@ export default {
         key = String(key).replace("_", "");
 
         Object.keys(fbGlobal.fields[key]).forEach((prop) => {
-          console.log(prop);
-          if (prop in initConfig.fields[key]) {
+          if (prop in initConfig.fields[key])
             fbGlobal.fields[key][prop] = initConfig.fields[key][prop];
-          } else delete fbGlobal.fields[key][prop];
+          else delete fbGlobal.fields[key][prop];
         });
         this.computeRawsTrigger += 1;
       });
@@ -262,7 +260,6 @@ export default {
 
       // initial config setting
       fbGlobal.fields[key] = config;
-      // console.log(key, { ...config });
     });
 
     // assign rows once

@@ -39,15 +39,15 @@ export const formConfig = {
     }
   },
 
-  buttons: [  // buttons NOT required
-    {
-      type: 'submit', // required IF buttons declared
-      label: 'отправить', color: 'primary', class: 'customClassName' //not required
-    },
-    { type: 'reset', label: 'сбросить' },  // reset button not required
-    { type: 'close', label: 'x' },    
-    { type: 'clear', label: 'очистить' },  // not required
-  ],
+  // buttons: [  // buttons NOT required
+  //   {
+  //     type: 'submit', // required IF buttons declared
+  //     label: 'отправить', color: 'primary', class: 'customClassName' //not required
+  //   },
+  //   { type: 'reset', label: 'сбросить' },  // reset button not required
+  //   { type: 'close', label: 'x' },    
+  //   { type: 'clear', label: 'очистить' },  // not required
+  // ],
 
   title: 'Dev title'
 }
