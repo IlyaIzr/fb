@@ -4,20 +4,22 @@
       <SimpleInput
         v-if="inputType === 'simple'"
         :keyName="fieldInfo.key"
+        :rest="rest"
       />
+      <Multiple v-else-if="inputType === 'multiple'" :keyName="fieldInfo.key" />
     </div>
   </div>
 </template>
 
 <script>
 import SimpleInput from "./inputs/SuperSimp";
+import Multiple from "./inputs/MSimp";
 import { fbGlobal } from "src/arguments";
 
 export default {
   name: "FieldSorter",
   data() {
-    return {
-    };
+    return {};
   },
   props: {
     fieldInfo: {
@@ -35,11 +37,12 @@ export default {
   },
   components: {
     SimpleInput,
+    Multiple,
   },
   computed: {
     inputType() {
-      const type = this.fieldInfo.type;
-      let inputType;
+      let type = ""; // here you go stupid vetur. No other reason for that reassignment
+      type = this.fieldInfo.type;
       const simpleTypes = [
         "text",
         "password",
@@ -52,18 +55,24 @@ export default {
         "timedate",
       ];
       if (simpleTypes.find((value) => value === type)) {
-        inputType = "simple";
-        return inputType;
+        return "simple";
+      }
+      switch (type) {
+        case "multiple":
+          return type;
       }
     },
-    childField() {
+
+    rest() {
       let res = {};
-      res = fbGlobal.fields[this.fieldInfo.key];
+      if (this.fieldInfo.multiKey) {
+        res = fbGlobal.fields[this.fieldInfo.multiKey].fields[this.fieldInfo.multiIndex][this.fieldInfo.key];
+      } else res = fbGlobal.fields[this.fieldInfo.key];
+      // console.log({...res});
       return res;
     },
   },
   beforeMount() {
-
     //  fbGlobal
     const self = this;
     fbGlobal.rows[this.rowNumber][this.order] = {
@@ -80,7 +89,6 @@ export default {
         },
       },
     };
-
   },
 };
 </script>

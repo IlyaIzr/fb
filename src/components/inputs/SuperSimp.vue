@@ -15,6 +15,7 @@ export default {
       type: String,
       required: true,
     },
+    rest: Object,
   },
   data() {
     return {
@@ -22,11 +23,6 @@ export default {
     };
   },
   computed: {
-    rest() {
-      let res = {};
-      res = fbGlobal.fields[this.keyName];
-      return res;
-    },
   },
   methods: {
     onFocus(e) {
@@ -46,7 +42,7 @@ export default {
     },
   },
   beforeMount() {
-    const field = fbGlobal.fields[this.keyName];
+    const field = this.rest;
 
     // Validate props for this specific input. Example: define select value
     Object.entries(field).forEach(([key, val]) => {
@@ -58,7 +54,7 @@ export default {
       // Assignment validation
       switch (key) {
         case "label":
-          assignment &&= String(assignment);
+          assignment ||= String(assignment);
           break;
       }
       field[key] = assignment;
@@ -69,14 +65,14 @@ export default {
     // console.log({...fbGlobal.fields[this.keyName]});
   },
 
-  watch: {
-    "rest": {  // Works now
-      handler(val) {
-        console.log("field info prop changed", {...val});
-      },
-      deep: true,
-    },
-  },
+  // watch: {
+  //   "rest": {  // Works now
+  //     handler(val) {
+  //       console.log("field info prop changed", {...val});
+  //     },
+  //     deep: true,
+  //   },
+  // },
 };
 </script>
 

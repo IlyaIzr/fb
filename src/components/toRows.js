@@ -1,29 +1,32 @@
 // Adds default required values
 // Then adds first-priority values from fb() values argument
 
-export const fieldsToRows = (fields = {}, values = {}) => {
+export const fieldsToRows = (fields, values, multiKey = false, multiValues = false) => {
   if (!Object.entries(fields).length) return []
+  const fieldsCollector = {}
 
-  // Map fields
+  // Assign required and default values, order rows
   const orderedRows = [];
   const unorderedRows = [];
   for (let [key, field] of Object.entries(fields)) {
-
     // field = { ...field }   // removes Proxy wrap, but also a connection to fbGlobal
 
-    //Assign value from values source, or else assign default value if it's not in config
-    if (values[key] !== undefined
-      // && !field.multiKey
-    ) {
-      field.value = values[key]
-    } else if (field.value === undefined)
-      field.value = "";
+    field.value = (function () {
+      // No check for multiples - have to know their indexes first
+      if (multiKey) return (field.value || "")
+      if (key in values) return values[key]
+      if (field.value === undefined) return ""
+      return field.value
+    }())
 
     //Assign default field type as 'text'
     if (!field.type) field.type = "text";
 
     // correct getters '_key' value
     field.key = String(key).replace("_", "")
+    fieldsCollector[field.key] = []
+
+    if (multiKey) field.multiKey = multiKey
 
     // Assign default rest values
     // Should be last one to have highest priority
@@ -35,8 +38,6 @@ export const fieldsToRows = (fields = {}, values = {}) => {
     //     field[key] = value;
     //   }
     // }
-
-    // Make extra array for not indexed fields
 
 
     if (field.row === undefined) {
@@ -50,7 +51,6 @@ export const fieldsToRows = (fields = {}, values = {}) => {
         orderedRows[field.row - 1] = [field];
       }
     }
-
   }
 
   // Clear rows and order fields inside rows
@@ -76,5 +76,30 @@ export const fieldsToRows = (fields = {}, values = {}) => {
     return fieldsFiltered
   })
   orderedFields.push(...unorderedRows); //add unindexed arrays
-  return orderedFields;
+  if (!multiKey) return orderedFields;
+
+  if (!values && !multiValues) return orderedFields
+  // Populate multiple fields (ordered rows * length of multivalues)
+
+  const populated = []
+  if (multiValues) multiValues.forEach((valueObj, index) => {
+    orderedFields.forEach(row => {
+      const fields = row.map(field => {
+        field.multiIndex = index
+        field.value = valueObj[field.key]
+
+        // Assign user second arg values
+        const globalValue = values?.[field.key]
+        if (globalValue) field.value = globalValue
+        const userValue = values?.[index]?.[field.key]
+        if (userValue) field.value = userValue
+
+        // Assign the field
+        return { ...field } // It BREAKS without {...} I mean WTF am i missing
+      })
+      populated.push([...fields])
+    })
+  })
+
+  return populated
 }
