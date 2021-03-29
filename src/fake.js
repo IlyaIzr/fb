@@ -23,7 +23,7 @@ export const formConfig = {
         { firstName: 'Peter', lastName: 'Bonnington' },
         { firstName: 'Lois', lastName: 'Puttershmidt' }
       ],
-      fields: {
+      settings: {
         firstName: {
           label: 'firstName'
         },

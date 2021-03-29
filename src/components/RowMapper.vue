@@ -39,11 +39,10 @@ export default {
     this.rows.forEach((row) => {
       row.forEach((field) => {
         // console.log({ ...field });
-        if (!fbGlobal.fields[this.multiKey].fields[field.multiIndex])
-          fbGlobal.fields[this.multiKey].fields[field.multiIndex] = {};
-        fbGlobal.fields[this.multiKey].fields[field.multiIndex][
-          field.key
-        ] = field;
+        const multiEntry = fbGlobal.fields[this.multiKey];
+        if (!multiEntry.fields?.[field.multiIndex])
+          multiEntry.fields[field.multiIndex] = {};
+        multiEntry.fields[field.multiIndex][field.key] = field;
       });
     });
     // console.log({ ...fbGlobal.fields[this.multiKey].fields });

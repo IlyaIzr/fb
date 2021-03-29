@@ -103,6 +103,16 @@ export default {
       const values = {};
       Object.entries(fbGlobal.fields).forEach(([key, config]) => {
         if (config.type === "multiple") {
+          values[config.key] = {};
+          config.fields.length &&
+            config.fields.forEach((row, multiIndex) => {
+              Object.entries(row).forEach(([fieldKey, fieldConfig]) => {
+                if (!values[config.key][multiIndex])
+                  values[config.key][multiIndex] = {};
+
+                values[config.key][multiIndex][fieldKey] = fieldConfig.value;
+              });
+            });
           return true;
         }
         key = String(key).replace("_", "");

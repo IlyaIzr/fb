@@ -2,7 +2,7 @@
   <div class="q-gutter-md">
     <label for="">{{ rest.label }}</label>
 
-    <RowMapper :rows="rows" :settings="{}" :multiKey="rest.key"/>
+    <RowMapper :rows="rows" :settings="{}" :multiKey="rest.key" />
   </div>
 </template>
 
@@ -36,7 +36,12 @@ export default {
   methods: {
     rowsComputed() {
       // console.log({ ...this.rest.fields });
-      const res = fieldsToRows(this.rest.fields, fbGlobal.values?.[this.keyName], this.keyName, this.rest.value);
+      const res = fieldsToRows(
+        this.rest.settings,
+        fbGlobal.values?.[this.keyName],
+        this.keyName,
+        this.rest.value
+      );
       // console.log(res);
       return res;
     },
@@ -44,6 +49,7 @@ export default {
 
   beforeMount() {
     const field = fbGlobal.fields[this.keyName];
+    if (!field.fields) field.fields = [];
     // console.log({ ...field });
 
     this.rows = this.rowsComputed();

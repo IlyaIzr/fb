@@ -22,8 +22,7 @@ export default {
       fbGlobal,
     };
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     onFocus(e) {
       if (this.rest?.onFocus) {
@@ -36,7 +35,7 @@ export default {
       if (this.rest?.onInput) {
         cb = this.rest.onInput(fbGlobal, this, val);
       }
-      fbGlobal.fields[this.keyName].value = val;
+      this.rest.value = val;
 
       if (typeof cb === "function") cb(fbGlobal, this, val);
     },
@@ -60,8 +59,8 @@ export default {
       field[key] = assignment;
     });
   },
-  
-  updated(){
+
+  updated() {
     // console.log({...fbGlobal.fields[this.keyName]});
   },
 
