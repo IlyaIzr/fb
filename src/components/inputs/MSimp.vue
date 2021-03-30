@@ -16,6 +16,8 @@ export default {
       type: String,
       required: true,
     },
+    // TODO add reactivity for incoming rest.settings changes
+    rest: Object,
   },
   components: {
     RowMapper: () => import("src/components/RowMapper"),
@@ -27,22 +29,22 @@ export default {
     };
   },
   computed: {
-    rest() {
-      let res = {};
-      res = fbGlobal.fields[this.keyName];
-      return res;
-    },
-  },
-  methods: {
-    rowsComputed() {
-      // console.log({ ...this.rest.fields });
-      const res = fieldsToRows(
+    defaultRows() {
+      let res = [];
+      res = fieldsToRows(
         this.rest.settings,
         fbGlobal.values?.[this.keyName],
         this.keyName,
         this.rest.value
       );
-      // console.log(res);
+      return res;
+    },
+  },
+  methods: {
+    rowsComputed() {
+      // console.log("rowsComputed", { ...this.rest.settings });
+      const res = this.defaultRows;
+
       return res;
     },
   },
@@ -50,6 +52,7 @@ export default {
   beforeMount() {
     const field = fbGlobal.fields[this.keyName];
     if (!field.fields) field.fields = [];
+    if (!field.watcher) field.watcher = 1;
     // console.log({ ...field });
 
     this.rows = this.rowsComputed();

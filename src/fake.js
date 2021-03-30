@@ -1,20 +1,33 @@
 export const formConfig = {
   fields: {
-    // name: {
-    //   label: 'Ваше имя',
-    //   value: 'Anton',
-    //   // label: function (formGlobal, component) { return component._uid },
-    //   onFocus(fb) {
-    //     // fb.fields.name = {
-    //     //   label: 'new obj label',
-    //     //   // row: 2,
-    //     //   order: 1,
-    //     //   value: 'Bamby',
-    //     //   hint: 'new added hint'
-    //     // }
-    //     // fb.fields['login'].hint = 'works now too'
-    //   }
-    // },
+    name: {
+      label: 'Ваше имя',
+      value: 'Anton',
+      // label: function (formGlobal, component) { return component._uid },
+      onFocus(fb) {
+        // fb.fields.name = {
+        //   label: 'new obj label',
+        //   // row: 2,
+        //   order: 1,
+        //   value: 'Bamby',
+        //   hint: 'new added hint'
+        // }
+        // fb.fields['login'].hint = 'works now too'
+        // console.log(fb.fields.members.fields);
+        fb.fields.members.fields[0].firstName.hint = 'bolock'
+        //  = {hint: 'Check checko'}
+        // fb.fields.members.settings.lastName = {  // redifene inside multiple
+        //   label: 'New labelc'
+        // }
+        // fb.fields.chil.hint = 'somebody'
+      }
+    },
+    chil: {
+      value: 'Beps',
+      onFocus(fb) {
+        fb.fields.name.hint = 'Bamby'
+      }
+    },
     members: {
       type: 'multiple',
       row: 1,
@@ -25,7 +38,7 @@ export const formConfig = {
       ],
       settings: {
         firstName: {
-          label: 'firstName'
+          label: 'firstName',
         },
         lastName: {
           label: 'lastName'

@@ -6,7 +6,11 @@
         :keyName="fieldInfo.key"
         :rest="rest"
       />
-      <Multiple v-else-if="inputType === 'multiple'" :keyName="fieldInfo.key" />
+      <Multiple
+        v-else-if="inputType === 'multiple'"
+        :keyName="fieldInfo.key"
+        :rest="rest"
+      />
     </div>
   </div>
 </template>
@@ -19,7 +23,9 @@ import { fbGlobal } from "src/arguments";
 export default {
   name: "FieldSorter",
   data() {
-    return {};
+    return {
+      trigger: 1,
+    };
   },
   props: {
     fieldInfo: {
@@ -65,30 +71,67 @@ export default {
 
     rest() {
       let res = {};
-      if (this.fieldInfo.multiKey) {
-        res = fbGlobal.fields[this.fieldInfo.multiKey].fields[this.fieldInfo.multiIndex][this.fieldInfo.key];
-      } else res = fbGlobal.fields[this.fieldInfo.key];
-      // console.log({...res});
+      const self = this;
+      if (!this.trigger) return null;
+
+      const i = this.fieldInfo;
+      if (i.multiKey) {
+        const fieldGlobal =
+          fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key];
+
+        const reactiveFieldWrap = {
+          set: function (targetObj, prop, value) {
+            console.log("field level ractivity", prop, value, { ...targetObj });
+            // Make changes and additions observable
+            if (!targetObj.watcher) targetObj.watcher = 1;
+            targetObj.watcher += 1;
+            self.trigger += 1;
+
+            targetObj[prop] = value;
+
+            return true;
+          },
+        };
+
+        fieldGlobal.watcher = 1;
+        const reactive = new Proxy(fieldGlobal, reactiveFieldWrap);
+        fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key] = reactive;
+        res = fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key];
+      } else res = fbGlobal.fields[i.key];
+
+      console.log({ ...res }, res.watcher);
       return res;
     },
   },
   beforeMount() {
     //  fbGlobal
-    const self = this;
-    fbGlobal.rows[this.rowNumber][this.order] = {
-      component: self,
-      get element() {
-        return this?.component?.$el;
+    // const self = this;
+    // fbGlobal.rows[this.rowNumber][this.order] = {
+    //   component: self,
+    //   get element() {
+    //     return this?.component?.$el;
+    //   },
+    //   field: {
+    //     get component() {
+    //       return self.$children[0];
+    //     },
+    //     get element() {
+    //       return this?.component?.$el;
+    //     },
+    //   },
+    // };
+  },
+
+  watch: {
+    rest: {
+      handler() {
+        console.log("rerest", this.fieldInfo.key);
       },
-      field: {
-        get component() {
-          return self.$children[0];
-        },
-        get element() {
-          return this?.component?.$el;
-        },
-      },
-    };
+      deep: true,
+    },
+    trigger() {
+      console.log("trigger happend");
+    },
   },
 };
 </script>
