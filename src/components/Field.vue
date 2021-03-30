@@ -76,6 +76,7 @@ export default {
 
       const i = this.fieldInfo;
       if (i.multiKey) {
+        
         const field = fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key];
 
         if (field.watcher) {

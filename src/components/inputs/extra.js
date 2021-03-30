@@ -1,5 +1,5 @@
 import { fbGlobal, globalArg } from "src/arguments";
-import { valueStore, configStore } from "../../store";
+// import { valueStore, configStore } from "../../store";
 
 // Exeptions: Multiple
 export const commonMethods = {

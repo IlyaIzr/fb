@@ -14,8 +14,9 @@ export const formConfig = {
         // }
         // fb.fields['login'].hint = 'works now too'
         // console.log(fb.fields.members.fields);
-        fb.fields.members.fields[0].firstName.hint = 'bolock'
-        //  = {hint: 'Check checko'}
+        fb.fields.members.fields[0].firstName= {hint: 'Check checko'}
+        // hint = 'bolock'
+         
         // fb.fields.members.settings.lastName = {  // redifene inside multiple
         //   label: 'New labelc'
         // }

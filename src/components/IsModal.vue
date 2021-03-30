@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { vNodeStore } from "src/store";
 import Form from "./Form";
 import { fbGlobal } from "src/arguments";
 export default {
@@ -39,7 +38,7 @@ export default {
     },
   },
   mounted() {
-    if (this.isModal) vNodeStore.closeModal = () => (this.isOpen = false);
+    // if (this.isModal) vNodeStore.closeModal = () => (this.isOpen = false);
   },
   beforeMount() {
 
