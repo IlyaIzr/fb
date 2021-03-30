@@ -14,6 +14,7 @@ export const fieldsToRows = (fields, values, multiKey = false, multiValues = fal
     field.value = (function () {
       // No check for multiples - have to know their indexes first
       if (multiKey) return (field.value || "")
+      if (field.type === 'multiple') return (field.value || [])
       if (key in values) return values[key]
       if (field.value === undefined) return ""
       return field.value
@@ -76,6 +77,8 @@ export const fieldsToRows = (fields, values, multiKey = false, multiValues = fal
     return fieldsFiltered
   })
   orderedFields.push(...unorderedRows); //add unindexed arrays
+
+  // Computations for multi-children 
   if (!multiKey) return orderedFields;
 
   if (!values && !multiValues) return orderedFields
@@ -102,4 +105,44 @@ export const fieldsToRows = (fields, values, multiKey = false, multiValues = fal
   })
 
   return populated
+}
+
+export function sortByTabs(fields, defaultTab) {
+  if (!Object.entries(fields).length) return []
+  const indexedGroup = []
+  const unIndexedFields = {}
+
+  for (let [key, field] of Object.entries(fields)) {
+
+    let index = field.tab || defaultTab
+    key = String(key).replace("_", "")
+
+    // Case no index
+    if (index === undefined) {
+
+      if (unIndexedFields[key]) console.log('WARNING! Fields with repeating key' + key, { ...field }, field);
+      unIndexedFields[key] = fields[key]
+
+    } else {
+
+      // Case has index
+      index -= 1
+      if (index < 0) index = 0
+
+      if (!indexedGroup[index]) indexedGroup[index] = {}
+
+      else if (indexedGroup[index][key]) console.log('WARNING! Fields with repeating key' + key, { ...field }, field);
+
+      // console.log(index, key, field);
+      indexedGroup[index][key] = fields[key]
+    }
+  }
+
+  // TODO put unindexed in first tab? Or last? We need to know last tab then. Should we ask for that at all here?
+  if (!indexedGroup[0]) indexedGroup[0] = {}
+  indexedGroup[0] = { ...indexedGroup[0], ...unIndexedFields }
+
+  const filtered = indexedGroup.filter((row) => row != null); //delete all empty indexes
+
+  return filtered
 }

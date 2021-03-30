@@ -104,7 +104,7 @@ export default {
         res = field;
       } else res = fbGlobal.fields[i.key];
 
-      // console.log({ ...res }, res.watcher);
+      // console.log({ ...res }, res.key, {...res.value});
       return res;
     },
   },

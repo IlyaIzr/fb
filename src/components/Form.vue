@@ -37,7 +37,9 @@
       @validation-success="onValidateSuccess"
       @validation-error="onValidateError"
     >
+      <Stepper v-if="settings.tabs" :rows="rows" />
       <RowMapper
+        v-else
         :rows="rows"
         :settings="settings"
         @submit="onSubmit"
@@ -70,13 +72,15 @@
 <script>
 import RowMapper from "./RowMapper";
 import Buttons from "./ButtonsOld";
-import { fieldsToRows } from "./toRows";
+import Stepper from "./Stepper";
+import { fieldsToRows, sortByTabs } from "./toRows";
 import { fbGlobal, initConfig } from "src/arguments";
 export default {
   name: "Form",
   components: {
     RowMapper,
     Buttons,
+    Stepper,
   },
   data() {
     return {
@@ -191,7 +195,12 @@ export default {
     },
 
     rowsComputed() {
-      const res = fieldsToRows(fbGlobal.fields, fbGlobal.values);
+      const f = fbGlobal;
+      if (f.tabs) {
+        const sortedFields = sortByTabs(f.fields, f.global?.fields?.tabIndex);
+        return sortedFields;
+      }
+      const res = fieldsToRows(f.fields, f.values);
       return res;
     },
   },

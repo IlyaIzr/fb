@@ -1,8 +1,6 @@
 <template>
   <div class="row fb-row">
-    <q-step v-if="settings.tabs" />
-
-    <div v-else v-for="row in rows" v-bind:key="rows.indexOf(row)">
+    <div v-for="row in rows" v-bind:key="rows.indexOf(row)">
       <FieldMapper :fields="row" :order="rows.indexOf(row)" />
     </div>
   </div>
