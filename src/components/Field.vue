@@ -76,15 +76,19 @@ export default {
 
       const i = this.fieldInfo;
       if (i.multiKey) {
-        const fieldGlobal =
-          fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key];
+        const field = fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key];
 
+        if (field.watcher) {
+          res = field;
+          return res;
+        }
+
+        // Case first time assignment of reactive wrap
         const reactiveFieldWrap = {
           set: function (targetObj, prop, value) {
-            console.log("field level ractivity", prop, value, { ...targetObj });
             // Make changes and additions observable
-            if (!targetObj.watcher) targetObj.watcher = 1;
             targetObj.watcher += 1;
+            // And reactive
             self.trigger += 1;
 
             targetObj[prop] = value;
@@ -93,13 +97,13 @@ export default {
           },
         };
 
-        fieldGlobal.watcher = 1;
-        const reactive = new Proxy(fieldGlobal, reactiveFieldWrap);
+        field.watcher = 1;
+        const reactive = new Proxy(field, reactiveFieldWrap);
         fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key] = reactive;
-        res = fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key];
+        res = field;
       } else res = fbGlobal.fields[i.key];
 
-      console.log({ ...res }, res.watcher);
+      // console.log({ ...res }, res.watcher);
       return res;
     },
   },
@@ -123,15 +127,15 @@ export default {
   },
 
   watch: {
-    rest: {
-      handler() {
-        console.log("rerest", this.fieldInfo.key);
-      },
-      deep: true,
-    },
-    trigger() {
-      console.log("trigger happend");
-    },
+    // rest: {
+    //   handler() {
+    //     console.log("rerest", this.fieldInfo.key);
+    //   },
+    //   deep: true,
+    // },
+    // trigger() {
+    //   console.log("trigger happend");
+    // },
   },
 };
 </script>
