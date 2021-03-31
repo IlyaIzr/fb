@@ -1,14 +1,57 @@
 <template>
-  <RowMapper
-    :rows="filteredRows[0]"
-    :settings="fbGlobal"
-  />
+  <q-stepper
+    :value="step"
+    @input="onInput"
+    ref="stepper"
+    animated
+    flat
+    style="padding: 0"
+    @before-transition="beforeStep"
+  >
+    <q-step
+      v-for="(tab, index) in tabs.steps"
+      v-bind:key="index"
+      :name="index"
+      :title="tab.title"
+      :icon="tab.icon || 'settings'"
+      :error="Boolean(errors.find((el) => el === Number(index + 1)))"
+    >
+      <RowMapper
+        v-if="filteredRows[index]"
+        :rows="filteredRows[index]"
+        :settings="fbGlobal"
+      />
+    </q-step>
+
+    <template v-slot:navigation>
+      <q-stepper-navigation class="formButtons">
+        <!-- Back btn -->
+        <q-btn
+          v-if="step > 0"
+          @click="onBackClick"
+          :label="'Back'"
+          :text-color="'black'"
+          class="q-mr-sm"
+        />
+        <!-- Next btn -->
+        <q-btn
+          @click="onNextClick"
+          :label="'Next'"
+          :text-color="'black'"
+          :class="step === tabs.steps.length - 1 ? 'hidden' : 'q-mr-sm'"
+          class="q-mr-sm"
+        />
+
+        <!-- <q-btn label="testo" @click="testo"></q-btn> -->
+      </q-stepper-navigation>
+    </template>
+  </q-stepper>
 </template>
 
 <script>
 import RowMapper from "./RowMapper";
 import { fbGlobal } from "src/arguments";
-import { fieldsToRows } from './toRows';
+import { fieldsToRows } from "./toRows";
 export default {
   name: "Stepper",
   components: {
@@ -17,7 +60,10 @@ export default {
   data() {
     return {
       fbGlobal,
-      filteredRows: []
+      filteredRows: [],
+      step: 0,
+      errors: [],
+      formRef: {},
     };
   },
   props: {
@@ -26,11 +72,57 @@ export default {
       required: true,
     },
   },
+  computed: {
+    tabs() {
+      let res = {
+        steps: [{ title: "" }, { title: "" }],
+      };
+      const t = fbGlobal.tabs;
+      if (t && Object.keys(t).length) {
+        Object.keys(t).forEach((key) => (res[key] = t[key]));
+      }
+      return res;
+    },
+  },
+  methods: {
+    async onInput(val) {
+      let res;
+      if (this.tabs.validateTabNavigation) {
+        // Form validation
+        res = await this.formRef.validate();
+        if (res) this.step = val;
+      } else this.step = val;
+    },
+    async onNextClick() {
+      if (this.tabs.validateButtonNavigation) {
+        const res = await this.formRef.validate();
+        if (res) this.$refs.stepper.next();
+      } else this.step += 1;
+    },
+    async onBackClick() {
+      if (this.tabs.validateButtonNavigation) {
+        const res = await this.formRef.validate();
+        if (res) this.$refs.stepper.previous();
+      } else this.step -= 1;
+    },
+    async beforeStep(newVal, prevVal) {
+      const res = await this.formRef.validate();
+
+      if (res) this.errors = this.errors.filter((step) => step !== prevVal);
+      else this.errors.push(prevVal);
+    },
+  },
   beforeMount() {
-    this.rows.length && this.rows.forEach(tabRow => {
-      const res = fieldsToRows(tabRow, fbGlobal.values);
-      this.filteredRows.push(res)
-    });
+    // console.log(fbGlobal.methods.component);
+    this.rows.length &&
+      this.rows.forEach((tabRow) => {
+        const res = fieldsToRows(tabRow, fbGlobal.values);
+        this.filteredRows.push(res);
+      });
+  },
+  mounted() {
+    // It doesn't exist before mount, although it happens in parent component
+    this.formRef = fbGlobal.methods?.component?.$refs.form;
   },
 };
 </script>
