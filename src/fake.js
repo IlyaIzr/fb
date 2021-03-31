@@ -53,17 +53,14 @@ export const formConfig = {
       console.log(values);
     }
   },
+
   tabs: true,
 
-  // buttons: [  // buttons NOT required
-  //   {
-  //     type: 'submit', // required IF buttons declared
-  //     label: 'отправить', color: 'primary', class: 'customClassName' //not required
-  //   },
-  //   { type: 'reset', label: 'сбросить' },  // reset button not required
-  //   { type: 'close', label: 'x' },    
-  //   { type: 'clear', label: 'очистить' },  // not required
-  // ],
+  // buttons: {
+  //   submit: {
+  //     label: 'Sub custom text', class: 'cuTOmamAMmaaS11'
+  //   }
+  // },
 
   title: 'Dev title'
 }

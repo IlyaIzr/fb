@@ -51,27 +51,20 @@
     <q-separator />
 
     <!-- Buttons -->
-    <div
-      v-if="!settings.noButtons"
-      :class="`fb-buttons ${settings.modal && ' float-right q-mr-md '}  ${
-        settings.tabs && ' q-pa-none'
-      } `"
-    >
-      <Buttons
-        :buttons="settings.buttons"
-        :modal="settings.modal"
-        v-if="!settings.tabs"
-        @submit="onSubmit"
-        @reset="onReset"
-        @clear="onClear"
-      />
-    </div>
+    <Buttons
+      :buttons="settings.buttons"
+      :modal="settings.modal"
+      v-if="!settings.tabs"
+      @submit="onSubmit"
+      @reset="onReset"
+      @clear="onClear"
+    />
   </div>
 </template>
 
 <script>
 import RowMapper from "./RowMapper";
-import Buttons from "./ButtonsOld";
+import Buttons from "./Buttons";
 import Stepper from "./Stepper";
 import { fieldsToRows, sortByTabs } from "./toRows";
 import { fbGlobal, initConfig } from "src/arguments";

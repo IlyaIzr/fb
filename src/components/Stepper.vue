@@ -25,23 +25,15 @@
 
     <template v-slot:navigation>
       <q-stepper-navigation class="formButtons">
-        <!-- Back btn -->
-        <q-btn
-          v-if="step > 0"
-          @click="onBackClick"
-          :label="'Back'"
-          :text-color="'black'"
-          class="q-mr-sm"
+        <Buttons
+          @submit="$emit('submit')"
+          @reset="$emit('reset')"
+          @clear="$emit('clear')"
+          @next="onNextClick"
+          @back="onBackClick"
+          :step="step"
+          :tabLength="tabs.steps.length"
         />
-        <!-- Next btn -->
-        <q-btn
-          @click="onNextClick"
-          :label="'Next'"
-          :text-color="'black'"
-          :class="step === tabs.steps.length - 1 ? 'hidden' : 'q-mr-sm'"
-          class="q-mr-sm"
-        />
-
         <!-- <q-btn label="testo" @click="testo"></q-btn> -->
       </q-stepper-navigation>
     </template>
@@ -50,12 +42,14 @@
 
 <script>
 import RowMapper from "./RowMapper";
+import Buttons from "./Buttons";
 import { fbGlobal } from "src/arguments";
 import { fieldsToRows } from "./toRows";
 export default {
   name: "Stepper",
   components: {
     RowMapper,
+    Buttons,
   },
   data() {
     return {
@@ -113,7 +107,6 @@ export default {
     },
   },
   beforeMount() {
-    // console.log(fbGlobal.methods.component);
     this.rows.length &&
       this.rows.forEach((tabRow) => {
         const res = fieldsToRows(tabRow, fbGlobal.values);
