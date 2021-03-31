@@ -6,6 +6,7 @@
     animated
     flat
     style="padding: 0"
+    :header-nav="true"
     @before-transition="beforeStep"
   >
     <q-step
@@ -26,7 +27,7 @@
     <template v-slot:navigation>
       <q-stepper-navigation class="formButtons">
         <Buttons
-          @submit="$emit('submit')"
+          @submit="trySubmit"
           @reset="$emit('reset')"
           @clear="$emit('clear')"
           @next="onNextClick"
@@ -104,6 +105,17 @@ export default {
 
       if (res) this.errors = this.errors.filter((step) => step !== prevVal);
       else this.errors.push(prevVal);
+    },
+    async trySubmit(e) {
+      e?.preventDefault();
+      await this.beforeStep(null, this.step);
+      if (this.errors.length === 0) {
+        this.$emit("submit");
+      } else {
+        this.step = this.errors[0];
+        // this.$nextTick(async function () { f.$children[0].focus();
+        // });
+      }
     },
   },
   beforeMount() {

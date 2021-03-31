@@ -23,7 +23,8 @@ export const formConfig = {
       }
     },
     chil: {
-      value: 'Beps',
+      value: '',
+      required: true,
       onFocus(fb) {
         fb.fields.name.hint = 'Bamby'
       }
