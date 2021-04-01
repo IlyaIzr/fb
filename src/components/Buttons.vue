@@ -19,14 +19,6 @@
       :class="common + buttons.clear.class"
       v-bind="buttons.clear"
     />
-    <!-- Next tab -->
-    <q-btn
-      v-if="buttons.next && step + 1 < tabLength"
-      type="button"
-      @click="$emit('next')"
-      :class="common + buttons.next.class"
-      v-bind="buttons.next"
-    />
     <!-- Previous tab -->
     <q-btn
       v-if="buttons.back && step > 0"
@@ -35,12 +27,20 @@
       :class="common + buttons.back.class"
       v-bind="buttons.back"
     />
+    <!-- Next tab -->
+    <q-btn
+      v-if="buttons.next && step + 1 < tabLength"
+      type="button"
+      @click="$emit('next')"
+      :class="common + buttons.next.class"
+      v-bind="buttons.next"
+    />
 
     <!-- ? __Right side__ ? -->
     <!-- Submit -->
     <q-btn
-      v-if="(tabLength && step + 1 === tabLength) || buttons.submit"
-      type="submit"
+      v-if="canSubmit"
+      type="button"
       @click="$emit('submit')"
       :class="common + buttons.submit.class"
       v-bind="buttons.submit"
@@ -69,11 +69,15 @@ export default {
       type: Number,
       required: false,
     },
+    validated: {
+      type: Array,
+      required: false,
+    },
   },
   data() {
     return {
       fbGlobal,
-      common: 'q-mx-md '
+      common: "q-mx-md ",
     };
   },
   computed: {
@@ -99,10 +103,18 @@ export default {
         });
       return res;
     },
+    canSubmit() {
+      let res = true;
+      if (!this.tabLength) return res;      
+      if (this.step + 1 === this.tabLength) return res;
+      const s = this.validated.find(e => e === false)
+      if (s === undefined) return res
+      else return false
+    },
   },
-  beforeMount(){
-    if (fbGlobal.tabs) this.common = 'q-mx-sm '
-  }
+  beforeMount() {
+    if (fbGlobal.tabs) this.common = "q-mx-sm ";
+  },
 };
 </script>
 

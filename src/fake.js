@@ -3,6 +3,7 @@ export const formConfig = {
     name: {
       label: 'Ваше имя',
       value: 'Anton',
+      tab: 2,
       // label: function (formGlobal, component) { return component._uid },
       onFocus(fb) {
         // fb.fields.name = {
@@ -24,7 +25,9 @@ export const formConfig = {
     },
     chil: {
       value: '',
-      required: true,
+      // required: true,
+      rules: [a => Boolean(a) || 'err msg'],
+      tab: 3,
       onFocus(fb) {
         fb.fields.name.hint = 'Bamby'
       }
@@ -55,7 +58,10 @@ export const formConfig = {
     }
   },
 
-  tabs: true,
+  // tabs: true,
+  tabs: {
+    "header-nav": true
+  },
 
   // buttons: {
   //   submit: {

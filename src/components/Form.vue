@@ -37,7 +37,13 @@
       @validation-success="onValidateSuccess"
       @validation-error="onValidateError"
     >
-      <Stepper v-if="settings.tabs" :rows="rows" />
+      <Stepper
+        v-if="settings.tabs"
+        :rows="rows"
+        @submit="onSubmit"
+        @reset="onReset"
+        @clear="onClear"
+      />
       <RowMapper
         v-else
         :rows="rows"

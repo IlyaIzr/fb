@@ -8,6 +8,7 @@
     style="padding: 0"
     :header-nav="true"
     @before-transition="beforeStep"
+    v-bind="tabsSettings"
   >
     <q-step
       v-for="(tab, index) in tabs.steps"
@@ -15,7 +16,8 @@
       :name="index"
       :title="tab.title"
       :icon="tab.icon || 'settings'"
-      :error="Boolean(errors.find((el) => el === Number(index + 1)))"
+      :error="Boolean(errors.find((el) => el === Number(index)))"
+      :done="validated[index]"
     >
       <RowMapper
         v-if="filteredRows[index]"
@@ -34,6 +36,7 @@
           @back="onBackClick"
           :step="step"
           :tabLength="tabs.steps.length"
+          :validated="validated"
         />
         <!-- <q-btn label="testo" @click="testo"></q-btn> -->
       </q-stepper-navigation>
@@ -59,6 +62,7 @@ export default {
       step: 0,
       errors: [],
       formRef: {},
+      validated: [],
     };
   },
   props: {
@@ -73,9 +77,23 @@ export default {
         steps: [{ title: "" }, { title: "" }],
       };
       const t = fbGlobal.tabs;
-      if (t && Object.keys(t).length) {
+      if (t && t.steps && Object.keys(t).length) {
         Object.keys(t).forEach((key) => (res[key] = t[key]));
+      } else if (t) {
+        const diff = this.rows.length - 2;
+        for (let i = 0; i < diff; i++) {
+          res.steps.push({ title: "" });
+        }
       }
+      return res;
+    },
+    tabsSettings() {
+      let res = {};
+      const settings = fbGlobal.tabs;
+      if (typeof settings !== "object") return res;
+      Object.entries(settings).forEach((key) => {
+        if (typeof key !== "object") res[key] = settings[key];
+      });
       return res;
     },
   },
@@ -89,27 +107,41 @@ export default {
       } else this.step = val;
     },
     async onNextClick() {
-      if (this.tabs.validateButtonNavigation) {
-        const res = await this.formRef.validate();
-        if (res) this.$refs.stepper.next();
-      } else this.step += 1;
+      const attempt = await this.validateStep();
+      if (attempt) this.$refs.stepper.next();
     },
     async onBackClick() {
-      if (this.tabs.validateButtonNavigation) {
-        const res = await this.formRef.validate();
-        if (res) this.$refs.stepper.previous();
-      } else this.step -= 1;
+      const attempt = await this.validateStep();
+      if (attempt) this.$refs.stepper.previous();
     },
-    async beforeStep(newVal, prevVal) {
+    async beforeStep(currStep, prevStep) {
+      // late guy
+      await this.validateStep(prevStep);
+    },
+    async validateStep(prevStep) {
       const res = await this.formRef.validate();
+      const step = prevStep ?? this.step;
 
-      if (res) this.errors = this.errors.filter((step) => step !== prevVal);
-      else this.errors.push(prevVal);
+      if (res) {
+        this.validated[step] = true;
+        // Todo err logic
+        // console.log("prev errors", [...this.errors]);
+        this.errors = this.errors.filter((errstep) => errstep !== step);
+        // console.log("filtered step", step, this.errors);
+        return true;
+      } else {
+        this.validated[step] = false;
+        this.errors.push(step);
+        // console.log("pushed step", step, this.errors);
+        return false;
+      }
     },
     async trySubmit(e) {
       e?.preventDefault();
-      await this.beforeStep(null, this.step);
+      // Check if all the steps are 'done'
+      await this.validateStep();
       if (this.errors.length === 0) {
+        console.log('emitting');
         this.$emit("submit");
       } else {
         this.step = this.errors[0];
@@ -124,6 +156,10 @@ export default {
         const res = fieldsToRows(tabRow, fbGlobal.values);
         this.filteredRows.push(res);
       });
+    // Assign 'done' statuses
+    for (let i = 0; i < this.filteredRows.length; i++) {
+      this.validated[i] = false;
+    }
   },
   mounted() {
     // It doesn't exist before mount, although it happens in parent component
