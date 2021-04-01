@@ -1,4 +1,5 @@
 export const formConfig = {
+  title: 'Basic form',
 
   fields: {
     name: {
@@ -17,7 +18,6 @@ export const formConfig = {
     }
   },
 
-  title: 'Basic form'
 }
 
 
