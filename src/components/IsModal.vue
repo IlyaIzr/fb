@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       isModal: Boolean(this.settings.modal),
-      isOpen: this.settings.modal?.opened === false ? false : true,
+      isOpen: this.settings.modal?.isOpen === false ? false : true,
       modalConfig: this.settings.modal,
     };
   },
@@ -41,9 +41,15 @@ export default {
     // if (this.isModal) vNodeStore.closeModal = () => (this.isOpen = false);
   },
   beforeMount() {
-
     // fbGlobal
-    fbGlobal.modal = this.settings.modal;
+    if (typeof fbGlobal.modal !== "object") fbGlobal.modal = {};
+    fbGlobal.modal.component = this;
+    Object.defineProperty(fbGlobal.modal, "element", {
+      get() {
+        return this?.component?.$el;
+      },
+    });
+    fbGlobal.modal.closeModal = () => (this.isOpen = false);
   },
 };
 </script>

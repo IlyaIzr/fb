@@ -47,7 +47,7 @@ export default {
       });
       fbGlobal[key] = val;
     });
-    fbGlobal.values = this.globalValues;
+    fbGlobal.values = this.globalValues || {};
     fbGlobal.component = this;
     Object.defineProperty(fbGlobal, "element", {
       get() {

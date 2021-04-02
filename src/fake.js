@@ -4,14 +4,7 @@ export const formConfig = {
       label: 'Ваше имя',
       value: 'Anton',
       onFocus(fb) {
-         
-        // fb.fields.members.settings.lastName = {  // redifene inside multiple
-        //   hint: 'New labelc'
-        // }
-
-        // - TDB
-        // fb.fields.members.settings.lastName.hint = 'New hint'
-        // fb.fields.chil.hint = 'somebody'
+        // console.log(fb.modal.closeModal());
       }
     },
     chil: {
@@ -43,6 +36,8 @@ export const formConfig = {
       console.log(values);
     }
   },
+
+  modal: true,
 
 
   title: 'Dev title'
