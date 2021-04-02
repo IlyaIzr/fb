@@ -2,13 +2,18 @@
   <div class="q-gutter-md">
     <label for="">{{ rest.label }}</label>
 
-    <RowMapper :rows="rows" :settings="{}" :multiKey="rest.key" />
+    <RowMapper
+      :rows="rows"
+      :settings="{}"
+      :multiKey="rest.key"
+      :key="computeRawsTrigger"
+    />
   </div>
 </template>
 
 <script>
 import { fbGlobal } from "src/arguments";
-import { fieldsToRows } from "src/components/toRows";
+import { fieldsToRows, reactiveFieldWrap } from "src/components/toRows";
 export default {
   name: "Multiple",
   props: {
@@ -26,26 +31,19 @@ export default {
     return {
       computeRawsTrigger: 1,
       rows: [],
+      stringUpdates: 1,
     };
   },
-  computed: {
-    defaultRows() {
-      let res = [];
-      res = fieldsToRows(
+  computed: {},
+  methods: {
+    computeRowsEffect() {
+      const rows = fieldsToRows(
         this.rest.settings,
         fbGlobal.values?.[this.keyName],
         this.keyName,
         this.rest.value
       );
-      return res;
-    },
-  },
-  methods: {
-    rowsComputed() {
-      // console.log("rowsComputed", { ...this.rest.settings });
-      const res = this.defaultRows;
-
-      return res;
+      this.rows = rows;
     },
   },
 
@@ -55,7 +53,27 @@ export default {
     if (!field.watcher) field.watcher = 1;
     // console.log({ ...field });
 
-    this.rows = this.rowsComputed();
+    // Wrap settings with reactivity
+    const self = this;
+    const redrawWrap = {
+      set: function (field, prop, value) {
+        // console.log('changes simp setting');]
+        self.stringUpdates = {field, prop, value};
+        // console.log(field.key, 'change');
+        field[prop] = value;
+
+        return true;
+      },
+    };
+    const s = fbGlobal.fields[this.keyName].settings;
+    Object.keys(s).forEach((key) => {
+      fbGlobal.fields[this.keyName].settings[key] = new Proxy(
+        s[key],
+        redrawWrap
+      );
+    });
+
+    this.computeRowsEffect();
 
     // VALIDATION STUFF
     // Validate props for this specific input. Example: define select value
@@ -73,6 +91,25 @@ export default {
     //     }
     //     field[key] = assignment;
     //   });
+  },
+  watch: {
+    // They fire only after component is mounted
+    "rest.settings": {
+      handler() {
+        this.computeRowsEffect();
+        this.computeRawsTrigger += 1;
+      },
+      deep: true,
+    },
+    stringUpdates({field, prop, value}) {
+      const mult = fbGlobal.fields[this.keyName];
+      if (mult.fields.length) mult.fields.forEach((r) => {
+        r[field.key][prop] = value
+      });
+    },
+    // trigger() {
+    //   console.log("trigger happend");
+    // },
   },
 };
 </script>

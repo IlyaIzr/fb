@@ -4,17 +4,19 @@ export const formConfig = {
       label: 'Ваше имя',
       value: 'Anton',
       onFocus(fb) {
-        fb.fields.members.fields[0].firstName.hint = 'Check checko'
          
         // fb.fields.members.settings.lastName = {  // redifene inside multiple
-        //   label: 'New labelc'
+        //   hint: 'New labelc'
         // }
+
+        // - TDB
+        // fb.fields.members.settings.lastName.hint = 'New hint'
         // fb.fields.chil.hint = 'somebody'
       }
     },
     chil: {
       onFocus(fb) {
-        fb.fields.name.hint = 'Bamby'
+        fb.fields.members.settings.lastName.label = 'New labelc'
       }
     },
     members: {
@@ -48,10 +50,4 @@ export const formConfig = {
 
 
 export const values = {
-  // members: {
-  //   lastName: 'Griffin',
-  //   1: {
-  //     lastName: 'Griffin-Puttersmidt'
-  //   }
-  // }
 }

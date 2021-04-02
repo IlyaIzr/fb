@@ -1,6 +1,16 @@
 // Adds default required values
 // Then adds first-priority values from fb() values argument
 
+const reactiveFieldWrap = {
+  set: function (targetObj, prop, value) {
+    targetObj.watcher += 1;
+    // console.log(targetObj.key, 'change');
+    targetObj[prop] = value;
+
+    return true;
+  },
+}
+
 export const fieldsToRows = (fields, values, multiKey = false, multiValues = false) => {
   if (!Object.entries(fields).length) return []
   const fieldsCollector = {}
@@ -40,6 +50,9 @@ export const fieldsToRows = (fields, values, multiKey = false, multiValues = fal
     //   }
     // }
 
+    // Todo?
+    // if (!field.watcher) field.watcher = 1
+    // field = new Proxy(field, reactiveFieldWrap)
 
     if (field.row === undefined) {
       unorderedRows.push([field]);  // [field] means every new field gets new entire row

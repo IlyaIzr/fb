@@ -45,6 +45,15 @@ export default {
     });
     // console.log({ ...fbGlobal.fields[this.multiKey].fields });
   },
+  
+  // watch: {
+  //   "rows": {
+  //     handler(s) {
+  //       console.log("rows update", s);
+  //     },
+  //     deep: true,
+  //   },
+  // },
 };
 </script>
 
