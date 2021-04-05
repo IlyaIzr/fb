@@ -6,6 +6,11 @@
         :keyName="fieldInfo.key"
         :rest="rest"
       />
+      <Select
+        v-if="inputType === 'select'"
+        :keyName="fieldInfo.key"
+        :rest="rest"
+      />
       <Multiple
         v-else-if="inputType === 'multiple'"
         :keyName="fieldInfo.key"
@@ -18,6 +23,7 @@
 <script>
 import SimpleInput from "./inputs/SuperSimp";
 import Multiple from "./inputs/MSimp";
+import Select from "./inputs/Select";
 import { fbGlobal } from "src/arguments";
 
 export default {
@@ -44,6 +50,7 @@ export default {
   components: {
     SimpleInput,
     Multiple,
+    Select,
   },
   computed: {
     inputType() {
@@ -64,6 +71,10 @@ export default {
         return "simple";
       }
       switch (type) {
+        case "select":
+          return type;
+      }
+      switch (type) {
         case "multiple":
           return type;
       }
@@ -76,7 +87,6 @@ export default {
 
       const i = this.fieldInfo;
       if (i.multiKey) {
-        
         const field = fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key];
 
         if (field.watcher) {

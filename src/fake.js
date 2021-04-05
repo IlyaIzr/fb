@@ -12,22 +12,11 @@ export const formConfig = {
         fb.fields.members.settings.lastName.label = 'New labelc'
       }
     },
-    members: {
-      type: 'multiple',
-      row: 1,
-      label: "Membas",
-      value: [
-        { firstName: 'Peter', lastName: 'Bonnington' },
-        { firstName: 'Lois', lastName: 'Puttershmidt' }
-      ],
-      settings: {
-        firstName: {
-          label: 'firstName',
-        },
-        lastName: {
-          label: 'lastName'
-        },
-      }
+    select: {
+      type: 'select',
+      options: [{ name: 'Alpha', id: '114aZ' }, { name: 'Beta', id: '2aaaZ' },],
+      // options: [{ label: 'Alpha', value: '114aZ' }, { label: 'Beta', value: '2aaaZ' },],
+      // options: ['pepe', 'bebe']
 
     }
   },
