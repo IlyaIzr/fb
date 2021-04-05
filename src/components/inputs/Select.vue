@@ -2,8 +2,8 @@
   <div class="q-gutter-md">
     <q-select
       v-bind="rest"
-      :options="localOptions"
       :value="localValue"
+      :options="localOptions"
       @input="onInput"
       @focus="onFocus"
     >
@@ -40,10 +40,20 @@ export default {
   data() {
     return {
       localValue: this.parseValue(this.rest.value),
-      localOptions: this.parseOptions(this.rest.options),
+      // localOptions: this.parseOptions(this.rest.options),
     };
   },
   computed: {
+    // localValue() {
+    //   let res = "";
+    //   res = this.parseValue(this.rest.value)
+    //   return res;
+    // },
+    localOptions() {
+      let res = "";
+      res = this.parseOptions(this.rest.options);
+      return res;
+    },
   },
   methods: {
     parseValue(val) {
@@ -91,7 +101,14 @@ export default {
       }
     },
   },
-  watch: {},
+  watch: {
+    rest: {
+      handler(o) {
+        this.localValue = this.parseValue(o.value);
+      },
+      deep: true,
+    },
+  },
 };
 </script>
 

@@ -4,7 +4,8 @@ export const formConfig = {
       label: 'Ваше имя',
       value: 'Anton',
       onFocus(fb) {
-        // console.log(fb.modal.closeModal());
+        fb.fields.select.value = '2aaaZ'
+        fb.fields.select.options = [...fb.fields.select.options, { name: 'New ops', id: 'sass' }]
       }
     },
     chil: {
