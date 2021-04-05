@@ -3,7 +3,10 @@ export const formConfig = {
 
   fields: {
     name: {
-      label: 'Ваше имя'
+      label: 'Click me',
+      onFocus(fb) {
+        // Example of reactivity usage
+      }
     },
     nick: {
       label: 'Ваш никнейм',
