@@ -1,8 +1,8 @@
 <template>
   <div class="q-gutter-md">
     <q-select
-      :options="parsedOptions"
       v-bind="rest"
+      :options="localOptions"
       :value="localValue"
       @input="onInput"
       @focus="onFocus"
@@ -40,33 +40,16 @@ export default {
   data() {
     return {
       localValue: this.parseValue(this.rest.value),
+      localOptions: this.parseOptions(this.rest.options),
     };
   },
   computed: {
-    parsedOptions() {
-      let res = "";
-      const o = this.rest.options;
-      if (!o?.length) return res;
-      // Case options are label-value pair
-      if (o[0].value) res = o;
-      // Case options are array of strings
-      else if (typeof o[0] === "string") res = o;
-      // Case options are name-id pair
-      else {
-        res = [];
-        o.forEach((option) => {
-          res.push({ label: option.name, value: option.id });
-        });
-      }
-      return res;
-      // p.s. all that shit code made thanks to vetur bugs, so it wouldn't redline whole project for no good reason at all
-    },
   },
   methods: {
     parseValue(val) {
       // So far it runs only on init
       let res = "";
-      const o = this.rest.options;
+      const o = this.parseOptions(this.rest.options);
       // validate
       if (val === undefined) return res;
       if (!o?.length || !o?.[0]) return res;
@@ -74,6 +57,19 @@ export default {
       if (typeof o?.[0] === "string") res = o.find((strVal) => val === strVal);
       else res = o.find((ops) => ops.id === val || ops.value === val);
       return res ?? "";
+    },
+    parseOptions(ops) {
+      if (!ops?.length) return [];
+      // Case options are label-value pair
+      if (ops[0].value) return ops;
+      // Case options are array of strings
+      if (typeof ops[0] === "string") return ops;
+      // Case options are name-id pair
+      const res = [];
+      ops.forEach((option) => {
+        res.push({ label: option.name, value: option.id });
+      });
+      return res;
     },
     onInput(val) {
       const simpleValue = simpleVal(val);
