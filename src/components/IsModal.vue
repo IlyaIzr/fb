@@ -37,10 +37,8 @@ export default {
       required: false,
     },
   },
-  mounted() {
-    // if (this.isModal) vNodeStore.closeModal = () => (this.isOpen = false);
-  },
   beforeMount() {
+    if (!fbGlobal.modal) return;
     // fbGlobal
     if (typeof fbGlobal.modal !== "object") fbGlobal.modal = {};
     fbGlobal.modal.component = this;

@@ -37,7 +37,6 @@ export const formConfig = {
     }
   },
 
-  modal: true,
 
 
   title: 'Dev title'

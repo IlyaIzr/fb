@@ -45,7 +45,7 @@
       :class="common + buttons.submit.class"
       v-bind="buttons.submit"
     />
-    <!-- Close momdal -->
+    <!-- Close modal -->
     <q-btn
       v-if="buttons.close"
       type="button"
@@ -105,11 +105,11 @@ export default {
     },
     canSubmit() {
       let res = true;
-      if (!this.tabLength) return res;      
+      if (!this.tabLength) return res;
       if (this.step + 1 === this.tabLength) return res;
-      const s = this.validated.find(e => e === false)
-      if (s === undefined) return res
-      else return false
+      const s = this.validated.find((e) => e === false);
+      if (s === undefined) return res;
+      else return false;
     },
   },
   beforeMount() {
