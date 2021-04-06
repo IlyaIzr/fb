@@ -79,26 +79,46 @@ export default {
       });
       return res;
     },
-    onInput(val) {
+    async onInput(val) {
       const simpleValue = simpleVal(val);
 
       let cb;
       if (this.rest?.onInput) {
-        cb = this.rest.onInput(fbGlobal, this, val);
+        cb = await this.rest.onInput(fbGlobal, this, val);
       }
       // Assign global value as simple string or array of them. Assign local value to whatever it gives us
       this.rest.value = simpleValue;
       this.localValue = val;
 
-      if (typeof cb === "function") cb(fbGlobal, this, val);
+      if (typeof cb === "function") await cb(fbGlobal, this, val);
     },
-    onFocus(e) {
+    async onFocus(e) {
       if (this.rest?.onFocus) {
-        const cb = this.rest.onFocus(fbGlobal);
-        if (typeof cb === "function") cb(fbGlobal, this, e);
+        const cb = await this.rest.onFocus(fbGlobal);
+        if (typeof cb === "function") await cb(fbGlobal, this, e);
       }
     },
-    shorthenOptions(val) {},
+    async shorthenOptions(val) {
+      const needle = val.toLocaleLowerCase?.();
+      let newOptions = this.localOptions;
+      if (val)
+        newOptions = this.localOptions.filter((v) => {
+          if (v.label?.toLocaleLowerCase?.().indexOf(needle) > -1) {
+            return v;
+          }
+        });
+
+      let cb;
+      if (this.rest?.onInput) {
+        cb = await this.rest.onInput(fbGlobal, this, val);
+      }
+      this.localOptions = newOptions;
+      this.$emit("optionInput", val);
+      this.$nextTick(function () {
+        this.$refs.input?.resetValidation?.();
+      });
+      if (typeof cb === "function") await cb(fbGlobal, this, val);
+    },
   },
 
   beforeMount() {
