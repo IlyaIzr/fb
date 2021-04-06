@@ -90,8 +90,11 @@ export default {
       if (!ops?.length) return [];
       // Case options are label-value pair
       if (ops[0].value) return ops;
-      // Case options are array of strings // TODO change strings to copied label-value pair. Unify return
-      if (typeof ops[0] === "string") return ops;
+      // Case options are array of strings
+      if (typeof ops[0] === "string")
+        return ops.map((o) => {
+          return { label: o, value: o };
+        });
       // Case options are name-id pair
       const res = [];
       ops.forEach((option) => {

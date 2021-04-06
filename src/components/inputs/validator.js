@@ -3,11 +3,17 @@ import { fbGlobal } from "src/arguments"
 function stringer(val, field) {
   if (!val) return ""
   if (typeof val === 'function') return val(fbGlobal, field)
+  if (typeof val === 'string') return val
   return String(val)
 }
 function booleaner(val, field) {
-  if (typeof value === 'function') val = val(fbGlobal, field)
+  if (typeof val === 'function') val = val(fbGlobal, field)
   return Boolean(val)
+}
+function arrayer(val, field) {
+  if (typeof val === 'function') val = val(fbGlobal, field)
+  if (Array.isArray(val)) return val
+  return Array(val)
 }
 
 const commonProps = {
@@ -23,10 +29,14 @@ export const validator = {
   },
   select: {
     ...commonProps,
+    value(val, f) {
+      if (f.multiple) return arrayer(val, f)
+      return stringer(val, f)
+    },
     writable(val, f) { booleaner(val, f) },
     "use-input"(val, f) { booleaner(val, f) },
     multiple(val, f) { booleaner(val, f) },
-    
+
   }
 
 }

@@ -22,6 +22,14 @@ export const formConfig = {
       // Value though is expected to be string or array of strings for multiple options
       value: "114aZ"
 
+    },
+
+    multipleSelect: {
+      type: 'select',
+      options: ['pepe', 'bebe'],
+      // value must be an array
+      value: [],
+      multiple: true
     }
   },
 
