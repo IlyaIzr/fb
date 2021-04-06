@@ -4,7 +4,7 @@ export const formConfig = {
       label: 'Ваше имя',
       value: 'Anton',
       onFocus(fb) {
-        fb.fields.select.value = '2aaaZ'
+        // fb.fields.select.value = '2aaaZ'
         fb.fields.select.options = [...fb.fields.select.options, { name: 'New ops', id: 'sass' }]
       }
     },

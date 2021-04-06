@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       localValue: this.parseValue(this.rest.value),
-      // localOptions: this.parseOptions(this.rest.options),
+      localOptions: this.parseOptions(this.rest.options),
     };
   },
   computed: {
@@ -52,11 +52,6 @@ export default {
     //   res = this.parseValue(this.rest.value)
     //   return res;
     // },
-    localOptions() {
-      let res = "";
-      res = this.parseOptions(this.rest.options);
-      return res;
-    },
   },
   methods: {
     parseValue(val) {
@@ -138,7 +133,8 @@ export default {
     rest: {
       handler(o) {
         this.localValue = this.parseValue(o.value);
-        console.log("ima field handler", o);
+        this.localOptions = this.parseOptions(o.options);
+        // console.log("ima field handler", o);
       },
       deep: true,
     },
