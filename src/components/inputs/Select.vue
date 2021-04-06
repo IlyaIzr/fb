@@ -44,6 +44,7 @@ export default {
     return {
       localValue: this.parseValue(this.rest.value),
       localOptions: this.parseOptions(this.rest.options),
+      initOptions: this.parseOptions(this.rest.options),
     };
   },
   computed: {
@@ -100,14 +101,13 @@ export default {
     },
     async shorthenOptions(val) {
       const needle = val.toLocaleLowerCase?.();
-      let newOptions = this.localOptions;
+      let newOptions = this.initOptions;
       if (val)
-        newOptions = this.localOptions.filter((v) => {
+        newOptions = this.initOptions.filter((v) => {
           if (v.label?.toLocaleLowerCase?.().indexOf(needle) > -1) {
             return v;
           }
         });
-
       let cb;
       if (this.rest?.onInput) {
         cb = await this.rest.onInput(fbGlobal, this, val);
@@ -153,7 +153,9 @@ export default {
     rest: {
       handler(o) {
         this.localValue = this.parseValue(o.value);
-        this.localOptions = this.parseOptions(o.options);
+        const ops = this.parseOptions(o.options);
+        this.localOptions = ops;
+        this.initOptions = ops;
         // console.log("ima field handler", o);
       },
       deep: true,
