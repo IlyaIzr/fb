@@ -25,6 +25,8 @@ export const validator = {
     ...commonProps,
     writable(val, f) { booleaner(val, f) },
     "use-input"(val, f) { booleaner(val, f) },
+    multiple(val, f) { booleaner(val, f) },
+    
   }
 
 }

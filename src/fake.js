@@ -17,7 +17,9 @@ export const formConfig = {
       options: [{ name: 'Alpha', id: '114aZ' }, { name: 'Beta', id: '2aaaZ' },],
       // options: [{ label: 'Alpha', value: '114aZ' }, { label: 'Beta', value: '2aaaZ' },],
       // options: ['pepe', 'bebe'],
-      value: "114aZ"
+      // value: "114aZ"
+      value: ['114aZ'],
+      multiple: true
 
     }
   },

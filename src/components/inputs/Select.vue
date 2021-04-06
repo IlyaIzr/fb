@@ -22,7 +22,13 @@
 <script>
 import { shouldEval } from "./extra";
 import { validator } from "./validator";
-function simpleVal(val) {
+function simpleVal(val, isM = false) {
+  // case multiple
+  if ((isM && !val) || !val[0]) return [];
+  if (isM && typeof val[0] === "string") return val;
+  if (isM && val[0].id) return val.map((obj) => obj.id);
+  if (isM && val[0].value) return val.map((obj) => obj.value);
+  // case single val
   if (!val) return "";
   if (typeof val === "string") return val;
   if (val.id) return val.id;
@@ -57,8 +63,21 @@ export default {
   methods: {
     parseValue(val) {
       // So far it runs only on init
-      let res = "";
+
       const o = this.parseOptions(this.rest.options);
+      // Case multiple
+      if (this.rest.multiple) {
+        if (!val || !val[0]) return [];
+        if (typeof val[0] === "string") {
+          return o.filter((op) => val.includes(op.value));
+        }
+        const simpArray = simpleVal(val, true);
+
+        if (val[0].value) return o.filter((op) => simpArray(op.value));
+        if (val[0].id) return o.filter((op) => simpArray(op.value));
+      }
+      // Case single val
+      let res = "";
       // validate
       if (val === undefined) return res;
       if (!o?.length || !o?.[0]) return res;
@@ -71,7 +90,7 @@ export default {
       if (!ops?.length) return [];
       // Case options are label-value pair
       if (ops[0].value) return ops;
-      // Case options are array of strings
+      // Case options are array of strings // TODO change strings to copied label-value pair. Unify return
       if (typeof ops[0] === "string") return ops;
       // Case options are name-id pair
       const res = [];
@@ -81,15 +100,22 @@ export default {
       return res;
     },
     async onInput(val) {
-      const simpleValue = simpleVal(val);
+      const isM = Boolean(this.rest.multiple);
+      const simpleValue = simpleVal(val, isM);
 
       let cb;
       if (this.rest?.onInput) {
         cb = await this.rest.onInput(fbGlobal, this, val);
       }
+
       // Assign global value as simple string or array of them. Assign local value to whatever it gives us
-      this.rest.value = simpleValue;
-      this.localValue = val;
+      if (isM) {
+        this.rest.value = [...simpleValue];
+        this.localValue = [...val];
+      } else {
+        this.rest.value = simpleValue;
+        this.localValue = val;
+      }
 
       if (typeof cb === "function") await cb(fbGlobal, this, val);
     },
