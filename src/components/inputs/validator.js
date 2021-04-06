@@ -17,15 +17,15 @@ function arrayer(val, field) {
 }
 
 const commonProps = {
-  label(val, f) { stringer(val, f) },
-  hint(val, f) { stringer(val, f) }
+  label(val, f) { return stringer(val, f) },
+  hint(val, f) { return stringer(val, f) }
 
 }
 
 export const validator = {
   text: {
     ...commonProps,
-    value(val, f) { stringer(val, f) },
+    value(val, f) { return stringer(val, f) },
   },
   select: {
     ...commonProps,
@@ -33,9 +33,9 @@ export const validator = {
       if (f.multiple) return arrayer(val, f)
       return stringer(val, f)
     },
-    writable(val, f) { booleaner(val, f) },
-    "use-input"(val, f) { booleaner(val, f) },
-    multiple(val, f) { booleaner(val, f) },
+    writable(val, f) { return booleaner(val, f) },
+    "use-input"(val, f) { return booleaner(val, f) },
+    multiple(val, f) { return booleaner(val, f) },
 
   }
 

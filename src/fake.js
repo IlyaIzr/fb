@@ -19,7 +19,7 @@ export const formConfig = {
       // options: ['pepe', 'bebe'],
       // value: "114aZ"
       // value: ['pepe'],
-      multiple: true
+      multiple: 'a'
 
     }
   },
