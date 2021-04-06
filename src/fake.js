@@ -10,7 +10,6 @@ export const formConfig = {
     },
     chil: {
       onFocus(fb) {
-        fb.fields.members.settings.lastName.label = 'New labelc'
       }
     },
     select: {

@@ -5,6 +5,7 @@
       :value="localValue"
       :options="localOptions"
       @input="onInput"
+      @input-value="shorthenOptions"
       @focus="onFocus"
     >
       <template v-slot:no-option>
@@ -19,6 +20,8 @@
 </template>
 
 <script>
+import { shouldEval } from "./extra";
+import { validator } from "./validator";
 function simpleVal(val) {
   if (!val) return "";
   if (typeof val === "string") return val;
@@ -100,11 +103,42 @@ export default {
         if (typeof cb === "function") cb(fbGlobal, this, e);
       }
     },
+    shorthenOptions(val) {},
+  },
+
+  beforeMount() {
+    const field = this.rest;
+
+    // Writable handling
+    field["use-input"] = (function () {
+      if (field.writable || field["use-input"]) return true;
+      if (field.writable === undefined && field.multiple === undefined)
+        return true;
+      return field["use-input"] || field.writable;
+    })();
+
+    // Validate props from config
+    Object.entries(field).forEach(([key, val]) => {
+      let assignment;
+
+      // Execute function values
+      if (shouldEval(key, val)) {
+        assignment = val(fbGlobal, this, field);
+      } else assignment = val;
+
+      // Assignment validation
+
+      const validated = validator[field.type]?.[key]?.(val, field);
+      if (validated !== undefined) assignment = validated;
+
+      field[key] = assignment;
+    });
   },
   watch: {
     rest: {
       handler(o) {
         this.localValue = this.parseValue(o.value);
+        console.log("ima field handler", o);
       },
       deep: true,
     },

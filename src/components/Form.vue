@@ -74,6 +74,7 @@ import Buttons from "./Buttons";
 import Stepper from "./Stepper";
 import { fieldsToRows, sortByTabs } from "./toRows";
 import { fbGlobal, initConfig } from "src/arguments";
+import { validator } from "./inputs/validator";
 export default {
   name: "Form",
   components: {
@@ -240,12 +241,17 @@ export default {
 
     fbGlobal.fields = {};
     const reactiveHandler = {
-      set: function (targetObj, prop, value) {
+      set: function (field, prop, value) {
+        let validated;
+        if (field.type)
+          validated = validator[field.type]?.[prop]?.(value, field);
+        if (validated !== undefined) value = validated;
+
         // This lets vue watch objects even on new properties addition
-        if (!targetObj.watcher) targetObj.watcher = 1;
-        else targetObj.watcher += 1;
+        if (!field.watcher) field.watcher = 1;
+        else field.watcher += 1;
         // default assignment
-        targetObj[prop] = value;
+        field[prop] = value;
         // Indicate success
         return true;
       },
