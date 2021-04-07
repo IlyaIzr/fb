@@ -61,7 +61,7 @@
       :buttons="settings.buttons"
       :modal="settings.modal"
       v-if="!settings.tabs"
-      @submit="onSubmit"
+      @submit="trySubmit"
       @reset="onReset"
       @clear="onClear"
     />
@@ -102,6 +102,10 @@ export default {
   },
   computed: {},
   methods: {
+    async trySubmit() {
+      const res = await this.$refs.form.validate();
+      if (res) await this.onSubmit();
+    },
     // Event Handlers
     async onSubmit(e) {
       const values = {};
@@ -242,7 +246,6 @@ export default {
     fbGlobal.fields = {};
     const reactiveHandler = {
       set: function (field, prop, value) {
-        
         let validated =
           field.type && validator[field.type]?.[prop]?.(value, field);
         if (validated !== undefined) value = validated;

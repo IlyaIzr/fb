@@ -6,13 +6,12 @@ export const formConfig = {
       onFocus(fb) {
         // fb.fields.multiple.settings.firstName.label = true
         // fb.fields.multiple.fields[0].firstName.label = true
-      }
+      },
     },
     chil: {
       onFocus(fb) {
       },
       row: '1s',
-      value: true
     },
   },
   methods: {
