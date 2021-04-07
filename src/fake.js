@@ -4,8 +4,8 @@ export const formConfig = {
       label: 'Ваше имя',
       value: 'Anton',
       onFocus(fb) {
-        // fb.fields.select.value = '2aaaZ'
-        fb.fields.select.options = [...fb.fields.select.options, { name: 'New ops', id: 'sass' }]
+        // fb.fields.multiple.settings.firstName.label = true
+        fb.fields.multiple.fields[0].firstName.label = true
       }
     },
     chil: {
@@ -19,9 +19,28 @@ export const formConfig = {
       // options: ['pepe', 'bebe'],
       // value: "114aZ"
       // value: ['pepe'],
-      multiple: 'a'
+      multiple: 'a',
+      writable: 'a'
 
-    }
+    },
+    multiple: {
+      type: 'multiple',
+      label: true,
+      value: [
+        { firstName: 'Peter', lastName: '' },
+        { firstName: 'Lois', lastName: 'Puttershmidt' }
+      ],
+      settings: {
+        firstName: {
+          label: 'First name',
+        },
+        lastName: {
+          label: 'Last name'
+        },
+      },
+  
+      row: 1
+    },
   },
   methods: {
     onSubmit(formGlobal, component, values) {

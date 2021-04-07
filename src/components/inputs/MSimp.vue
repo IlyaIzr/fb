@@ -14,6 +14,7 @@
 <script>
 import { fbGlobal } from "src/arguments";
 import { fieldsToRows, reactiveFieldWrap } from "src/components/toRows";
+import { validator } from './validator';
 export default {
   name: "Multiple",
   props: {
@@ -57,8 +58,13 @@ export default {
     const self = this;
     const redrawWrap = {
       set: function (field, prop, value) {
+
+        let validated =
+          field.type && validator[field.type]?.[prop]?.(value, field);
+        if (validated !== undefined) value = validated;
+        
         // console.log('changes simp setting');]
-        self.stringUpdates = {field, prop, value};
+        self.stringUpdates = { field, prop, value };
         // console.log(field.key, 'change');
         field[prop] = value;
 
@@ -101,11 +107,12 @@ export default {
       },
       deep: true,
     },
-    stringUpdates({field, prop, value}) {
+    stringUpdates({ field, prop, value }) {
       const mult = fbGlobal.fields[this.keyName];
-      if (mult.fields.length) mult.fields.forEach((r) => {
-        r[field.key][prop] = value
-      });
+      if (mult.fields.length)
+        mult.fields.forEach((r) => {
+          r[field.key][prop] = value;
+        });
     },
     // trigger() {
     //   console.log("trigger happend");

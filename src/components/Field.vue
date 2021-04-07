@@ -25,6 +25,7 @@ import SimpleInput from "./inputs/SuperSimp";
 import Multiple from "./inputs/MSimp";
 import Select from "./inputs/Select";
 import { fbGlobal } from "src/arguments";
+import { validator } from "./inputs/validator";
 
 export default {
   name: "FieldSorter",
@@ -86,6 +87,7 @@ export default {
       if (!this.trigger) return null;
 
       const i = this.fieldInfo;
+      // Case multifield children
       if (i.multiKey) {
         const field = fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key];
 
@@ -96,13 +98,17 @@ export default {
 
         // Case first time assignment of reactive wrap
         const reactiveFieldWrap = {
-          set: function (targetObj, prop, value) {
+          set: function (field, prop, value) {
             // Make changes and additions observable
-            targetObj.watcher += 1;
+            field.watcher += 1;
             // And reactive
             self.trigger += 1;
 
-            targetObj[prop] = value;
+            let validated =
+              field.type && validator[field.type]?.[prop]?.(value, field);
+            if (validated !== undefined) value = validated;
+
+            field[prop] = value;
 
             return true;
           },
