@@ -1,6 +1,8 @@
 // Adds default required values
 // Then adds first-priority values from fb() values argument
 
+import { validator } from "./inputs/validator";
+
 const reactiveFieldWrap = {
   set: function (targetObj, prop, value) {
     targetObj.watcher += 1;
@@ -53,6 +55,12 @@ export const fieldsToRows = (fields, values, multiKey = false, multiValues = fal
     // Todo?
     // if (!field.watcher) field.watcher = 1
     // field = new Proxy(field, reactiveFieldWrap)
+
+    // Validate initial entries
+    Object.entries(field).forEach(([prop, value]) => {
+      let validated = validator[field.type]?.[prop]?.(value, field);
+      if (validated !== undefined) field[prop] = validated;
+    })
 
     if (field.row === undefined) {
       unorderedRows.push([field]);  // [field] means every new field gets new entire row
