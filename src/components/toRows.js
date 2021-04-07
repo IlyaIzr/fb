@@ -1,7 +1,7 @@
 // Adds default required values
 // Then adds first-priority values from fb() values argument
 
-import { validator } from "./inputs/validator";
+import { defaultProps, validator } from "./inputs/validator";
 
 const reactiveFieldWrap = {
   set: function (targetObj, prop, value) {
@@ -23,23 +23,18 @@ export const fieldsToRows = (fields, values, multiKey = false, multiValues = fal
   for (let [key, field] of Object.entries(fields)) {
     // field = { ...field }   // removes Proxy wrap, but also a connection to fbGlobal
 
-    field.value = (function () {
-      // No check for multiples - have to know their indexes first
-      if (multiKey) return (field.value || "")
-      if (field.type === 'multiple') return (field.value || [])
-      if (key in values) return values[key]
-      if (field.value === undefined) return ""
-      return field.value
-    }())
+    if (multiKey) field.multiKey = multiKey
 
-    //Assign default field type as 'text'
-    if (!field.type) field.type = "text";
+    // Assign required and default values
+    defaultProps(field)
+
+    if (key in values) field.value = values[key]
+
 
     // correct getters '_key' value
     field.key = String(key).replace("_", "")
     fieldsCollector[field.key] = []
 
-    if (multiKey) field.multiKey = multiKey
 
     // Assign default rest values
     // Should be last one to have highest priority
@@ -55,6 +50,7 @@ export const fieldsToRows = (fields, values, multiKey = false, multiValues = fal
     // Todo?
     // if (!field.watcher) field.watcher = 1
     // field = new Proxy(field, reactiveFieldWrap)
+
 
     // Validate initial entries
     Object.entries(field).forEach(([prop, value]) => {

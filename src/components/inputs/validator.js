@@ -43,7 +43,10 @@ export const validator = {
       let number = numberer(val, f)
       if (number < 1) number = 1
       return number
-    }
+    },
+    required(val, f) { return booleaner(val, f) },
+    clearable(val, f) { return booleaner(val, f) },
+    rules(val, f) { return arrayer(val, f) },
   },
   select: {
     ...commonProps,
@@ -55,15 +58,26 @@ export const validator = {
     "use-input"(val, f) { return booleaner(val, f) },
     multiple(val, f) { return booleaner(val, f) },
 
+  },
+  multiple: {
+    ...commonProps,
+    value(val, f) { return arrayer(val, f) },
+
   }
 
 }
 
 // TBC
-export function defPropsAssignment(field) {
-  if (field.clearable === undefined) field.clearable = true
+export function defaultProps(field) {
+  // Required props
+  field.type ??= "text";
+  field.value ??= ""
+
+  // Additional default props
+  // if (field.clearable === undefined) field.clearable = true
+  if (field.required === undefined) field.required = true
+  if (field.rules === undefined) field.rules = []
+
+
   return field
 }
-
-let a = 'a'
-console.log(stringer(a), booleaner(a), arrayer(a));

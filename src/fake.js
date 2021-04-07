@@ -11,7 +11,8 @@ export const formConfig = {
     chil: {
       onFocus(fb) {
       },
-      row: '1s'
+      row: '1s',
+      value: true
     },
   },
   methods: {
