@@ -1,11 +1,12 @@
 <template>
   <div class="q-gutter-md">
-    <q-input v-bind="rest" @focus="onFocus" @input="onInput"> </q-input>
+    <q-input v-bind="rest" @focus="onFocus" @input="onInput" :rules="rules">
+    </q-input>
   </div>
 </template>
 
 <script>
-import { shouldEval } from "./extra";
+import { checkRulesStr, shouldEval } from "./extra";
 import { fbGlobal } from "src/arguments";
 
 export default {
@@ -20,6 +21,11 @@ export default {
   data() {
     return {
       fbGlobal,
+      rules: checkRulesStr(
+        this.rest.rules,
+        this.rest.required,
+        this.rest.requiredMessage
+      ),
     };
   },
   computed: {},

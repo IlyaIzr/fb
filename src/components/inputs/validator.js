@@ -26,8 +26,11 @@ function numberer(val, field) {
 
 const commonProps = {
   label(val, f) { return stringer(val, f) },
-  hint(val, f) { return stringer(val, f) }
-
+  hint(val, f) { return stringer(val, f) },
+  requiredMessage(val, f) { return stringer(val, f) },
+  required(val, f) { return booleaner(val, f) },
+  clearable(val, f) { return booleaner(val, f) },
+  rules(val, f) { return arrayer(val, f) },
 }
 
 export const validator = {
@@ -44,9 +47,6 @@ export const validator = {
       if (number < 1) number = 1
       return number
     },
-    required(val, f) { return booleaner(val, f) },
-    clearable(val, f) { return booleaner(val, f) },
-    rules(val, f) { return arrayer(val, f) },
   },
   select: {
     ...commonProps,
@@ -76,7 +76,7 @@ export function defaultProps(field) {
   // Additional default props
   // if (field.clearable === undefined) field.clearable = true
   if (field.required === undefined) field.required = true
-  if (field.rules === undefined) field.rules = []
+  if (typeof field.rules !== 'object') field.rules = []
 
 
   return field

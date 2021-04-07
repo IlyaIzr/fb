@@ -104,23 +104,17 @@ export const methods = {
 
 
 // Exeptions: Date, Editor, File, Html, SelectInput, Slider
-export const stringRules = {
-  checkRules(rules, required) {
-    let res;
-    if (required) {
-      if (typeof rules === "object") {
-        res = [
-          (val) => Boolean(val) || this.rest.requiredMessage || "Please fill",
-          ...this.rest.rules,
-        ];
-      } else
-        res = [
-          (val) => Boolean(val) || this.rest.requiredMessage || "Please fill",
-        ];
-    } else res = this.rest.rules;
-    return res;
-  },
+export function checkRulesStr(rules, required, requiredMessage) {
+  let res = rules
+  if (required) {
+    res = [
+      (val) => Boolean(val) || requiredMessage || "Please fill",
+      ...rules,
+    ];
+  }
+  return res;
 }
+
 
 // Exeptions: Slider
 
