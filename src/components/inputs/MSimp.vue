@@ -2,11 +2,12 @@
   <div class="q-gutter-md">
     <label for="">{{ rest.label }}</label>
 
-    <RowMapper
-      :rows="rows"
+    <MultiMapper
+      :multiRows="rows"
       :settings="{}"
       :multiKey="rest.key"
       :key="computeRawsTrigger"
+      @remove="removeField"
     />
 
     <q-btn
@@ -25,6 +26,7 @@
 import { fbGlobal } from "src/arguments";
 import { fieldsToRows } from "src/components/toRows";
 import { validator } from "./validator";
+import MultiMapper from "src/components/MultiMapper";
 export default {
   name: "Multiple",
   props: {
@@ -36,7 +38,7 @@ export default {
     rest: Object,
   },
   components: {
-    RowMapper: () => import("src/components/RowMapper"),
+    MultiMapper,
   },
   data() {
     return {
@@ -62,6 +64,10 @@ export default {
       const obj = {};
       Object.keys(field.settings).forEach((key) => (obj[key] = ""));
       field.value.push(obj);
+    },
+    removeField(index) {
+      const field = fbGlobal.fields[this.keyName];
+      field.value.splice(index, 1);
     },
   },
 

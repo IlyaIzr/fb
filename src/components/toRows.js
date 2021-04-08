@@ -13,7 +13,7 @@ const reactiveFieldWrap = {
   },
 }
 
-export const fieldsToRows = (fields, values={}, multiKey = false, multiValues = false) => {
+export const fieldsToRows = (fields, values = {}, multiKey = false, multiValues = []) => {
   if (!Object.entries(fields).length) return []
   const fieldsCollector = {}
 
@@ -98,11 +98,14 @@ export const fieldsToRows = (fields, values={}, multiKey = false, multiValues = 
   // Computations for multi-children 
   if (!multiKey) return orderedFields;
 
-  if (!values && !multiValues) return orderedFields
+  // if (!values && !multiValues) return orderedFields
   // Populate multiple fields (ordered rows * length of multivalues)
+  const muliLevelPopulated = []
+  if (multiValues.length) for (let i = 0; i < multiValues.length; i++) {
+    muliLevelPopulated.push([])
+  }
 
-  const populated = []
-  if (multiValues) multiValues.forEach((valueObj, index) => {
+  multiValues.forEach((valueObj, index) => {
     orderedFields.forEach(row => {
       const fields = row.map(field => {
         field.multiIndex = index
@@ -117,11 +120,11 @@ export const fieldsToRows = (fields, values={}, multiKey = false, multiValues = 
         // Assign the field
         return { ...field } // It BREAKS without {...} I mean WTF am i missing
       })
-      populated.push([...fields])
+      muliLevelPopulated[index].push(fields)
     })
   })
 
-  return populated
+  return muliLevelPopulated
 }
 
 export function sortByTabs(fields, defaultTab) {
@@ -163,3 +166,4 @@ export function sortByTabs(fields, defaultTab) {
 
   return filtered
 }
+

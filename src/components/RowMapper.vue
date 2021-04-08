@@ -33,17 +33,6 @@ export default {
     },
   },
   beforeMount() {
-    if (!this.multiKey) return;
-    this.rows.forEach((row) => {
-      row.forEach((field) => {
-        // console.log({ ...field });
-        const multiEntry = fbGlobal.fields[this.multiKey];
-        if (!multiEntry.fields?.[field.multiIndex])
-          multiEntry.fields[field.multiIndex] = {};
-        multiEntry.fields[field.multiIndex][field.key] = field;
-      });
-    });
-    // console.log({ ...fbGlobal.fields[this.multiKey].fields });
   },
   
   // watch: {

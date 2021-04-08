@@ -19,8 +19,8 @@ export const formConfig = {
       type: 'multiple',
       label: "Multiple with simpleinputs",
       value: [
-        { firstName: 'Peter', lastName: '' },
-        { firstName: 'Lois', lastName: 'Puttershmidt' }
+        { firstName: 'Peter', lastName: '', order: 3 },
+        { firstName: 'Lois', lastName: 'Puttershmidt', order: 1 }
       ],
       settings: {
         firstName: {
