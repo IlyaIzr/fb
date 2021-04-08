@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { checkRulesStr, shouldEval } from "./extra";
+import { checkRulesStr, shouldEval } from "./common";
 import { fbGlobal } from "src/arguments";
 
 export default {

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { shouldEval } from "./extra";
+import { shouldEval } from "./common";
 import { validator } from "./validator";
 function simpleVal(val, isM = false) {
   // case multiple
