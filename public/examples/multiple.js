@@ -35,10 +35,16 @@ export const formConfig = {
       // }
 
       // Rewrite fields settings
-      // __ Rewrite whole config
-      fb.fields.simpleMultiple.settings.lastName = { 
+      // __ Rewrite whole field config
+      fb.fields.simpleMultiple.settings.lastName = {
         label: 'Family name',
         hint: 'a.k.a second name'
+      }
+      // __ Rewrite whole setting - To Be Tested
+      fb.fields.simpleMultiple.settings = {
+        firstName: {
+          label: 'New setting field',
+        }
       }
 
       // __ Update single property (without rewriting)

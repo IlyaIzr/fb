@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import { fbGlobal } from "src/arguments";
+import { fbGlobal, initConfig } from "src/arguments";
 import { fieldsToRows, reactiveFieldWrap } from "src/components/toRows";
-import { validator } from './validator';
+import { validator } from "./validator";
 export default {
   name: "Multiple",
   props: {
@@ -49,20 +49,20 @@ export default {
   },
 
   beforeMount() {
+    const self = this;
     const field = fbGlobal.fields[this.keyName];
     if (!field.fields) field.fields = [];
     if (!field.watcher) field.watcher = 1;
+
     // console.log({ ...field });
 
     // Wrap settings with reactivity
-    const self = this;
     const redrawWrap = {
       set: function (field, prop, value) {
-
         let validated =
           field.type && validator[field.type]?.[prop]?.(value, field);
         if (validated !== undefined) value = validated;
-        
+
         // console.log('changes simp setting');]
         self.stringUpdates = { field, prop, value };
         // console.log(field.key, 'change');
@@ -108,8 +108,9 @@ export default {
       deep: true,
     },
     stringUpdates({ field, prop, value }) {
+      // updates already rendered fields
       const mult = fbGlobal.fields[this.keyName];
-      if (mult.fields.length)
+      if (mult?.fields?.length)
         mult.fields.forEach((r) => {
           r[field.key][prop] = value;
         });

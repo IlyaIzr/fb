@@ -13,7 +13,7 @@ const reactiveFieldWrap = {
   },
 }
 
-export const fieldsToRows = (fields, values, multiKey = false, multiValues = false) => {
+export const fieldsToRows = (fields, values={}, multiKey = false, multiValues = false) => {
   if (!Object.entries(fields).length) return []
   const fieldsCollector = {}
 

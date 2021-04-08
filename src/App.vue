@@ -31,7 +31,8 @@ export default {
     const self = this;
     Object.entries(this.globalConfig).forEach(([key, val]) => {
       if (key === "fields") {
-        initConfig.fields = { ...val };
+        // This calculates once so it's fine
+        initConfig.fields = JSON.parse(JSON.stringify(val));
         return true;
       }
 

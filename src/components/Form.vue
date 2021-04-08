@@ -138,13 +138,13 @@ export default {
         cb = await this.methods.onReset(fbGlobal, this, values);
       }
 
-      Object.entries(fbGlobal.fields).forEach(([key, config]) => {
-        if (config.type === "multiple") {
-          return true;
-        }
+      Object.keys(fbGlobal.fields).forEach((key) => {
         key = String(key).replace("_", "");
 
         Object.keys(fbGlobal.fields[key]).forEach((prop) => {
+          // Case multiple
+          if (prop === "fields") return ;
+          // rest actions
           if (prop in initConfig.fields[key])
             fbGlobal.fields[key][prop] = initConfig.fields[key][prop];
           else delete fbGlobal.fields[key][prop];
