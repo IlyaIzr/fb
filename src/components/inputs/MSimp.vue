@@ -8,12 +8,22 @@
       :multiKey="rest.key"
       :key="computeRawsTrigger"
     />
+
+    <q-btn
+      class="q-mr-md"
+      size="sm"
+      :label="addButton.text || '+'"
+      :color="addButton.color || 'green'"
+      :text-color="addButton.textColor"
+      :disable="addButton.disabled"
+      @click="addField"
+    />
   </div>
 </template>
 
 <script>
-import { fbGlobal, initConfig } from "src/arguments";
-import { fieldsToRows, reactiveFieldWrap } from "src/components/toRows";
+import { fbGlobal } from "src/arguments";
+import { fieldsToRows } from "src/components/toRows";
 import { validator } from "./validator";
 export default {
   name: "Multiple",
@@ -33,6 +43,7 @@ export default {
       computeRawsTrigger: 1,
       rows: [],
       stringUpdates: 1,
+      addButton: fbGlobal.buttons?.multipleAdd || {},
     };
   },
   computed: {},
@@ -45,6 +56,12 @@ export default {
         this.rest.value
       );
       this.rows = rows;
+    },
+    addField() {
+      const field = fbGlobal.fields[this.keyName];
+      const obj = {};
+      Object.keys(field.settings).forEach((key) => (obj[key] = ""));
+      field.value.push(obj);
     },
   },
 
@@ -101,6 +118,13 @@ export default {
   watch: {
     // They fire only after component is mounted
     "rest.settings": {
+      handler() {
+        this.computeRowsEffect();
+        this.computeRawsTrigger += 1;
+      },
+      deep: true,
+    },
+    "rest.value": {
       handler() {
         this.computeRowsEffect();
         this.computeRawsTrigger += 1;

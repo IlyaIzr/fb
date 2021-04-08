@@ -4,9 +4,7 @@ export const formConfig = {
       label: 'Ваше имя',
       value: 'Anton',
       onFocus(fb) {
-        fb.fields.multiple.settings.firstName = {
-          label: 'New setting field'
-        }
+        fb.fields.multiple.value = [...fb.fields.multiple.value, { firstName: 'Meg', lastName: 'Screw her' }]
         // fb.fields.multiple.fields[0].firstName.label = true
       },
     },
