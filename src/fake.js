@@ -42,8 +42,8 @@ export const formConfig = {
   },
 
   buttons: {
-    reset: {
-      label: 'reset'
+    clear: {
+      label: 'clear'
     },
   },
 

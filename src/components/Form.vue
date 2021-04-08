@@ -162,6 +162,12 @@ export default {
 
       Object.entries(fbGlobal.fields).forEach(([key, config]) => {
         if (config.type === "multiple") {
+          config.fields.length &&
+            config.fields.forEach((row, multiIndex) => {
+              Object.entries(row).forEach(([fieldKey, fieldConfig]) => {
+                fieldConfig.value = "";
+              });
+            });
           return true;
         }
 
