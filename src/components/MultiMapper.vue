@@ -6,9 +6,7 @@
       v-bind:key="multiRows.indexOf(rows)"
     >
       <!-- Map regular structure -->
-      <div v-for="row in rows" v-bind:key="rows.indexOf(row)">
-        <FieldMapper :fields="row" :order="rows.indexOf(row)" />
-      </div>
+      <RowMapper :rows="rows"/>
 
       <q-btn
         v-if="multiKey"
@@ -31,7 +29,7 @@ import { fbGlobal } from "src/arguments";
 export default {
   name: "MultiMapper",
   components: {
-    FieldMapper: () => import("src/components/FieldMapper"),
+    RowMapper: () => import("src/components/RowMapper"),
   },
   props: {
     multiRows: {
