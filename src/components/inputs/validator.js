@@ -23,6 +23,11 @@ function numberer(val, field) {
   if (isNaN(val)) return 0
   return val
 }
+function inputMethods(val) {
+  if (typeof val === 'function') return val
+  return undefined
+}
+
 
 const commonProps = {
   label(val, f) { return stringer(val, f) },
@@ -31,6 +36,9 @@ const commonProps = {
   required(val, f) { return booleaner(val, f) },
   clearable(val, f) { return booleaner(val, f) },
   rules(val, f) { return arrayer(val, f) },
+  onInput(val) { return inputMethods(val) },
+  onFocus(val) { return inputMethods(val) },
+  onBlur(val) { return inputMethods(val) },
 }
 
 export const validator = {

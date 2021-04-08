@@ -165,7 +165,7 @@ export default {
     Object.entries(field).forEach(([key, val]) => {
       let assignment;
 
-      // Execute function values
+      // Execute function values // TODO should we allow it???
       if (shouldEval(key, val)) {
         assignment = val(fbGlobal, this, field);
       } else assignment = val;
