@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import SimpleInput from "./inputs/SuperSimp";
-import Multiple from "./inputs/MSimp";
+import SimpleInput from "./inputs/Simple";
+import Multiple from "./inputs/Multiple";
 import Select from "./inputs/Select";
 import { fbGlobal } from "src/arguments";
 import { validator } from "./inputs/validator";

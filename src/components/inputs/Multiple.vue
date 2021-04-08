@@ -28,7 +28,7 @@ import { fieldsToRows } from "src/components/toRows";
 import { validator } from "./validator";
 import MultiMapper from "src/components/MultiMapper";
 export default {
-  name: "Multiple",
+  name: "MultipleInput",
   props: {
     keyName: {
       type: String,
