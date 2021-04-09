@@ -15,14 +15,6 @@ export const formConfig = {
       row: '1s',
       visible: false
     },
-    slider: { 
-      type: 'slider',
-      label: 'some slider',
-      // value: 12,
-      min: -10,
-      max: 22,
-      rules: [val => val > 5 || 'bigger please']
-    }
   },
   methods: {
     onSubmit(formGlobal, component, values) {
@@ -30,11 +22,6 @@ export const formConfig = {
     }
   },
 
-  buttons: {
-    clear: {
-      label: 'clear'
-    },
-  },
 
 
   title: 'Dev title'
