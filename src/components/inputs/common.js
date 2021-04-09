@@ -27,14 +27,14 @@ export const commonMethods = {
 
 // Exeptions: Multiple
 export const strMethods = {
-  onInput(val) {
+  async onInput(val) {
     let cb;
     if (this.rest?.onInput) {
-      cb = this.rest.onInput(fbGlobal, this, val);
+      cb = await this.rest.onInput(fbGlobal, this, val);
     }
     this.rest.value = val;
 
-    if (typeof cb === "function") cb(fbGlobal, this, val);
+    if (typeof cb === "function") await cb(fbGlobal, this, val);
   },
 }
 

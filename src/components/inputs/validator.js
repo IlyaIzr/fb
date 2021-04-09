@@ -91,11 +91,19 @@ export const validator = {
     max(val, f) { return numberer(val, f) },
     step(val, f) { return numberer(val, f) },
 
+  },
+
+  date: {
+    ...commonProps,
+    value(val, f) { return stringer(val, f) },
+    
+    range(val, f) { return booleaner(val, f) },
+    withInput(val, f) { return booleaner(val, f) },    
   }
 
 }
 
-// TBC
+
 export function defaultProps(field) {
   // Required props
   field.type ??= "text";

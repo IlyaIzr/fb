@@ -1,6 +1,6 @@
 <template>
-  <div class="row fb-row">
-    <div v-for="row in rows" v-bind:key="rows.indexOf(row)">
+  <div >
+    <div v-for="row in rows" v-bind:key="rows.indexOf(row)" class="row fb-row">
       <FieldMapper :fields="row" :order="rows.indexOf(row)" />
     </div>
   </div>

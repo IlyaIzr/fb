@@ -21,6 +21,11 @@
         :keyName="fieldInfo.key"
         :rest="rest"
       />
+      <Date
+        v-if="inputType === 'date'"
+        :keyName="fieldInfo.key"
+        :rest="rest"
+      />
 
     </div>
   </div>
@@ -31,6 +36,7 @@ import SimpleInput from "./inputs/Simple";
 import Multiple from "./inputs/Multiple";
 import Select from "./inputs/Select";
 import Slider from "./inputs/Slider";
+import Date from './inputs/Date'
 import { fbGlobal } from "src/arguments";
 import { validator } from "./inputs/validator";
 
@@ -60,6 +66,7 @@ export default {
     Multiple,
     Select,
     Slider,
+    Date
   },
   computed: {
     inputType() {
@@ -89,6 +96,10 @@ export default {
       }      
       switch (type) {
         case "slider":
+          return type;
+      }
+      switch (type) {
+        case "date":
           return type;
       }
 
