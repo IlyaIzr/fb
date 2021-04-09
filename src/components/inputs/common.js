@@ -2,16 +2,16 @@ import { fbGlobal } from "src/arguments";
 
 // Exeptions: Multiple
 export const commonMethods = {
-  onFocus(e) {
+  async onFocus(e) {
     if (this.rest?.onFocus) {
-      const cb = this.rest.onFocus(fbGlobal);
-      if (typeof cb === "function") cb(fbGlobal, this, e);
+      const cb = await this.rest.onFocus(fbGlobal);
+      if (typeof cb === "function") await cb(fbGlobal, this, e);
     }
   },
-  onBlur(e) {
+  async onBlur(e) {
     if (this.rest?.onBlur) {
-      const cb = this.rest.onBlur(fbGlobal);
-      if (typeof cb === "function") cb(fbGlobal, this, e);
+      const cb = await this.rest.onBlur(fbGlobal);
+      if (typeof cb === "function") await cb(fbGlobal, this, e);
     }
   },
 
