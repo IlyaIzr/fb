@@ -4,33 +4,19 @@ export const formConfig = {
       label: 'Ваше имя',
       value: 'Anton',
       onFocus(fb) {
-        fb.fields.multiple.value = [...fb.fields.multiple.value, { firstName: 'Meg', lastName: 'Screw her' }]
+        fb.fields.chil.value = NaN
         // fb.fields.multiple.fields[0].firstName.label = true
       },
     },
     chil: {
       onFocus(fb) {
         // fb.fields.multiple.reset()
-        console.log(fb.fields.multiple.settings.firstName.label );
       },
       row: '1s',
-    },
-    multiple: {
-      type: 'multiple',
-      label: "Multiple with simpleinputs",
-      value: [
-        { firstName: 'Peter', lastName: '', order: 3 },
-        { firstName: 'Lois', lastName: 'Puttershmidt', order: 1 }
-      ],
-      settings: {
-        firstName: {
-          label: 'First name',
-        },
-        lastName: {
-          label: 'Last name'
-        },
-      },
-
+      label(fb, component, smt){
+        console.log(...arguments);
+        return 'some label'
+      }
     },
   },
   methods: {

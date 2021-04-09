@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import { shouldEval } from "./common";
-import { validator } from "./validator";
+import { commonMethods } from "./common";
+
 function simpleVal(val, isM = false) {
   // case multiple
   if ((isM && !val) || !val[0]) return [];
@@ -61,6 +61,7 @@ export default {
     // },
   },
   methods: {
+    ...commonMethods,
     parseValue(val) {
       // So far it runs only on init
 
@@ -122,12 +123,6 @@ export default {
 
       if (typeof cb === "function") await cb(fbGlobal, this, val);
     },
-    async onFocus(e) {
-      if (this.rest?.onFocus) {
-        const cb = await this.rest.onFocus(fbGlobal);
-        if (typeof cb === "function") await cb(fbGlobal, this, e);
-      }
-    },
     async shorthenOptions(val) {
       const needle = val.toLocaleLowerCase?.();
       let newOptions = this.initOptions;
@@ -160,23 +155,6 @@ export default {
         return true;
       return field["use-input"] || field.writable;
     })();
-
-    // Validate props from config
-    Object.entries(field).forEach(([key, val]) => {
-      let assignment;
-
-      // Execute function values // TODO should we allow it???
-      if (shouldEval(key, val)) {
-        assignment = val(fbGlobal, this, field);
-      } else assignment = val;
-
-      // Assignment validation
-
-      const validated = validator[field.type]?.[key]?.(val, field);
-      if (validated !== undefined) assignment = validated;
-
-      field[key] = assignment;
-    });
   },
   watch: {
     rest: {

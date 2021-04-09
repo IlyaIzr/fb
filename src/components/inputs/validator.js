@@ -2,7 +2,7 @@ import { fbGlobal } from "src/arguments"
 
 function stringer(val, field) {
   if (!val || typeof val === 'object') return ""
-  if (typeof val === 'function') return val(fbGlobal, field)
+  if (typeof val === 'function') return String(stringer(val(fbGlobal, field), field))
   if (typeof val === 'string') return val
   return String(val)
 }

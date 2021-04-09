@@ -4,37 +4,39 @@ import { fbGlobal } from "src/arguments";
 export const commonMethods = {
   onFocus(e) {
     if (this.rest?.onFocus) {
-      const cb = this.rest.onFocus(fbGlobal)
-      if (typeof cb === 'function') cb(this)
+      const cb = this.rest.onFocus(fbGlobal);
+      if (typeof cb === "function") cb(fbGlobal, this, e);
     }
   },
   onBlur(e) {
-    this.$emit("blur", e);
-  },
-  onInput(val) {
-    this.storeValue(val);
-    this.$emit("input", val);
+    if (this.rest?.onBlur) {
+      const cb = this.rest.onBlur(fbGlobal);
+      if (typeof cb === "function") cb(fbGlobal, this, e);
+    }
   },
 
   clear() {
-    this.setValue("");
-    this.$nextTick(function () {
-      this.$refs.input.resetValidation();
-    });
+    console.log('TODO TBD');
   },
 
 
   reset() {
-    this.setConfig(this.archiveRest);
-    this.setValue(this.archiveRest.value);
-    this.$nextTick(function () {
-      this.$refs.input?.resetValidation?.();
-    });
+    console.log('TODO TBD');
   },
 }
 
 // Exeptions: Multiple
-export const methods = {}
+export const strMethods = {
+  onInput(val) {
+    let cb;
+    if (this.rest?.onInput) {
+      cb = this.rest.onInput(fbGlobal, this, val);
+    }
+    this.rest.value = val;
+
+    if (typeof cb === "function") cb(fbGlobal, this, val);
+  },
+}
 
 
 // Exeptions: Date, Editor, File, Html, SelectInput, Slider

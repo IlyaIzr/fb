@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { checkRulesStr, shouldEval } from "./common";
+import { checkRulesStr, commonMethods, strMethods } from "./common";
 import { fbGlobal } from "src/arguments";
 
 export default {
@@ -30,41 +30,10 @@ export default {
   },
   computed: {},
   methods: {
-    onFocus(e) {
-      if (this.rest?.onFocus) {
-        const cb = this.rest.onFocus(fbGlobal);
-        if (typeof cb === "function") cb(fbGlobal, this, e);
-      }
-    },
-    onInput(val) {
-      let cb;
-      if (this.rest?.onInput) {
-        cb = this.rest.onInput(fbGlobal, this, val);
-      }
-      this.rest.value = val;
-
-      if (typeof cb === "function") cb(fbGlobal, this, val);
-    },
+    ...commonMethods,
+    ...strMethods
   },
-  beforeMount() {
-    const field = this.rest;
-
-    // Validate props for this specific input. Example: define select value
-    Object.entries(field).forEach(([key, val]) => {
-      let assignment;
-      if (shouldEval(key, val)) {
-        assignment = val(fbGlobal, this);
-      } else assignment = val;
-
-      // Assignment validation
-      switch (key) {
-        case "label":
-          assignment ||= String(assignment);
-          break;
-      }
-      field[key] = assignment;
-    });
-  },
+  
 
   updated() {
     // console.log({...fbGlobal.fields[this.keyName]});
