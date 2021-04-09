@@ -1,5 +1,5 @@
 <template>
-  <div class="q-gutter-md">
+  <div class="q-gutter-md" v-if="rest.visible">
     <q-input v-bind="rest" @focus="onFocus" @input="onInput" :rules="rules">
     </q-input>
   </div>

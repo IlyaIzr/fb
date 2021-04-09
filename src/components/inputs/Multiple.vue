@@ -1,5 +1,5 @@
 <template>
-  <div class="q-gutter-md">
+  <div class="q-gutter-md" v-if="rest.visible">
     <label for="">{{ rest.label }}</label>
 
     <MultiMapper

@@ -110,11 +110,13 @@ export default {
     async onSubmit(e) {
       const values = {};
       Object.entries(fbGlobal.fields).forEach(([key, config]) => {
+        if (config.service === true) return;
         if (config.type === "multiple") {
           values[config.key] = {};
           config.fields.length &&
             config.fields.forEach((row, multiIndex) => {
               Object.entries(row).forEach(([fieldKey, fieldConfig]) => {
+                if (fieldConfig.service === true) return;
                 if (!values[config.key][multiIndex])
                   values[config.key][multiIndex] = {};
 
@@ -143,7 +145,7 @@ export default {
 
         Object.keys(fbGlobal.fields[key]).forEach((prop) => {
           // Case multiple
-          if (prop === "fields") return ;
+          if (prop === "fields") return;
           // rest actions
           if (prop in initConfig.fields[key])
             fbGlobal.fields[key][prop] = initConfig.fields[key][prop];

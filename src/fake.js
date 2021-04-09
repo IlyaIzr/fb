@@ -4,7 +4,7 @@ export const formConfig = {
       label: 'Ваше имя',
       value: 'Anton',
       onFocus(fb) {
-        fb.fields.chil.value = NaN
+        fb.fields.chil.visible = false
         // fb.fields.multiple.fields[0].firstName.label = true
       },
     },
@@ -12,11 +12,9 @@ export const formConfig = {
       onFocus(fb) {
         // fb.fields.multiple.reset()
       },
+      label: 'a',
       row: '1s',
-      label(fb, component, smt){
-        console.log(...arguments);
-        return 'some label'
-      }
+      // visible: false
     },
   },
   methods: {

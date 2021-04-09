@@ -2,7 +2,7 @@ import { fbGlobal } from "src/arguments"
 
 function stringer(val, field) {
   if (!val || typeof val === 'object') return ""
-  if (typeof val === 'function') return String(stringer(val(fbGlobal, field), field))
+  if (typeof val === 'function') val = val(fbGlobal, field)
   if (typeof val === 'string') return val
   return String(val)
 }
@@ -33,9 +33,15 @@ const commonProps = {
   label(val, f) { return stringer(val, f) },
   hint(val, f) { return stringer(val, f) },
   requiredMessage(val, f) { return stringer(val, f) },
+
   required(val, f) { return booleaner(val, f) },
   clearable(val, f) { return booleaner(val, f) },
+  disable(val, f) { return booleaner(val, f) },
+  service(val, f) { return booleaner(val, f) },
+  visible(val, f) { return booleaner(val, f) },
+  
   rules(val, f) { return arrayer(val, f) },
+
   onInput(val) { return inputMethods(val) },
   onFocus(val) { return inputMethods(val) },
   onBlur(val) { return inputMethods(val) },
@@ -84,6 +90,7 @@ export function defaultProps(field) {
   // Additional default props
   // if (field.clearable === undefined) field.clearable = true
   if (field.required === undefined) field.required = true
+  if (field.visible === undefined) field.visible = true
   if (typeof field.rules !== 'object') field.rules = []
 
 
