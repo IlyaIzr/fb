@@ -16,6 +16,12 @@
         :keyName="fieldInfo.key"
         :rest="rest"
       />
+      <Slider
+        v-if="inputType === 'slider'"
+        :keyName="fieldInfo.key"
+        :rest="rest"
+      />
+
     </div>
   </div>
 </template>
@@ -24,6 +30,7 @@
 import SimpleInput from "./inputs/Simple";
 import Multiple from "./inputs/Multiple";
 import Select from "./inputs/Select";
+import Slider from "./inputs/Slider";
 import { fbGlobal } from "src/arguments";
 import { validator } from "./inputs/validator";
 
@@ -52,6 +59,7 @@ export default {
     SimpleInput,
     Multiple,
     Select,
+    Slider,
   },
   computed: {
     inputType() {
@@ -78,7 +86,12 @@ export default {
       switch (type) {
         case "multiple":
           return type;
+      }      
+      switch (type) {
+        case "slider":
+          return type;
       }
+
     },
 
     rest() {

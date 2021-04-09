@@ -12,10 +12,14 @@ export const formConfig = {
       onFocus(fb) {
         // fb.fields.multiple.reset()
       },
-      label: 'a',
       row: '1s',
-      // visible: false
+      visible: false
     },
+    slider: { 
+      type: 'slider',
+      label: 'some slider',
+      // value: 12
+    }
   },
   methods: {
     onSubmit(formGlobal, component, values) {

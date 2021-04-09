@@ -50,6 +50,16 @@ export function checkRulesStr(rules, required, requiredMessage) {
   }
   return res;
 }
+export function checkRulesNum(rules, required, requiredMessage) {
+  let res = rules
+  if (required) {
+    res = [
+      (val) => Number(val) > 0 || requiredMessage || "Please fill",
+      ...rules,
+    ];
+  }
+  return res;
+}
 
 
 export function shouldEval(key, val) {

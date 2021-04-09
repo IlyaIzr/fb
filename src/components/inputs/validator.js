@@ -19,9 +19,8 @@ function arrayer(val, field) {
 function numberer(val, field) {
   if (val === undefined) val = 0
   if (typeof val === 'function') val = val(fbGlobal, field)
-  val = Number(val)
   if (isNaN(val)) return 0
-  return val
+  return Number(val)
 }
 function inputMethods(val) {
   if (typeof val === 'function') return val
@@ -39,7 +38,7 @@ const commonProps = {
   disable(val, f) { return booleaner(val, f) },
   service(val, f) { return booleaner(val, f) },
   visible(val, f) { return booleaner(val, f) },
-  
+
   rules(val, f) { return arrayer(val, f) },
 
   onInput(val) { return inputMethods(val) },
@@ -76,6 +75,17 @@ export const validator = {
   multiple: {
     ...commonProps,
     value(val, f) { return arrayer(val, f) },
+
+  },
+  slider: {
+    ...commonProps,
+    value(val, f) { return numberer(val, f) },
+    showValue(val, f) { return booleaner(val, f) },
+    reverse(val, f) { return booleaner(val, f) },
+
+    min(val, f) { return numberer(val, f) },
+    max(val, f) { return numberer(val, f) },
+    step(val, f) { return numberer(val, f) },
 
   }
 
