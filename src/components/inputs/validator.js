@@ -60,6 +60,9 @@ export const validator = {
       if (number < 1) number = 1
       return number
     },
+
+    clearable(val, f) { return booleaner(val, f) },
+    "clear-icon"(val, f) { return stringer(val, f) || "close" },
   },
   select: {
     ...commonProps,
@@ -69,6 +72,7 @@ export const validator = {
     },
     writable(val, f) { return booleaner(val, f) },
     "use-input"(val, f) { return booleaner(val, f) },
+    "use-chips"(val, f) { return booleaner(val, f) },
     multiple(val, f) { return booleaner(val, f) },
 
   },
@@ -98,7 +102,8 @@ export function defaultProps(field) {
   field.value ??= ""
 
   // Additional default props
-  // if (field.clearable === undefined) field.clearable = true
+  if (field.clearable === undefined) field.clearable = true
+  if (field["clear-icon"] === undefined) field["clear-icon"] = "close"
   if (field.required === undefined) field.required = true
   if (field.visible === undefined) field.visible = true
   if (typeof field.rules !== 'object') field.rules = []

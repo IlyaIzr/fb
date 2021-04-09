@@ -121,6 +121,7 @@ export default {
 
       // Assign global value as simple string or array of them. Assign local value to whatever it gives us
       if (isM) {
+        if (!val) val = [];
         this.rest.value = [...simpleValue];
         this.localValue = [...val];
       } else {
