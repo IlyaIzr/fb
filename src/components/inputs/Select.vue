@@ -2,7 +2,9 @@
   <div class="q-gutter-md" v-if="rest.visible">
     <q-select
       v-bind="rest"
+      :rules="rules"
       :value="localValue"
+      :use-chips="Boolean(rest.value && rest.value.length)"
       :options="localOptions"
       @input="onInput"
       @input-value="shorthenOptions"
@@ -24,7 +26,7 @@ import { commonMethods } from "./common";
 
 function simpleVal(val, isM = false) {
   // case multiple
-  if ((isM && !val) || !val[0]) return [];
+  if ((isM && !val) || (isM && !val[0])) return [];
   if (isM && typeof val[0] === "string") return val;
   if (isM && val[0].id) return val.map((obj) => obj.id);
   if (isM && val[0].value) return val.map((obj) => obj.value);
@@ -51,6 +53,11 @@ export default {
       localValue: this.parseValue(this.rest.value),
       localOptions: this.parseOptions(this.rest.options),
       initOptions: this.parseOptions(this.rest.options),
+      rules: this.selectRules(
+        this.rest.rules,
+        this.rest.required,
+        this.rest.requiredMessage
+      ),
     };
   },
   computed: {
@@ -142,6 +149,23 @@ export default {
         this.$refs.input?.resetValidation?.();
       });
       if (typeof cb === "function") await cb(fbGlobal, this, val);
+    },
+    selectRules(rules, required, requiredMessage) {
+      let res = rules;
+      let multy = this.rest.multiple;
+      if (required && multy) {
+        return [
+          (val) => (val && val.length) || requiredMessage || "Please fill",
+          ...rules,
+        ];
+      }
+      if (required) {
+        res = [
+          (val) => Boolean(val) || requiredMessage || "Please fill",
+          ...rules,
+        ];
+      }
+      return res;
     },
   },
 
