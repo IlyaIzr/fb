@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { checkRulesStr, commonMethods, strMethods } from "./common";
+import { checkRulesBool, commonMethods, strMethods } from "./common";
 import { fbGlobal } from "src/arguments";
 
 export default {
@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       fbGlobal,
-      rules: checkRulesStr(
+      rules: checkRulesBool(
         this.rest.rules,
         this.rest.required,
         this.rest.requiredMessage

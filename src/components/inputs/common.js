@@ -40,7 +40,7 @@ export const strMethods = {
 
 
 // Exeptions: Date, Editor, File, Html, SelectInput, Slider
-export function checkRulesStr(rules, required, requiredMessage) {
+export function checkRulesBool(rules, required, requiredMessage) {
   let res = rules
   if (required) {
     res = [

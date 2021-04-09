@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { commonMethods, checkRulesNum, strMethods } from "./common";
+import { commonMethods, strMethods, checkRulesBool } from "./common";
 export default {
   name: "SliderInput",
   props: {
@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      rules: checkRulesNum(
+      rules: checkRulesBool(
         this.rest.rules,
         this.rest.required,
         this.rest.requiredMessage

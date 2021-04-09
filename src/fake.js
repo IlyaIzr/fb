@@ -18,7 +18,10 @@ export const formConfig = {
     slider: { 
       type: 'slider',
       label: 'some slider',
-      // value: 12
+      // value: 12,
+      min: -10,
+      max: 22,
+      rules: [val => val > 5 || 'bigger please']
     }
   },
   methods: {
