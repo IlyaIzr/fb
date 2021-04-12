@@ -4,8 +4,12 @@ export const formConfig = {
       type: 'multiple',
       label: "Multiple with simpleinputs",
       value: [
-        { firstName: 'Peter', lastName: '' },
-        { firstName: 'Lois', lastName: 'Puttershmidt' }
+        { firstName: 'Peter', lastName: 'Man' },
+        { firstName: 'Lois', lastName: 'Puttershmidt' },
+        
+        { firstName: 'Meg', lastName: 'Test' },
+        { firstName: 'static', lastName: 'Filler' },
+
       ],
       settings: {
         firstName: {
@@ -18,6 +22,11 @@ export const formConfig = {
   
       row: 1
     },
+    s: {
+      onFocus(fb){
+        console.log(fb.fields);
+      }
+    }
   },
   methods: {
     onSubmit(formGlobal, component, values) {

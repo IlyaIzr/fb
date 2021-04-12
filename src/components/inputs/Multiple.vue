@@ -60,22 +60,21 @@ export default {
       this.rows = rows;
     },
     addField() {
-      const field = fbGlobal.fields[this.keyName];
       const obj = {};
-      Object.keys(field.settings).forEach((key) => (obj[key] = ""));
-      console.log([...field.value]);
-      field.value.push(obj);
-      this.redrawChildren()
-      console.log([...field.value]);
+      Object.keys(this.rest.settings).forEach((key) => (obj[key] = ""));
+      this.rest.value.push(obj);
+      this.redrawChildren();
     },
     removeField(index) {
-      const field = fbGlobal.fields[this.keyName];
-      field.value.splice(index, 1);
+      const newVals = [...this.rest.value];
+      newVals.splice(index, 1);
+      this.rest.value = newVals;
+      this.redrawChildren();
     },
-    redrawChildren(){
+    redrawChildren() {
       this.computeRowsEffect();
       this.computeRawsTrigger += 1;
-    }
+    },
   },
 
   beforeMount() {
@@ -148,10 +147,8 @@ export default {
     stringUpdates({ field, prop, value }) {
       // updates already rendered fields
       const mult = fbGlobal.fields[this.keyName];
-      if (mult?.fields?.length)
-        mult.fields.forEach((r) => {
-          r[field.key][prop] = value;
-        });
+      if (mult.fields?.[field.multiIndex]?.[prop])
+        mult.fields[field.multiIndex][prop] = value;
     },
     // trigger() {
     //   console.log("trigger happend");

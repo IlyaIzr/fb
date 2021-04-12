@@ -115,6 +115,8 @@ export default {
           values[config.key] = {};
           config.fields.length &&
             config.fields.forEach((row, multiIndex) => {
+              // Check if it is in the values
+              if (!config.value[multiIndex]) return;
               Object.entries(row).forEach(([fieldKey, fieldConfig]) => {
                 if (fieldConfig.service === true) return;
                 if (!values[config.key][multiIndex])

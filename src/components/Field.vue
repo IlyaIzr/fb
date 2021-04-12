@@ -21,12 +21,7 @@
         :keyName="fieldInfo.key"
         :rest="rest"
       />
-      <Date
-        v-if="inputType === 'date'"
-        :keyName="fieldInfo.key"
-        :rest="rest"
-      />
-
+      <Date v-if="inputType === 'date'" :keyName="fieldInfo.key" :rest="rest" />
     </div>
   </div>
 </template>
@@ -36,7 +31,7 @@ import SimpleInput from "./inputs/Simple";
 import Multiple from "./inputs/Multiple";
 import Select from "./inputs/Select";
 import Slider from "./inputs/Slider";
-import Date from './inputs/Date'
+import Date from "./inputs/Date";
 import { fbGlobal } from "src/arguments";
 import { validator } from "./inputs/validator";
 
@@ -66,7 +61,7 @@ export default {
     Multiple,
     Select,
     Slider,
-    Date
+    Date,
   },
   computed: {
     inputType() {
@@ -93,7 +88,7 @@ export default {
       switch (type) {
         case "multiple":
           return type;
-      }      
+      }
       switch (type) {
         case "slider":
           return type;
@@ -102,7 +97,6 @@ export default {
         case "date":
           return type;
       }
-
     },
 
     rest() {
@@ -133,7 +127,11 @@ export default {
             if (validated !== undefined) value = validated;
 
             field[prop] = value;
-            if (prop === 'value') fbGlobal.fields[i.multiKey].value[i.multiIndex][i.key] = value
+            if (
+              prop === "value" &&
+              fbGlobal.fields[i.multiKey].value?.[i.multiIndex]
+            )
+              fbGlobal.fields[i.multiKey].value[i.multiIndex][i.key] = value;
 
             return true;
           },
