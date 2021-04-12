@@ -4,6 +4,7 @@
     <div
       v-for="(rows, multiIndex) in multiRows"
       v-bind:key="multiRows.indexOf(rows)"
+      class="col-12"
     >
       <!-- Map regular structure -->
       <RowMapper :rows="rows"/>

@@ -63,12 +63,19 @@ export default {
       const field = fbGlobal.fields[this.keyName];
       const obj = {};
       Object.keys(field.settings).forEach((key) => (obj[key] = ""));
+      console.log([...field.value]);
       field.value.push(obj);
+      this.redrawChildren()
+      console.log([...field.value]);
     },
     removeField(index) {
       const field = fbGlobal.fields[this.keyName];
       field.value.splice(index, 1);
     },
+    redrawChildren(){
+      this.computeRowsEffect();
+      this.computeRawsTrigger += 1;
+    }
   },
 
   beforeMount() {
@@ -130,13 +137,14 @@ export default {
       },
       deep: true,
     },
-    "rest.value": {
-      handler() {
-        this.computeRowsEffect();
-        this.computeRawsTrigger += 1;
-      },
-      deep: true,
-    },
+    // "rest.value": {
+    //   handler(s) {
+    //   console.log('value change listned', s);
+    //     this.computeRowsEffect();
+    //     this.computeRawsTrigger += 1;
+    //   },
+    //   deep: true,
+    // },
     stringUpdates({ field, prop, value }) {
       // updates already rendered fields
       const mult = fbGlobal.fields[this.keyName];
@@ -150,6 +158,8 @@ export default {
     // },
   },
 };
+// Adding fields. Case 1 - .value are initValue, on add we assign current values to initValue, redraw whole field
+// Case 2 - we redraw field.value on every child value change, not listening to values, providing methods to redraw field
 </script>
 
 <style>

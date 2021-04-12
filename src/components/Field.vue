@@ -133,6 +133,7 @@ export default {
             if (validated !== undefined) value = validated;
 
             field[prop] = value;
+            if (prop === 'value') fbGlobal.fields[i.multiKey].value[i.multiIndex][i.key] = value
 
             return true;
           },
@@ -141,7 +142,7 @@ export default {
         field.watcher = 1;
         const reactive = new Proxy(field, reactiveFieldWrap);
         fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key] = reactive;
-        res = field;
+        res = reactive;
       } else res = fbGlobal.fields[i.key];
 
       // console.log({ ...res }, res.key, {...res.value});

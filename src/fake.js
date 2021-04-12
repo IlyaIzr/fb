@@ -1,25 +1,23 @@
 export const formConfig = {
   fields: {
-    name: {
-      label: 'Ваше имя',
-      value: 'Anton',
-      onFocus(fb) {
-        fb.fields.chil.visible = false
-        // fb.fields.multiple.fields[0].firstName.label = true
+    simpleMultiple: {
+      type: 'multiple',
+      label: "Multiple with simpleinputs",
+      value: [
+        { firstName: 'Peter', lastName: '' },
+        { firstName: 'Lois', lastName: 'Puttershmidt' }
+      ],
+      settings: {
+        firstName: {
+          label: 'First name',
+        },
+        lastName: {
+          label: 'Last name'
+        },
       },
+  
+      row: 1
     },
-    chil: {
-      onFocus(fb) {
-        // fb.fields.multiple.reset()
-      },
-      row: '1s',
-      visible: false
-    },
-    date: {
-      type: 'date',
-      label: 'date label',
-      // withInput: false,
-    }
   },
   methods: {
     onSubmit(formGlobal, component, values) {
