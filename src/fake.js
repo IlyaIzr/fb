@@ -1,31 +1,15 @@
 export const formConfig = {
   fields: {
-    simpleMultiple: {
-      type: 'multiple',
-      label: "Multiple with simpleinputs",
-      value: [
-        { firstName: 'Peter', lastName: 'Man' },
-        { firstName: 'Lois', lastName: 'Puttershmidt' },
-        
-        { firstName: 'Meg', lastName: 'Test' },
-        { firstName: 'static', lastName: 'Filler' },
-
-      ],
-      settings: {
-        firstName: {
-          label: 'First name',
-        },
-        lastName: {
-          label: 'Last name'
-        },
-      },
-  
-      row: 1
+    date: {
+      type: 'date',
+      // value: '12/12/2012'
+      required: false
     },
     s: {
       onFocus(fb){
         console.log(fb.fields);
-      }
+      },
+      required: false
     }
   },
   methods: {

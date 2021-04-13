@@ -4,6 +4,7 @@
     v-bind="rest"
     today-btn
     @input="onInput"
+    mask="DD.MM.YYYY"
   >
     <!-- <div v-if="rest.withInput" class="row items-center justify-end">
       <q-btn v-close-popup label="Close" color="primary" flat ref="btn" />
@@ -69,14 +70,7 @@ export default {
   methods: {
     ...commonMethods,
   async onInput(val) {
-    console.log(val, 'here');
-    let cb;
-    if (this.rest?.onInput) {
-      cb = await this.rest.onInput(fbGlobal, this, val);
-    }
-    this.rest.value = val;
-
-    if (typeof cb === "function") await cb(fbGlobal, this, val);
+    this.$emit('input', val)
   },
   },
 };

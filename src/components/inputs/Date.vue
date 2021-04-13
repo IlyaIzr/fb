@@ -1,5 +1,6 @@
 <template>
   <div v-if="rest.visible">
+    <q-input :value="rest.value" />
     <div v-if="!rest.withInput" class="q-gutter-md">
       <p class="text-subtitle1 q-mb-none">{{ rest.label }}</p>
       <CalendarInput
@@ -15,6 +16,7 @@
     <div v-else class="q-gutter-md">
       <q-input
         @input="onTextInput"
+        :value="rest.value"
         :mask="rest.inputMask || textInputMask"
         :rules="rules"
         :key="fuckenMask"
@@ -49,7 +51,7 @@
 <script>
 import { date } from "quasar";
 import CalendarInput from "./Calendar";
-import { checkRulesBool, commonMethods } from "./common";
+import { commonMethods } from "./common";
 const { formatDate } = date;
 export default {
   name: "DateInput",
@@ -69,11 +71,7 @@ export default {
   data() {
     return {
       fuckenMask: 1,
-      rules: checkRulesBool(
-        this.rest.rules,
-        this.rest.required,
-        this.rest.requiredMessage
-      ),
+      rules: this.dateRules(),
     };
   },
   computed: {
@@ -92,7 +90,6 @@ export default {
 
     async onInput(val) {
       // this.fuckenMask += 1;
-      console.log('higher date input', val);
       let cb;
       let finalVal = val;
 
@@ -106,13 +103,17 @@ export default {
           to: val.finish,
         };
       }
+      console.log("higher date input", finalVal);
 
       this.rest.value = finalVal;
+      this.$nextTick(() => {
+        this.$forceUpdate();
+      });
 
       if (typeof cb === "function") await cb(fbGlobal, this, val);
     },
     async onTextInput(val) {
-      console.log('higher date text input', val);
+      console.log("higher date text input", val);
       let finalVal = val;
       if (val && this.rest.range) {
         const dates = val.split(" - ");
@@ -122,9 +123,40 @@ export default {
       if (this.rest?.onInput) {
         cb = await this.rest.onInput(fbGlobal, this, val);
       }
+      
       this.rest.value = finalVal;
+      this.$nextTick(() => {
+        this.$forceUpdate();
+      });
 
       if (typeof cb === "function") await cb(fbGlobal, this, val);
+    },
+    dateRules() {
+      let res = this.rest.rules || [];
+      if (this.rest.required && !this.rest.range) {
+        res = [
+          (dateString) =>
+            (dateString.split(".")[0] < 32 &&
+              dateString.split(".")[1] < 13 &&
+              dateString.split(".")[2] > 1900) ||
+            this.rest.requiredMessage ||
+            "Incorrect date",
+        ];
+      } else if (this.rest.required) {
+        res = [
+          (rangeObject) =>
+            (rangeObject.from.split(".")[0] < 2 &&
+              rangeObject.from.split(".")[1] < 13 &&
+              rangeObject.from.split(".")[2] > 1900 &&
+              rangeObject.to.split(".")[0] < 32 &&
+              rangeObject.to.split(".")[1] < 13 &&
+              rangeObject.to.split(".")[2] > 1900) ||
+            this.rest.requiredMessage ||
+            "Incorrect date",
+        ];
+      }
+      console.log(res[0]);
+      return res;
     },
   },
   mounted() {
