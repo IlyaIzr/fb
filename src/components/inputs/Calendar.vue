@@ -4,21 +4,22 @@
     v-bind="rest"
     today-btn
     @input="onInput"
-    mask="DD.MM.YYYY"
+    :mask="mask"
   >
-    <!-- <div v-if="rest.withInput" class="row items-center justify-end">
+    <div v-if="rest.withInput" class="row items-center justify-end">
       <q-btn v-close-popup label="Close" color="primary" flat ref="btn" />
     </div>
     <template v-slot:default class="q-ma-none">
       <q-icon name="cancel" @click="onInput('')" class="cursor-pointer" />
       <q-field
+        v-if="!rest.withInput"
         ref="calendarCheck"
         :value="rest.range ? rangeValues : rest.value"
         :rules="rules"
         borderless
         dense
       />
-    </template> -->
+    </template>
   </q-date>
 </template>
 
@@ -66,12 +67,21 @@ export default {
       }
       return res;
     },
+    mask() {
+      let mask = "";
+      mask = this.rest.range ? "DD.MM.YYYY - DD.MM.YYYY" : "DD.MM.YYYY";
+      if (this.rest.localization === "ru") return mask;
+      if (this.rest.localization === "en") {
+        mask = this.rest.range ? "YYYY.MM.DD - YYYY.MM.DD" : "YYYY.MM.DD";
+      }
+      return mask;
+    },
   },
   methods: {
     ...commonMethods,
-  async onInput(val) {
-    this.$emit('input', val)
-  },
+    async onInput(val) {
+      this.$emit("input", val);
+    },
   },
 };
 </script>

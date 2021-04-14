@@ -79,7 +79,7 @@ export default {
       let mask = "";
       mask = this.rest.range ? "##.##.#### - ##.##.####" : "##.##.####";
       if (this.rest.localization === "ru") return mask;
-      else if (this.rest.localization === "en") {
+      if (this.rest.localization === "en") {
         mask = this.rest.range ? "####/##/## - ####/##/##" : "####/##/##";
       }
       return mask;
