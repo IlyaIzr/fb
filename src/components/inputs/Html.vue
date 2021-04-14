@@ -1,18 +1,10 @@
 <template>
   <div class="q-gutter-md" v-if="rest.visible">
-    <q-card-section
-      v-bind="rest"
-      ref="input"
-      v-html="rest.value"
-      @focus="onFocus"
-      @blur="onBlur"
-    />
+    <q-card-section v-bind="rest" ref="input" v-html="rest.value" />
   </div>
 </template>
 
 <script>
-import { commonMethods } from './common';
-
 export default {
   name: "HtmlInjection",
   props: {
@@ -24,10 +16,6 @@ export default {
       type: Object,
       required: true,
     },
-  },
-
-  methods: {
-    ...commonMethods
   },
 };
 </script>

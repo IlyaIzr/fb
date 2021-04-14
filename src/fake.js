@@ -9,12 +9,14 @@ export const formConfig = {
     // checkbox: {
     //   type: 'checkbox',
     // },
-    // html: {
-    //   type: 'html',
-    //   value: 'some <br> html'
-    // },
+    html: {
+      type: 'html',
+      value: 'some <br> html',
+    },
     editor: {
-      type: 'editor'
+      type: 'editor',
+      onBlur(a, b, c) {console.log(...arguments);},
+      disable: true
     },
     s: {
       onFocus(fb){
