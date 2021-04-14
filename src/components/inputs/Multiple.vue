@@ -1,6 +1,6 @@
 <template>
   <div class="q-gutter-md" v-if="rest.visible">
-    <label for="">{{ rest.label }}</label>
+    <label for="" class="fb-field-label">{{ rest.label }}</label>
 
     <MultiMapper
       :multiRows="rows"

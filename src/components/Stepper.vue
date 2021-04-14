@@ -8,6 +8,7 @@
     style="padding: 0"
     :header-nav="true"
     @before-transition="beforeStep"
+    class="fb-tabs"
     v-bind="tabsSettings"
   >
     <q-step
@@ -18,11 +19,11 @@
       :icon="tab.icon || 'settings'"
       :error="Boolean(errors.find((el) => el === Number(index)))"
       :done="validated[index]"
+      class="fb-content-wrap"
     >
       <RowMapper
         v-if="filteredRows[index]"
         :rows="filteredRows[index]"
-        :settings="fbGlobal"
       />
     </q-step>
 

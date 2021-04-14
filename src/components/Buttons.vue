@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!fbGlobal.noButtons || fbGlobal.buttons === false"
-    class="q-my-sm q-px-md"
+    class="fb-form-buttons q-my-sm q-px-md"
   >
     <!-- Reset -->
     <q-btn

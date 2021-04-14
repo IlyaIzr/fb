@@ -1,12 +1,13 @@
 <template>
   <div class="q-gutter-md" v-if="rest.visible">
-    <p class="text-subtitle1 q-mb-none">{{ rest.label }}</p>
+    <p class="text-subtitle1 q-mb-none fb-field-label">{{ rest.label }}</p>
     <q-editor
       v-bind="rest"
       @focus="onFocus"
       @blur="onBlur"
       @input="onInput"
       :placeholder="rest.placeholder"
+      class="fb-field-content"
     />
     <!-- TODO clearable btn -->
   </div>

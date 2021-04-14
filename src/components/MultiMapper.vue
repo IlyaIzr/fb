@@ -1,13 +1,13 @@
 <template>
-  <div class="row fb-row">
+  <div class="fb-row fb-field-content fb-multiple-content row">
     <!-- Map multilevel structure -->
     <div
       v-for="(rows, multiIndex) in multiRows"
       v-bind:key="multiRows.indexOf(rows)"
-      class="col-12"
+      class="fb-multiple-row col-12"
     >
       <!-- Map regular structure -->
-      <RowMapper :rows="rows"/>
+      <RowMapper :rows="rows" />
 
       <q-btn
         v-if="multiKey"

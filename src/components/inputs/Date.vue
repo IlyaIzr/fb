@@ -1,7 +1,7 @@
 <template>
   <div v-if="rest.visible">
     <div v-if="!rest.withInput" class="q-gutter-md">
-      <p class="text-subtitle1 q-mb-none">{{ rest.label }}</p>
+      <p class="fb-field-label text-subtitle1 q-mb-none">{{ rest.label }}</p>
       <CalendarInput
         :label="rest.label"
         :keyName="keyName"
@@ -22,6 +22,7 @@
         :clearable="rest.clearable"
         :clear-icon="rest['clear-icon']"
         ref="input"
+        class="fb-field-content"
       >
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">

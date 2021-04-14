@@ -28,7 +28,7 @@
     <q-form
       :style="settings.modal && 'max-height: 65vh'"
       :class="
-        'fb-content q-pa-none' +
+        'fb-form-content q-pa-none' +
         `scroll bg-white ${settings.tabs ? '' : 'q-pa-md q-py-none'}`
       "
       ref="form"
@@ -47,7 +47,6 @@
       <RowMapper
         v-else
         :rows="rows"
-        :settings="settings"
         @submit="onSubmit"
         @reset="onReset"
         @clear="onClear"

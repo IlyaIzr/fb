@@ -1,6 +1,6 @@
 <template>
   <div class="q-gutter-md" v-if="rest.visible">
-    <q-input v-bind="rest" @focus="onFocus" @input="onInput" :rules="rules">
+    <q-input v-bind="rest" @focus="onFocus" @input="onInput" :rules="rules" class="fb-field-content">
     </q-input>
   </div>
 </template>

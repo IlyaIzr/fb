@@ -1,6 +1,6 @@
 <template>
-  <div class="col fb-field-wrap q-mx-md">
-    <div class="column fb-field">
+  <div class="fb-field-container col q-mx-md">
+    <div class="fb-field column">
       <SimpleInput
         v-if="inputType === 'simple'"
         :keyName="fieldInfo.key"

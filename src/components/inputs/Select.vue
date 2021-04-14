@@ -1,6 +1,7 @@
 <template>
   <div class="q-gutter-md" v-if="rest.visible">
     <q-select
+    class="fb-field-content"
       v-bind="rest"
       :rules="rules"
       :value="localValue"

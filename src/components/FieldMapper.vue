@@ -1,5 +1,5 @@
 <template>
-  <div v-if="fields" class="row items-center">
+  <div v-if="fields" class="fb-fields-wrap col-grow row items-center ">
     <Field
       :fieldInfo="field"
       v-for="field in fields"

@@ -5,6 +5,7 @@
     today-btn
     @input="onInput"
     :mask="mask"
+    class="fb-field-content"
   >
     <div v-if="rest.withInput" class="row items-center justify-end">
       <q-btn v-close-popup label="Close" color="primary" flat ref="btn" />
@@ -18,6 +19,7 @@
         :rules="rules"
         borderless
         dense
+        class="fb-field-hint"
       />
     </template>
   </q-date>

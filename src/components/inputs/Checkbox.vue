@@ -6,6 +6,7 @@
       :rules="rules"
       :hint="rest.hint"
       name="checkboxInput"
+      class="fb-field-label"
       borderless
       dense
     >
@@ -16,6 +17,7 @@
           @blur="onBlur"
           @input="onInputLocal"
           :rules="rules"
+          class="fb-field-content"
         />
       </template>
     </q-field>

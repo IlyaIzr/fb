@@ -1,6 +1,6 @@
 <template>
   <div class="q-gutter-md" v-if="rest.visible">
-    <q-card-section v-bind="rest" ref="input" v-html="rest.value" />
+    <q-card-section v-bind="rest" ref="input" v-html="rest.value" class="fb-field-content" />
   </div>
 </template>
 
