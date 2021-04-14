@@ -14,7 +14,7 @@
       <q-field
         v-if="!rest.withInput"
         ref="calendarCheck"
-        :value="rest.range ? rangeValues : rest.value"
+        :value="textInputValue"
         :rules="rules"
         borderless
         dense
@@ -35,6 +35,10 @@ export default {
     rest: {
       type: Object,
       required: true,
+    },
+    textInputValue: {
+      type: String,
+      required: false,
     },
   },
   data() {

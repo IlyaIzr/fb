@@ -35,6 +35,7 @@
               <CalendarInput
                 :keyName="keyName"
                 :rest="rest"
+                :textInputValue="inputValue"
                 @input="onInput"
                 @focus="onFocus"
                 @blur="onBlur"
@@ -142,7 +143,6 @@ export default {
             "Incorrect date",
         ];
       }
-      console.log(res[0]);
       return res;
     },
   },
