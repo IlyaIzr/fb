@@ -73,6 +73,7 @@ export default {
     },
     mask() {
       let mask = "";
+      if (this.rest.calendarMask) return this.rest.calendarMask
       mask =  "DD.MM.YYYY";
       if (this.rest.localization === "ru") return mask;
       if (this.rest.localization === "en") {

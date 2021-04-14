@@ -17,7 +17,7 @@
         @input="onTextInput"
         :value="inputValue"
         :mask="rest.inputMask || textInputMask"
-        :rules="rules"
+        :rules="inputRules"
         :label="rest.label"
         :clearable="rest.clearable"
         :clear-icon="rest['clear-icon']"
@@ -68,7 +68,7 @@ export default {
   },
   data() {
     return {
-      rules: this.dateRules(),
+      inputRules: this.inputDateRules(),
       inputValue: "",
     };
   },
@@ -108,7 +108,7 @@ export default {
       if (!this.rest.range) return await this.onInput(val);
       // Case reset on range value
       if (!val) {
-        this.inputValue = ""
+        this.inputValue = "";
         return await this.onInput("", false);
       }
       // Case valid length of range value provided
@@ -117,30 +117,38 @@ export default {
         return await this.onInput({ from: vals[0], to: vals[1] }, false);
       }
     },
-    dateRules() {
+    inputDateRules() {
+      
       let res = this.rest.rules || [];
+      // Delimeter
+      const d = this.rest.inputMask?.[2] || "#";
       if (this.rest.required && !this.rest.range) {
         res = [
           (dateString) =>
-            (dateString.split(".")[0] < 32 &&
-              dateString.split(".")[1] < 13 &&
-              dateString.split(".")[2] > 1900) ||
+            (dateString.split(d)[0] < 32 &&
+              dateString.split(d)[1] < 13 &&
+              dateString.split(d)[2] > 1900) ||
             this.rest.requiredMessage ||
             "Incorrect date",
         ];
-      } else if (this.rest.required) {
-        res = [
-          (rangeObject) =>
-            (rangeObject.from.split(".")[0] < 2 &&
-              rangeObject.from.split(".")[1] < 13 &&
-              rangeObject.from.split(".")[2] > 1900 &&
-              rangeObject.to.split(".")[0] < 32 &&
-              rangeObject.to.split(".")[1] < 13 &&
-              rangeObject.to.split(".")[2] > 1900) ||
-            this.rest.requiredMessage ||
-            "Incorrect date",
-        ];
-      }
+      } 
+      // else if (this.rest.required) {
+      //   res = [
+      //     (rangeStr) => {
+      //       console.log('val run', rangeStr);
+      //       const errMsg = this.rest.requiredMessage || "Incorrect date";
+      //       if (!rangeStr) return errMsg
+      //       const [from, to] = rangeStr.split(" - ");
+      //       let [day, month, year] = from.split(d);
+      //       console.log(day, month, year, day > 31 || month > 12 || year < 1900, day > 31);
+      //       if (day > 31 || month > 12 || year < 1900) return errMsg;
+      //       [day, month, year] = to.split(d);
+      //       console.log(day, month, year);
+      //       if (day > 31 || month > 12 || year < 1900) return errMsg;
+      //       return true
+      //     },
+      //   ];
+      // }
       return res;
     },
   },
