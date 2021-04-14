@@ -6,8 +6,12 @@ export const formConfig = {
     //   required: false,
     //   // range: true,
     // },
-    checkbox: {
-      type: 'checkbox',
+    // checkbox: {
+    //   type: 'checkbox',
+    // },
+    html: {
+      type: 'html',
+      value: 'some <br> html'
     },
     s: {
       onFocus(fb){

@@ -27,7 +27,12 @@
         :keyName="fieldInfo.key"
         :rest="rest"
       />
-      
+      <Html
+        v-if="inputType === 'html'"
+        :keyName="fieldInfo.key"
+        :rest="rest"
+      />
+
       <div v-if="inputType === 'err'">
         err, wrong type: {{ fieldInfo.type }}
       </div>
@@ -42,6 +47,7 @@ import Select from "./inputs/Select";
 import Slider from "./inputs/Slider";
 import Date from "./inputs/Date";
 import Checkbox from "./inputs/Checkbox";
+import Html from "./inputs/Html";
 import { fbGlobal } from "src/arguments";
 import { validator } from "./inputs/validator";
 
@@ -73,6 +79,7 @@ export default {
     Slider,
     Date,
     Checkbox,
+    Html,
   },
   computed: {
     inputType() {
