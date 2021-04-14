@@ -7,7 +7,6 @@
 
 <script>
 import { checkRulesBool, commonMethods, strMethods } from "./common";
-import { fbGlobal } from "src/arguments";
 
 export default {
   name: "SimpleInput",
@@ -20,7 +19,6 @@ export default {
   },
   data() {
     return {
-      fbGlobal,
       rules: checkRulesBool(
         this.rest.rules,
         this.rest.required,
@@ -34,19 +32,6 @@ export default {
     ...strMethods
   },
   
-
-  updated() {
-    // console.log({...fbGlobal.fields[this.keyName]});
-  },
-
-  // watch: {
-  //   "rest": {  // Works now
-  //     handler(val) {
-  //       console.log("field info prop changed", {...val});
-  //     },
-  //     deep: true,
-  //   },
-  // },
 };
 </script>
 

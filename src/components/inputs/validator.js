@@ -63,6 +63,7 @@ export const validator = {
 
     clearable(val, f) { return booleaner(val, f) },
     "clear-icon"(val, f) { return stringer(val, f) || "close" },
+    mask(val, f) { return stringer(val, f) },
   },
   select: {
     ...commonProps,
@@ -101,6 +102,9 @@ export const validator = {
 
     range(val, f) { return booleaner(val, f) },
     withInput(val, f) { return booleaner(val, f) },
+
+    inputMask(val, f) { return stringer(val, f) },
+    mask(val, f) { return stringer(val, f) },
   },
 
   checkbox: {

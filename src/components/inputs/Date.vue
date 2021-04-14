@@ -1,6 +1,5 @@
 <template>
   <div v-if="rest.visible">
-    <q-input :value="rest.value" />
     <div v-if="!rest.withInput" class="q-gutter-md">
       <p class="text-subtitle1 q-mb-none">{{ rest.label }}</p>
       <CalendarInput
@@ -22,7 +21,6 @@
         :label="rest.label"
         :clearable="rest.clearable"
         :clear-icon="rest['clear-icon']"
-        :class="rest.class + ' input-' + keyName"
         ref="input"
       >
         <template v-slot:append>
