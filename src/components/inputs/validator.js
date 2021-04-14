@@ -95,7 +95,9 @@ export const validator = {
 
   date: {
     ...commonProps,
-    value(val, f) { return stringer(val, f) },
+    value(val, f) { 
+      if (!f.range) return stringer(val, f)
+     },
     
     range(val, f) { return booleaner(val, f) },
     withInput(val, f) { return booleaner(val, f) },    

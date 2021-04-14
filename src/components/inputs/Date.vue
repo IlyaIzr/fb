@@ -16,10 +16,9 @@
     <div v-else class="q-gutter-md">
       <q-input
         @input="onTextInput"
-        :value="rest.value"
+        :value="inputValue"
         :mask="rest.inputMask || textInputMask"
         :rules="rules"
-        :key="fuckenMask"
         :label="rest.label"
         :clearable="rest.clearable"
         :clear-icon="rest['clear-icon']"
@@ -70,8 +69,8 @@ export default {
   },
   data() {
     return {
-      fuckenMask: 1,
       rules: this.dateRules(),
+      inputValue: "",
     };
   },
   computed: {
@@ -88,48 +87,36 @@ export default {
   methods: {
     ...commonMethods,
 
-    async onInput(val) {
-      // this.fuckenMask += 1;
+    async onInput(val, updateTextInput = true) {
       let cb;
       let finalVal = val;
+      let inputVal = val;
 
       if (this.rest?.onInput) {
         cb = await this.rest.onInput(fbGlobal, this, val);
       }
 
-      if (typeof val === "object" && val && val.start && val.finish) {
-        finalVal = {
-          from: val.start,
-          to: val.finish,
-        };
+      if (typeof val === "object" && val?.from && val.to) {
+        inputVal = val.from + " - " + val.to;
       }
-      console.log("higher date input", finalVal);
 
       this.rest.value = finalVal;
-      this.$nextTick(() => {
-        this.$forceUpdate();
-      });
+      if (updateTextInput) this.inputValue = inputVal;
 
       if (typeof cb === "function") await cb(fbGlobal, this, val);
     },
     async onTextInput(val) {
-      console.log("higher date text input", val);
-      let finalVal = val;
-      if (val && this.rest.range) {
-        const dates = val.split(" - ");
-        finalVal = { from: dates[0], to: dates[1] };
+      if (!this.rest.range) return await this.onInput(val);
+      // Case reset on range value
+      if (!val) {
+        this.inputValue = ""
+        return await this.onInput("", false);
       }
-      let cb;
-      if (this.rest?.onInput) {
-        cb = await this.rest.onInput(fbGlobal, this, val);
+      // Case valid length of range value provided
+      if (val.length === 23) {
+        const vals = val.split(" - ");
+        return await this.onInput({ from: vals[0], to: vals[1] }, false);
       }
-      
-      this.rest.value = finalVal;
-      this.$nextTick(() => {
-        this.$forceUpdate();
-      });
-
-      if (typeof cb === "function") await cb(fbGlobal, this, val);
     },
     dateRules() {
       let res = this.rest.rules || [];
@@ -159,17 +146,10 @@ export default {
       return res;
     },
   },
-  mounted() {
-    // if (this.rest.withInput || this.rest.withInput === undefined)
-    //   this.validate = this.$refs.input.validate;
-    // else this.validate = this.$children[0].$refs.calendarCheck;
-    // if (this.rest.hasOwnProperty("visible") && !this.rest.visible) {
-    //   this.$parent.$el.parentNode.className += " hidden";
-    // }
-  },
   beforeMount() {
     const field = this.rest;
     field.withInput ??= true;
+    this.inputValue = this.rest.value;
   },
 };
 </script>

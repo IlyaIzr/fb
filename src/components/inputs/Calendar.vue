@@ -69,10 +69,10 @@ export default {
     },
     mask() {
       let mask = "";
-      mask = this.rest.range ? "DD.MM.YYYY - DD.MM.YYYY" : "DD.MM.YYYY";
+      mask =  "DD.MM.YYYY";
       if (this.rest.localization === "ru") return mask;
       if (this.rest.localization === "en") {
-        mask = this.rest.range ? "YYYY.MM.DD - YYYY.MM.DD" : "YYYY.MM.DD";
+        mask = "YYYY.MM.DD";
       }
       return mask;
     },

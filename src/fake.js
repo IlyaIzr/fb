@@ -4,7 +4,7 @@ export const formConfig = {
       type: 'date',
       // value: '12/12/2012'
       required: false,
-      range: true,
+      // range: true,
     },
     s: {
       onFocus(fb){
