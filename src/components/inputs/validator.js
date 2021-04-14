@@ -111,6 +111,19 @@ export const validator = {
     ...commonProps,
     value(val, f) { return booleaner(val, f) },
 
+  },
+
+  html: {
+    ...commonProps,
+    value(val, f) { return stringer(val, f) },
+
+  },
+
+  editor: {
+    ...commonProps,
+    value(val, f) { return stringer(val, f) },
+    placeholder(val, f) { return stringer(val, f) },
+
   }
 
 }

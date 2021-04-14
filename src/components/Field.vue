@@ -32,6 +32,11 @@
         :keyName="fieldInfo.key"
         :rest="rest"
       />
+      <Editor
+        v-if="inputType === 'editor'"
+        :keyName="fieldInfo.key"
+        :rest="rest"
+      />
 
       <div v-if="inputType === 'err'">
         err, wrong type: {{ fieldInfo.type }}
@@ -48,6 +53,7 @@ import Slider from "./inputs/Slider";
 import Date from "./inputs/Date";
 import Checkbox from "./inputs/Checkbox";
 import Html from "./inputs/Html";
+import Editor from "./inputs/Editor";
 import { fbGlobal } from "src/arguments";
 import { validator } from "./inputs/validator";
 
@@ -80,6 +86,7 @@ export default {
     Date,
     Checkbox,
     Html,
+    Editor
   },
   computed: {
     inputType() {
@@ -106,6 +113,7 @@ export default {
         "date",
         "checkbox",
         "html",
+        "editor"
       ]);
       if (allowedTypes.has(type)) return type;
       else return "err";

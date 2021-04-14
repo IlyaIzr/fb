@@ -9,9 +9,12 @@ export const formConfig = {
     // checkbox: {
     //   type: 'checkbox',
     // },
-    html: {
-      type: 'html',
-      value: 'some <br> html'
+    // html: {
+    //   type: 'html',
+    //   value: 'some <br> html'
+    // },
+    editor: {
+      type: 'editor'
     },
     s: {
       onFocus(fb){
