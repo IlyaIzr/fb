@@ -12,7 +12,7 @@
         :rest="rest"
       />
       <Multiple
-        v-else-if="inputType === 'multiple'"
+        v-if="inputType === 'multiple'"
         :keyName="fieldInfo.key"
         :rest="rest"
       />
@@ -22,6 +22,15 @@
         :rest="rest"
       />
       <Date v-if="inputType === 'date'" :keyName="fieldInfo.key" :rest="rest" />
+      <Checkbox
+        v-if="inputType === 'checkbox'"
+        :keyName="fieldInfo.key"
+        :rest="rest"
+      />
+      
+      <div v-if="inputType === 'err'">
+        err, wrong type: {{ fieldInfo.type }}
+      </div>
     </div>
   </div>
 </template>
@@ -32,6 +41,7 @@ import Multiple from "./inputs/Multiple";
 import Select from "./inputs/Select";
 import Slider from "./inputs/Slider";
 import Date from "./inputs/Date";
+import Checkbox from "./inputs/Checkbox";
 import { fbGlobal } from "src/arguments";
 import { validator } from "./inputs/validator";
 
@@ -62,6 +72,7 @@ export default {
     Select,
     Slider,
     Date,
+    Checkbox,
   },
   computed: {
     inputType() {
@@ -81,22 +92,16 @@ export default {
       if (simpleTypes.find((value) => value === type)) {
         return "simple";
       }
-      switch (type) {
-        case "select":
-          return type;
-      }
-      switch (type) {
-        case "multiple":
-          return type;
-      }
-      switch (type) {
-        case "slider":
-          return type;
-      }
-      switch (type) {
-        case "date":
-          return type;
-      }
+      const allowedTypes = new Set([
+        "select",
+        "multiple",
+        "slider",
+        "date",
+        "checkbox",
+        "html",
+      ]);
+      if (allowedTypes.has(type)) return type;
+      else return "err";
     },
 
     rest() {

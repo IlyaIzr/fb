@@ -1,10 +1,13 @@
 export const formConfig = {
   fields: {
-    date: {
-      type: 'date',
-      // value: '12/12/2012'
-      required: false,
-      // range: true,
+    // date: {
+    //   type: 'date',
+    //   // value: '12/12/2012'
+    //   required: false,
+    //   // range: true,
+    // },
+    checkbox: {
+      type: 'checkbox',
     },
     s: {
       onFocus(fb){
