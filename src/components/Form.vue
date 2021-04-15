@@ -26,7 +26,6 @@
 
     <!-- Form itself -->
     <q-form
-      :style="settings.modal && 'max-height: 65vh'"
       class="fb-form-content q-pa-none scroll"
       ref="form"
       @submit="onSubmit"

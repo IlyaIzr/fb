@@ -54,4 +54,21 @@ export default {
 </script>
 
 <style>
+.q-dialog__inner--minimized .fb-form {
+  max-height: unset;
+}
+.q-dialog__inner--minimized .fb-form-content {
+  max-height: calc(100vh - 200px);
+}
+/* Case maximized */
+.q-dialog__inner--maximized .fb-form {
+  max-height: 100vh;
+  overflow-y: hidden;
+}
+.q-dialog__inner--maximized .fb-form-content {
+  max-height: calc(100vh - 100px);
+}
+.q-dialog__inner--maximized .fb-form-buttons.q-my-md{
+  margin-top: 10px;
+}
 </style>
