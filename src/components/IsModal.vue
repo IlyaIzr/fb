@@ -24,7 +24,8 @@ export default {
     return {
       isModal: Boolean(this.settings.modal),
       isOpen: this.settings.modal?.isOpen === false ? false : true,
-      modalConfig: this.settings.modal,
+      modalConfig:
+        typeof this.settings.modal === "object" ? this.settings.modal : {},
     };
   },
   props: {

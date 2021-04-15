@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!fbGlobal.noButtons || fbGlobal.buttons === false"
-    class="fb-form-buttons q-my-sm q-px-md"
+    class="fb-form-buttons q-my-md q-px-md"
   >
     <!-- Reset -->
     <q-btn
@@ -37,14 +37,6 @@
     />
 
     <!-- ? __Right side__ ? -->
-    <!-- Submit -->
-    <q-btn
-      v-if="canSubmit"
-      type="button"
-      @click="$emit('submit')"
-      :class="common + buttons.submit.class"
-      v-bind="buttons.submit"
-    />
     <!-- Close modal -->
     <q-btn
       v-if="buttons.close"
@@ -52,6 +44,14 @@
       v-close-popup
       :class="common + buttons.close.class"
       v-bind="buttons.close"
+    />
+    <!-- Submit -->
+    <q-btn
+      v-if="canSubmit"
+      type="button"
+      @click="$emit('submit')"
+      :class="common + buttons.submit.class"
+      v-bind="buttons.submit"
     />
   </div>
 </template>
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       fbGlobal,
-      common: "q-mx-md ",
+      common: "q-mr-md ",
     };
   },
   computed: {

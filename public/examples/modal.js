@@ -17,6 +17,7 @@ export const formConfig = {
     isOpen: false,
     persistent: true,
     "transition-hide": 'fade',
+    maximized: false,
 
     // Optional trigger button
     // Trigger button properties. See more: https://quasar.dev/vue-components/button#qbtn-api

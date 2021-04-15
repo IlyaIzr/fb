@@ -1,6 +1,6 @@
 <template>
   <div class="q-gutter-md" v-if="rest.visible">
-    <p class="text-subtitle1 q-mb-none fb-field-label">{{ rest.label }}</p>
+    <h5 class="text-subtitle1 q-mb-none fb-field-label">{{ rest.label }}</h5>
     <q-editor
       v-bind="rest"
       @focus="onFocus"

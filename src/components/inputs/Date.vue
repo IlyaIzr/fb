@@ -1,7 +1,7 @@
 <template>
   <div v-if="rest.visible">
     <div v-if="!rest.withInput" class="q-gutter-md">
-      <p class="fb-field-label text-subtitle1 q-mb-none">{{ rest.label }}</p>
+      <h5 class="fb-field-label text-subtitle1 q-mb-none">{{ rest.label }}</h5>
       <CalendarInput
         :label="rest.label"
         :keyName="keyName"

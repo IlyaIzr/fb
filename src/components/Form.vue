@@ -1,5 +1,5 @@
 <template>
-  <div style="min-width: min(75vw, 1800px)" class="fb-form">
+  <div style="min-width: min(75vw, 1800px)" class="fb-form bg-white">
     <!-- Close modal v-if it's modal -->
     <div
       v-if="settings.title"
@@ -27,10 +27,7 @@
     <!-- Form itself -->
     <q-form
       :style="settings.modal && 'max-height: 65vh'"
-      :class="
-        'fb-form-content q-pa-none' +
-        `scroll bg-white ${settings.tabs ? '' : 'q-pa-md q-py-none'}`
-      "
+      class="fb-form-content q-pa-none scroll"
       ref="form"
       @submit="onSubmit"
       @reset="onReset"
@@ -58,7 +55,6 @@
     <!-- Buttons -->
     <Buttons
       :buttons="settings.buttons"
-      :modal="settings.modal"
       v-if="!settings.tabs"
       @submit="trySubmit"
       @reset="onReset"

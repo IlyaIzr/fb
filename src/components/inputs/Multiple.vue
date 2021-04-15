@@ -1,6 +1,6 @@
 <template>
   <div class="q-gutter-md" v-if="rest.visible">
-    <label for="" class="fb-field-label">{{ rest.label }}</label>
+    <h5 class="fb-field-label">{{ rest.label }}</h5>
 
     <MultiMapper
       :multiRows="rows"
@@ -160,4 +160,7 @@ export default {
 </script>
 
 <style>
+.fb-row.fb-field-content.fb-multiple-content{
+  margin-top: 0;
+}
 </style>

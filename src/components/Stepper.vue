@@ -170,4 +170,12 @@ export default {
 </script>
 
 <style>
+.q-stepper__nav.formButtons{
+  padding: 0;
+  border-top: 1px solid lightgray;
+}
+.fb-tabs .q-stepper__step-inner{
+  padding: 0;
+
+}
 </style>

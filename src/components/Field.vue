@@ -1,5 +1,8 @@
 <template>
-  <div class="fb-field-container col q-mx-md">
+  <div
+    :class="'fb-field-container col ' + `${!fieldInfo.multiKey ? ' q-mx-md' : ''}`"
+    style="min-width: 160px"
+  >
     <div class="fb-field column">
       <SimpleInput
         v-if="inputType === 'simple'"
@@ -27,11 +30,7 @@
         :keyName="fieldInfo.key"
         :rest="rest"
       />
-      <Html
-        v-if="inputType === 'html'"
-        :keyName="fieldInfo.key"
-        :rest="rest"
-      />
+      <Html v-if="inputType === 'html'" :keyName="fieldInfo.key" :rest="rest" />
       <Editor
         v-if="inputType === 'editor'"
         :keyName="fieldInfo.key"
@@ -86,7 +85,7 @@ export default {
     Date,
     Checkbox,
     Html,
-    Editor
+    Editor,
   },
   computed: {
     inputType() {
@@ -113,7 +112,7 @@ export default {
         "date",
         "checkbox",
         "html",
-        "editor"
+        "editor",
       ]);
       if (allowedTypes.has(type)) return type;
       else return "err";
@@ -201,4 +200,8 @@ export default {
 </script>
 
 <style>
+.fb-field-label{
+  font-size: 1.2em;
+  margin: 16px;
+}
 </style>
