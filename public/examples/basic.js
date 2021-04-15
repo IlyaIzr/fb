@@ -1,4 +1,4 @@
-export const formConfig = {
+const formConfig = {
   title: 'Basic form',
 
   fields: {
@@ -22,9 +22,4 @@ export const formConfig = {
     }
   },
 
-}
-
-
-export const values = {
-  name: 'Louis'
 }

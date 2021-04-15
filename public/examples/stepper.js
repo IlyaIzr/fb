@@ -1,4 +1,4 @@
-export const formConfig = {
+const formConfig = {
   title: 'Tabs example',
 
   fields: {
@@ -42,5 +42,3 @@ export const formConfig = {
     }
   },
 },
-
-

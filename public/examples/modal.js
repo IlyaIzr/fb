@@ -1,4 +1,4 @@
-export const formConfig = {
+const formConfig = {
   title: 'Modal usage',
 
   fields: {

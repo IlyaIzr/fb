@@ -1,4 +1,4 @@
-export const formConfig = {
+const formConfig = {
   title: 'Other type of inputs',
 
   fields: {

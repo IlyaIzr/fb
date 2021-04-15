@@ -27,20 +27,6 @@ export const formConfig = {
       row: 3
     },
     
-    // thirdGuy: {
-    //   value: 'Bascerini',
-    //   row: 2
-    // },
-    // name: {
-    //   label: 'Ваше имя',
-    //   value: 'Anton',
-    //   tab: 2
-    // },
-    // city: {
-    //   label: 'City',
-    //   rules: [a => a && a.length > 3 || 'err msg'],
-    //   tab: 3,
-    // },
   },
   methods: {
     onSubmit(formGlobal, component, values) {

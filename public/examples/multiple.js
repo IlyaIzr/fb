@@ -1,4 +1,4 @@
-export const formConfig = {
+const formConfig = {
   title: 'Multiple fields',
 
   simpleMultiple: {

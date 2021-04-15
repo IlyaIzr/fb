@@ -1,4 +1,4 @@
-export const formConfig = {
+const formConfig = {
   title: 'Select example',
 
   fields: {
