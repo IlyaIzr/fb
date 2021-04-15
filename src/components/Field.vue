@@ -3,7 +3,7 @@
     :class="'fb-field-container col ' + `${!fieldInfo.multiKey ? ' q-mx-md' : ''}`"
     style="min-width: 160px"
   >
-    <div class="fb-field column">
+    <div class="fb-field column q-my-sm">
       <SimpleInput
         v-if="inputType === 'simple'"
         :keyName="fieldInfo.key"
