@@ -57,27 +57,19 @@
 </template>
 
 <script>
-import { fbGlobal } from "src/arguments";
+import { fbGlobal, stepperStore } from "src/arguments";
 export default {
   name: "Buttons",
   props: {
-    step: {
-      type: Number,
-      required: false,
-    },
-    tabLength: {
-      type: Number,
-      required: false,
-    },
-    validated: {
-      type: Array,
-      required: false,
-    },
   },
   data() {
     return {
       fbGlobal,
+      stepperStore,
       common: "q-mr-md ",
+      step: stepperStore.step,
+      tabLength: stepperStore.tabLength,
+      validated: stepperStore.validated
     };
   },
   computed: {
@@ -114,6 +106,16 @@ export default {
   },
   beforeMount() {
     if (fbGlobal.tabs) this.common = "q-mx-sm ";
+  },
+  watch: {
+    stepperStore: {
+      handler(val) {
+        console.log({...val});
+        this.step = val.step
+        this.validated = val.validated  
+      },
+      deep: true,
+    },
   },
 };
 </script>

@@ -40,6 +40,7 @@
         @submit="onSubmit"
         @reset="onReset"
         @clear="onClear"
+        ref="stepperComponent"
       />
       <RowMapper
         v-else
@@ -55,10 +56,11 @@
     <!-- Buttons -->
     <Buttons
       :buttons="settings.buttons"
-      v-if="!settings.tabs"
       @submit="trySubmit"
       @reset="onReset"
       @clear="onClear"
+      @back="onBack"
+      @next="onNext"
     />
   </div>
 </template>
@@ -97,7 +99,11 @@ export default {
   },
   computed: {},
   methods: {
-    async trySubmit() {
+    async trySubmit(e) {
+      if (this.settings.tabs) {
+        const res = await this.$refs.stepperComponent.trySubmit(e);
+        if (!res) return false;
+      }
       const res = await this.$refs.form.validate();
       if (res) await this.onSubmit();
     },
@@ -191,6 +197,12 @@ export default {
         const cb = await f(fbGlobal, this, values, err);
         if (typeof cb === "function") cb(fbGlobal, this, values);
       }
+    },
+    onNext() {
+      this.$refs.stepperComponent.onNextClick();
+    },
+    onBack() {
+      this.$refs.stepperComponent.onBackClick();
     },
 
     async reset() {

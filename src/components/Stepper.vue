@@ -21,24 +21,18 @@
       :done="validated[index]"
       class="fb-content-wrap"
     >
-      <RowMapper
-        v-if="filteredRows[index]"
-        :rows="filteredRows[index]"
-      />
+      <RowMapper v-if="filteredRows[index]" :rows="filteredRows[index]" />
     </q-step>
 
     <template v-slot:navigation>
       <q-stepper-navigation class="formButtons">
-        <Buttons
+        <!-- <Buttons
           @submit="trySubmit"
           @reset="$emit('reset')"
           @clear="$emit('clear')"
           @next="onNextClick"
           @back="onBackClick"
-          :step="step"
-          :tabLength="tabs.steps.length"
-          :validated="validated"
-        />
+        /> -->
         <!-- <q-btn label="testo" @click="testo"></q-btn> -->
       </q-stepper-navigation>
     </template>
@@ -48,7 +42,7 @@
 <script>
 import RowMapper from "./RowMapper";
 import Buttons from "./Buttons";
-import { fbGlobal } from "src/arguments";
+import { fbGlobal, stepperStore } from "src/arguments";
 import { fieldsToRows } from "./toRows";
 export default {
   name: "Stepper",
@@ -100,12 +94,8 @@ export default {
   },
   methods: {
     async onInput(val) {
-      let res;
-      if (this.tabs.validateTabNavigation) {
-        // Form validation
-        res = await this.formRef.validate();
-        if (res) this.step = val;
-      } else this.step = val;
+      await this.formRef.validate();
+      this.setStep(val);
     },
     async onNextClick() {
       const attempt = await this.validateStep();
@@ -125,6 +115,7 @@ export default {
 
       if (res) {
         this.validated[step] = true;
+        stepperStore.validated[step] = true;
         // Todo err logic
         // console.log("prev errors", [...this.errors]);
         this.errors = this.errors.filter((errstep) => errstep !== step);
@@ -132,6 +123,8 @@ export default {
         return true;
       } else {
         this.validated[step] = false;
+        stepperStore.validated[step] = false;
+
         this.errors.push(step);
         // console.log("pushed step", step, this.errors);
         return false;
@@ -142,13 +135,17 @@ export default {
       // Check if all the steps are 'done'
       await this.validateStep();
       if (this.errors.length === 0) {
-        console.log('emitting');
-        this.$emit("submit");
+        return true;
       } else {
-        this.step = this.errors[0];
+        this.setStep(this.errors[0]);
+        return false;
         // this.$nextTick(async function () { f.$children[0].focus();
         // });
       }
+    },
+    setStep(step) {
+      this.step = step;
+      stepperStore.step = step;
     },
   },
   beforeMount() {
@@ -160,7 +157,10 @@ export default {
     // Assign 'done' statuses
     for (let i = 0; i < this.filteredRows.length; i++) {
       this.validated[i] = false;
+      stepperStore.validated[i] = false;
     }
+
+    stepperStore.tabLength = this.tabs.steps.length;
   },
   mounted() {
     // It doesn't exist before mount, although it happens in parent component
@@ -170,12 +170,11 @@ export default {
 </script>
 
 <style>
-.q-stepper__nav.formButtons{
+.q-stepper__nav.formButtons {
   padding: 0;
   border-top: 1px solid lightgray;
 }
-.fb-tabs .q-stepper__step-inner{
+.fb-tabs .q-stepper__step-inner {
   padding: 0;
-
 }
 </style>
