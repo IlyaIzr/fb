@@ -1,12 +1,20 @@
 export const formConfig = {
   fields: {
-
-    rangeInput: {
-      type: 'date',
-      value: { from: '12.12.2012', to: '15.12.2012' },
-      range: true,
+    bio: {
+      label: 'Tell us about yourself'
+    },
+    name: {
+      label: 'Ваше имя',
+      value: 'Anton',
+      tab: 2
+    },
+    city: {
+      label: 'City',
+      rules: [a => a && a.length > 3 || 'err msg'],
+      tab: 3,
     },
   },
+  tabs: true,
   methods: {
     onSubmit(formGlobal, component, values) {
       console.log(values);

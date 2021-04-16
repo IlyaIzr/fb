@@ -177,4 +177,16 @@ export default {
 .fb-tabs .q-stepper__step-inner {
   padding: 0;
 }
+.q-stepper__header {
+  padding: 0 2px;
+}
+.q-stepper__tab {
+  border-left: 2px solid lightgray;
+  border-right: 2px solid lightgray;
+  border-radius: 2px;
+  margin: 0 2px;
+}
+.fb-tabs {
+  margin-top: 6px;
+}
 </style>
