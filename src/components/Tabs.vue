@@ -45,7 +45,7 @@ import Buttons from "./Buttons";
 import { fbGlobal, stepperStore } from "src/arguments";
 import { fieldsToRows } from "./toRows";
 export default {
-  name: "Stepper",
+  name: "Tabs",
   components: {
     RowMapper,
     Buttons,

@@ -33,13 +33,13 @@
       @validation-success="onValidateSuccess"
       @validation-error="onValidateError"
     >
-      <Stepper
+      <Tabs
         v-if="settings.tabs"
         :rows="rows"
         @submit="onSubmit"
         @reset="onReset"
         @clear="onClear"
-        ref="stepperComponent"
+        ref="tabsComponent"
       />
       <RowMapper
         v-else
@@ -67,7 +67,7 @@
 <script>
 import RowMapper from "./RowMapper";
 import Buttons from "./Buttons";
-import Stepper from "./Stepper";
+import Tabs from "./Tabs";
 import { fieldsToRows, sortByTabs } from "./toRows";
 import { fbGlobal, initConfig } from "src/arguments";
 import { validator } from "./inputs/validator";
@@ -76,7 +76,7 @@ export default {
   components: {
     RowMapper,
     Buttons,
-    Stepper,
+    Tabs,
   },
   data() {
     return {
@@ -100,7 +100,7 @@ export default {
   methods: {
     async trySubmit(e) {
       if (this.settings.tabs) {
-        const res = await this.$refs.stepperComponent.trySubmit(e);
+        const res = await this.$refs.tabsComponent.trySubmit(e);
         if (!res) return false;
       }
       const res = await this.$refs.form.validate();
@@ -198,10 +198,10 @@ export default {
       }
     },
     onNext() {
-      this.$refs.stepperComponent.onNextClick();
+      this.$refs.tabsComponent.onNextClick();
     },
     onBack() {
-      this.$refs.stepperComponent.onBackClick();
+      this.$refs.tabsComponent.onBackClick();
     },
 
     async reset() {
