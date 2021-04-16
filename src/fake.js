@@ -1,8 +1,8 @@
 export const formConfig = {
   fields: {
-    firstguy: {
-      
-    },
+    // firstguy: {
+    //   s: 's'
+    // },
     secondGuy: {
       value: 'Sommsom',
       row: 2,
@@ -33,5 +33,5 @@ export const formConfig = {
 
 
 export const values = {
-  firstguy: 'Annan'
+  secondGuy: 'Annan'
 }

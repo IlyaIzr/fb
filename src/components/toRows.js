@@ -22,20 +22,18 @@ export const fieldsToRows = (fields, values = {}, multiKey = false, multiValues 
   const unorderedRows = [];
   for (let [key, field] of Object.entries(fields)) {
     // field = { ...field }   // removes Proxy wrap, but also a connection to fbGlobal
-  // field.watcher ||= 1 //TODO
+    
 
     if (multiKey) field.multiKey = multiKey
 
     // Assign required and default values
     defaultProps(field)
 
-    if (key in values) field.value = values[key]
-
-
     // correct getters '_key' value
     field.key = String(key).replace("_", "")
     fieldsCollector[field.key] = []
 
+    if (field.key in values) field.value = values[field.key]
 
     // Assign default rest values
     // Should be last one to have highest priority

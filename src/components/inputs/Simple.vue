@@ -32,7 +32,7 @@ export default {
     ...strMethods
   },
   beforeMount(){
-    console.log({...this.rest});
+    // console.log({...this.rest});
   },
   watch: {
     // rest: {
