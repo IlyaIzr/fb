@@ -139,7 +139,7 @@ export default {
     async onReset() {
       let cb;
       if (this.methods.onReset) {
-        cb = await this.methods.onReset(fbGlobal, this, values);
+        cb = await this.methods.onReset(fbGlobal, this);
       }
 
       Object.keys(fbGlobal.fields).forEach((key) => {
@@ -156,12 +156,12 @@ export default {
         this.computeRawsTrigger += 1;
       });
 
-      if (typeof cb === "function") cb(fbGlobal, this, values);
+      if (typeof cb === "function") await cb(fbGlobal, this);
     },
     async onClear() {
       let cb;
       if (this.methods.onClear) {
-        cb = await this.methods.onClear(fbGlobal, this, values);
+        cb = await this.methods.onClear(fbGlobal, this);
       }
 
       Object.entries(fbGlobal.fields).forEach(([key, config]) => {
@@ -182,19 +182,19 @@ export default {
         this.$refs.form.resetValidation();
       });
 
-      if (typeof cb === "function") cb(fbGlobal, this, values);
+      if (typeof cb === "function") await cb(fbGlobal, this);
     },
     async onValidateSuccess() {
       if (this.methods.onValidateSuccess) {
-        const cb = await this.methods.onValidateSuccess(fbGlobal, this, values);
-        if (typeof cb === "function") cb(fbGlobal, this, values);
+        const cb = await this.methods.onValidateSuccess(fbGlobal, this);
+        if (typeof cb === "function") cb(fbGlobal, this);
       }
     },
     async onValidateError(err) {
       const f = this.methods.onValidateError || this.methods.onValidationError;
       if (f) {
-        const cb = await f(fbGlobal, this, values, err);
-        if (typeof cb === "function") cb(fbGlobal, this, values);
+        const cb = await f(fbGlobal, this, err);
+        if (typeof cb === "function") await cb(fbGlobal, this, err);
       }
     },
     onNext() {
@@ -309,6 +309,12 @@ export default {
     this.rows = this.rowsComputed();
   },
 
+  async mounted() {
+    if (this.form.onMount) {
+      const cb = await this.form.onMount(fbGlobal, this, this.$refs.form);
+      if (cb && typeof cb === "function") await cb(fbGlobal, this, this.$refs.form);
+    }
+  },
   watch: {
     computeRawsTrigger: {
       handler() {
