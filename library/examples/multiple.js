@@ -1,55 +1,56 @@
 const formConfig = {
   title: 'Multiple fields',
-
-  simpleMultiple: {
-    type: 'multiple',
-    label: "Multiple with simpleinputs",
-    value: [
-      { firstName: 'Peter', lastName: '' },
-      { firstName: 'Lois', lastName: 'Puttershmidt' }
-    ],
-    settings: {
-      firstName: {
-        label: 'First name',
-      },
-      lastName: {
-        label: 'Last name'
-      },
-    },
-
-    row: 1
-  },
-  reacivity: {
-    label: 'Focus on me',
-    onFocus(formGlobal) {
-      const fb = formGlobal
-
-      // Change one property on rendered field
-      fb.fields.simpleMultiple.fields[0].firstName.hint = 'First rendered "firstname" hint'
-
-      // Assign config
-      // TBD
-      // fb.fields.simpleMultiple.fields[0].firstName = {
-      //   hint: 'First rendered "firstname" hint',
-      //   label: 'First name first'
-      // }
-
-      // Rewrite fields settings
-      // __ Rewrite whole field config
-      fb.fields.simpleMultiple.settings.lastName = {
-        label: 'Family name',
-        hint: 'a.k.a second name'
-      }
-      // __ Rewrite whole setting - To Be Tested
-      fb.fields.simpleMultiple.settings = {
+  fields: {
+    simpleMultiple: {
+      type: 'multiple',
+      label: "Multiple with simpleinputs",
+      value: [
+        { firstName: 'Peter', lastName: '' },
+        { firstName: 'Lois', lastName: 'Puttershmidt' }
+      ],
+      settings: {
         firstName: {
-          label: 'New setting field',
-        }
-      }
+          label: 'First name',
+        },
+        lastName: {
+          label: 'Last name'
+        },
+      },
 
-      // __ Update single property (without rewriting)
-      fb.fields.simpleMultiple.settings.lastName.hint = 'family name'
-    }
+      row: 1
+    },
+    reacivity: {
+      label: 'Focus on me',
+      onFocus(formGlobal) {
+        const fb = formGlobal
+
+        // Change one property on rendered field
+        fb.fields.simpleMultiple.fields[0].firstName.hint = 'First rendered "firstname" hint'
+
+        // Assign config
+        // TBD
+        // fb.fields.simpleMultiple.fields[0].firstName = {
+        //   hint: 'First rendered "firstname" hint',
+        //   label: 'First name first'
+        // }
+
+        // Rewrite fields settings
+        // __ Rewrite whole field config
+        fb.fields.simpleMultiple.settings.lastName = {
+          label: 'Family name',
+          hint: 'a.k.a second name'
+        }
+        // __ Rewrite whole setting - To Be Tested
+        fb.fields.simpleMultiple.settings = {
+          firstName: {
+            label: 'New setting field',
+          }
+        }
+
+        // __ Update single property (without rewriting)
+        fb.fields.simpleMultiple.settings.lastName.hint = 'family name'
+      }
+    },
   },
 
   methods: {

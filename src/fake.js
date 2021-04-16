@@ -8,7 +8,11 @@ export const formConfig = {
     secondGuy: {
       value: 'Sommsom',
       row: 2,
-      label: 11
+      label: 11,
+      onFocus(a, b, c) {
+        console.log('asas');
+        console.log(...arguments);
+      }
     },
     
   },
@@ -31,4 +35,5 @@ export const formConfig = {
 
 
 export const values = {
+  firstguy: 'Annan'
 }

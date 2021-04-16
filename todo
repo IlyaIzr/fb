@@ -1,3 +1,10 @@
+no-settings fields don't have persist values
+extra values not working right
+date validation error on third input
+draw tabs
+0-value select-writable
+check if onMount method
+
 prefix and suffix
 
 ? multiple rendered fields {} chages

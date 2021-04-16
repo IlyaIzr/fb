@@ -2,8 +2,8 @@ import { fbGlobal } from "src/arguments";
 
 // Exeptions: Multiple
 export const commonMethods = {
-  async onFocus(e) {
-    if (this.rest?.onFocus) {
+  async onFocus() {
+    if (this.rest.onFocus) {
       const cb = await this.rest.onFocus(fbGlobal);
       if (typeof cb === "function") await cb(fbGlobal, this, e);
     }

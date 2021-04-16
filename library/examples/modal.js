@@ -12,7 +12,7 @@ const formConfig = {
   },
 
   modal: {
-    // all availble properties. See more: https://quasar.dev/vue-components/dialog#qdialog-api
+    // Modal mode properties. See more: https://quasar.dev/vue-components/dialog#qdialog-api
     position: 'left',
     isOpen: false,
     persistent: true,

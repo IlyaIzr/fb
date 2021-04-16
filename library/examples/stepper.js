@@ -31,7 +31,7 @@ const formConfig = {
     }
   },
 
-  buttons: {   // Not reuired
+  buttons: {   // Not required
 
     // You can re-assign buttons values
     submit: {
