@@ -54,6 +54,12 @@
 import { date } from "quasar";
 import CalendarInput from "./Calendar";
 import { commonMethods } from "./common";
+function stringdDate(val) {
+  if (!val) return "";
+  if (typeof val === 'string') return val;
+  if (val.from) return val.from + " - " + val.to;
+  return ""
+}
 const { formatDate } = date;
 export default {
   name: "DateInput",
@@ -104,7 +110,7 @@ export default {
       }
 
       this.rest.value = finalVal;
-      if (updateTextInput) this.inputValue = inputVal;
+      if (updateTextInput) this.inputValue = stringdDate(inputVal);
 
       if (typeof cb === "function") await cb(fbGlobal, this, val);
     },
@@ -124,41 +130,38 @@ export default {
     inputDateRules() {
       let res = this.rest.rules || [];
       // Delimeter
-      const d = this.rest.inputMask?.[2] || "#";
+      // const d = this.rest.inputMask?.[2] || ".";
       if (this.rest.required && !this.rest.range) {
         res = [
           (dateString) =>
-            (dateString.split(d)[0] < 32 &&
-              dateString.split(d)[1] < 13 &&
-              dateString.split(d)[2] > 1900) ||
+            (dateString.split(".")[0] < 32 &&
+              dateString.split(".")[1] < 13 &&
+              dateString.split(".")[2] > 1900) ||
             this.rest.requiredMessage ||
             "Incorrect date",
         ];
+      } else if (this.rest.required) {
+        const range = (str) => {
+          const obj = this.rest.value;
+          // !console.log("im runing", this.rest.value, str);
+          const errMsg = this.rest.requiredMessage || "Incorrect date";
+          if (!str || str.length < 23) return errMsg;
+          const { from, to } = obj;
+          let [day, month, year] = from.split(".");
+          if (day > 31 || month > 12 || year < 1900) return errMsg;
+          [day, month, year] = to.split(".");
+          if (day > 31 || month > 12 || year < 1900) return errMsg;
+          return true;
+        };
+        res = [range];
       }
-      // else if (this.rest.required) {
-      //   res = [
-      //     (rangeStr) => {
-      //       console.log('val run', rangeStr);
-      //       const errMsg = this.rest.requiredMessage || "Incorrect date";
-      //       if (!rangeStr) return errMsg
-      //       const [from, to] = rangeStr.split(" - ");
-      //       let [day, month, year] = from.split(d);
-      //       console.log(day, month, year, day > 31 || month > 12 || year < 1900, day > 31);
-      //       if (day > 31 || month > 12 || year < 1900) return errMsg;
-      //       [day, month, year] = to.split(d);
-      //       console.log(day, month, year);
-      //       if (day > 31 || month > 12 || year < 1900) return errMsg;
-      //       return true
-      //     },
-      //   ];
-      // }
       return res;
     },
   },
   beforeMount() {
     const field = this.rest;
     field.withInput ??= true;
-    this.inputValue = this.rest.value;
+    this.inputValue = stringdDate(this.rest.value);
   },
 };
 </script>
