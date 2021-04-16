@@ -29,7 +29,8 @@ const formConfig = {
       options: ['pepe', 'bebe'],
       // value must be an array
       value: [],
-      multiple: true
+      multiple: true,
+      writable: false, // True by dafault. Allow user to write values to reduce select options
     }
   },
 

@@ -1,20 +1,15 @@
 export const formConfig = {
+
   fields: {
-    bio: {
-      label: 'Tell us about yourself'
-    },
-    name: {
-      label: 'Ваше имя',
-      value: 'Anton',
-      tab: 2
-    },
-    city: {
-      label: 'City',
-      rules: [a => a && a.length > 3 || 'err msg'],
-      tab: 3,
-    },
+    multipleSelect: {
+      type: 'select',
+      options: ['pepe', 'bebe'],
+      // value must be an array
+      value: [''],
+      multiple: true
+    }
   },
-  tabs: true,
+  
   methods: {
     onSubmit(formGlobal, component, values) {
       console.log(values);
