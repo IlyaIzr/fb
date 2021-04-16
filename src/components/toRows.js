@@ -22,6 +22,7 @@ export const fieldsToRows = (fields, values = {}, multiKey = false, multiValues 
   const unorderedRows = [];
   for (let [key, field] of Object.entries(fields)) {
     // field = { ...field }   // removes Proxy wrap, but also a connection to fbGlobal
+  // field.watcher ||= 1 //TODO
 
     if (multiKey) field.multiKey = multiKey
 

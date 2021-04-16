@@ -31,6 +31,20 @@ export default {
     ...commonMethods,
     ...strMethods
   },
+  beforeMount(){
+    console.log({...this.rest});
+  },
+  watch: {
+    // rest: {
+    //   handler() {
+    //     console.log("rerest", this.rest.key);
+    //   },
+    //   deep: true,
+    // },
+    // trigger() {
+    //   console.log("trigger happend");
+    // },
+  },
   
 };
 </script>

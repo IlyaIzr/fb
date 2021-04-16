@@ -1,17 +1,15 @@
 export const formConfig = {
   fields: {
     firstguy: {
-      value: 'Peter',
-      row: 1,
-      label: 11
+      
     },
     secondGuy: {
       value: 'Sommsom',
       row: 2,
-      label: 11,
+      label: 'secondGuy',
       onFocus(a, b, c) {
-        console.log('asas');
-        console.log(...arguments);
+        // console.log('asas');
+        // console.log(...arguments);
       }
     },
     

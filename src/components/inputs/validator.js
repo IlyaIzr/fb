@@ -137,7 +137,7 @@ export function defaultProps(field) {
   // Additional default props
   if (field.clearable === undefined) field.clearable = true
   if (field["clear-icon"] === undefined) field["clear-icon"] = "close"
-  if (field.required === undefined) field.required = true
+  if (field.required === undefined) field.required = false
   if (field.visible === undefined) field.visible = true
   if (typeof field.rules !== 'object') field.rules = []
 
