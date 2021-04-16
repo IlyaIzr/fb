@@ -1,10 +1,12 @@
 <template>
   <div v-if="rest.visible">
+    <!-- No input -->
     <div v-if="!rest.withInput" class="q-gutter-md">
       <h5 class="fb-field-label text-subtitle1 q-mb-none">{{ rest.label }}</h5>
       <CalendarInput
         :label="rest.label"
         :keyName="keyName"
+        :textInputValue="inputValue"
         :rest="rest"
         :class="rest.class + ' input-' + keyName"
         @input="onInput"
@@ -12,6 +14,7 @@
         @blur="onBlur"
       />
     </div>
+    <!-- With input -->
     <div v-else class="q-gutter-md">
       <q-input
         @input="onTextInput"
@@ -119,7 +122,6 @@ export default {
       }
     },
     inputDateRules() {
-      
       let res = this.rest.rules || [];
       // Delimeter
       const d = this.rest.inputMask?.[2] || "#";
@@ -132,7 +134,7 @@ export default {
             this.rest.requiredMessage ||
             "Incorrect date",
         ];
-      } 
+      }
       // else if (this.rest.required) {
       //   res = [
       //     (rangeStr) => {

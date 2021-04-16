@@ -49,34 +49,34 @@ export default {
   computed: {
     rules() {
       let res = [];
+      const errMsg = this.rest.requiredMessage || "Incorrect date";
+      const noRange = (str) => {
+        if (!str) return errMsg;
+        const [day, month, year] = str.split("."); // Watch mask
+        if (day < 32 && month < 13 && year > 1900 && year < 2222) return true;
+        return errMsg;
+      };
+      const range = (str) => {
+        const errMsg = this.rest.requiredMessage || "Incorrect date";
+        if (!str || str.length < 23) return errMsg;
+        const [from, to] = str.split(" - ");
+        let [day, month, year] = from.split(".");
+        if (day > 31 || month > 12 || year < 1900) return errMsg;
+        [day, month, year] = to.split(".");
+        if (day > 31 || month > 12 || year < 1900) return errMsg;
+        return true;
+      };
       if (this.rest.required && !this.rest.range) {
-        res = [
-          (dateString) =>
-            (dateString.split(".")[0] < 32 &&
-              dateString.split(".")[1] < 13 &&
-              dateString.split(".")[2] > 1900) ||
-            this.rest.requiredMessage ||
-            "Incorrect date",
-        ];
+        res = [noRange];
       } else if (this.rest.required) {
-        res = [
-          (rangeObject) =>
-            (rangeObject.from.split(".")[0] < 2 &&
-              rangeObject.from.split(".")[1] < 13 &&
-              rangeObject.from.split(".")[2] > 1900 &&
-              rangeObject.to.split(".")[0] < 32 &&
-              rangeObject.to.split(".")[1] < 13 &&
-              rangeObject.to.split(".")[2] > 1900) ||
-            this.rest.requiredMessage ||
-            "Incorrect date",
-        ];
+        res = [range];
       }
       return res;
     },
     mask() {
       let mask = "";
-      if (this.rest.calendarMask) return this.rest.calendarMask
-      mask =  "DD.MM.YYYY";
+      if (this.rest.calendarMask) return this.rest.calendarMask;
+      mask = "DD.MM.YYYY";
       if (this.rest.localization === "ru") return mask;
       if (this.rest.localization === "en") {
         mask = "YYYY.MM.DD";
