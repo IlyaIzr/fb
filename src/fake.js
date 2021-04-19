@@ -2,14 +2,9 @@ export const formConfig = {
 
   fields: {
     multipleSelect: {
-      type: 'select',
-      options: ['pepe', 'bebe'],
-      // value must be an array
-      value: [''],
-      multiple: true
     }
   },
-  
+
   methods: {
     onSubmit(formGlobal, component, values) {
       console.log(values);

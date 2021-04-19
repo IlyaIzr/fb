@@ -1,6 +1,8 @@
 <template>
   <div
-    :class="'fb-field-container col ' + `${!fieldInfo.multiKey ? ' q-mx-md' : ''}`"
+    :class="
+      'fb-field-container col ' + `${!fieldInfo.multiKey ? ' q-mx-md' : ''}`
+    "
     style="min-width: 160px"
   >
     <div class="fb-field column q-my-sm">
@@ -141,7 +143,7 @@ export default {
             // And reactive
             self.trigger += 1;
 
-            let validated =
+            const validated =
               field.type && validator[field.type]?.[prop]?.(value, field);
             if (validated !== undefined) value = validated;
 
@@ -160,7 +162,25 @@ export default {
         const reactive = new Proxy(field, reactiveFieldWrap);
         fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key] = reactive;
         res = reactive;
-      } else res = fbGlobal.fields[i.key];
+        return res;
+      }
+
+      const reactiveFieldWrap = {
+        set: function (field, prop, value) {
+          // Make changes and additions observable
+          field.watcher += 1;
+          // And reactive
+          self.trigger += 1;
+
+          const validated =
+            field.type && validator[field.type]?.[prop]?.(value, field);
+          if (validated !== undefined) value = validated;
+
+          field[prop] = value;
+          return true;
+        },
+      };
+      res = new Proxy(fbGlobal.fields[i.key], reactiveFieldWrap);
 
       // console.log({ ...res }, res.key, {...res.value});
       return res;
@@ -200,7 +220,7 @@ export default {
 </script>
 
 <style>
-.fb-field-label{
+.fb-field-label {
   font-size: 1.2em;
   margin: 16px;
 }
