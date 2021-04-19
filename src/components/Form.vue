@@ -310,8 +310,8 @@ export default {
   },
 
   async mounted() {
-    if (this.form.onMount) {
-      const cb = await this.form.onMount(fbGlobal, this, this.$refs.form);
+    if (this.methods.onMount) {
+      const cb = await this.methods.onMount(fbGlobal, this, this.$refs.form);
       if (cb && typeof cb === "function") await cb(fbGlobal, this, this.$refs.form);
     }
   },
