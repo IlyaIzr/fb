@@ -1,8 +1,12 @@
 export const formConfig = {
 
   fields: {
-    multipleSelect: {
-    }
+    bebers: {
+    },
+    html: {
+      type: 'html',
+      value: 'zelibobersen'
+    },
   },
 
   methods: {

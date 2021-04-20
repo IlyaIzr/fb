@@ -36,7 +36,10 @@ const commonProps = {
   required(val, f) { return booleaner(val, f) },
   clearable(val, f) { return booleaner(val, f) },
   disable(val, f) { return booleaner(val, f) },
-  service(val, f) { return booleaner(val, f) },
+  service(val, f) {
+    if (f.type === 'html') return true
+    return booleaner(val, f)
+  },
   visible(val, f) { return booleaner(val, f) },
 
   rules(val, f) { return arrayer(val, f) },
@@ -133,6 +136,7 @@ export function defaultProps(field) {
   // Required props
   field.type ??= "text";
   field.value ??= ""
+  field.service ??= false
 
   // Additional default props
   if (field.clearable === undefined) field.clearable = true
