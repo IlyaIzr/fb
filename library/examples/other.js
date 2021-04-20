@@ -20,6 +20,19 @@ const formConfig = {
       // no Event handler functions
     },
 
+    // Slider
+    
+    slider: { 
+      type: 'slider',
+      label: 'some slider',
+      // value: 12,
+      min: -10,
+      max: 22,
+      rules: [val => val > 5 || 'bigger then 5, please'],
+      showValue: false,
+      // More props can be found here https://quasar.dev/vue-components/slider#qslider-api
+    },
+
     // Text editor
 
     editor: {
@@ -40,8 +53,6 @@ const formConfig = {
       console.log(values);
     },
     async onReset(formGlobal, component) {
-
-
       // Callback functions availible for all event handlers
       return async (formGlobal) => {
         // do something AFTER reset

@@ -17,7 +17,7 @@ const formConfig = {
     },
   },
 
-  // tabs: true,  // Thats enough
+  tabs: true,  // Thats enough
 
   // More verbose config
   tabs: {

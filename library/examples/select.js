@@ -30,6 +30,10 @@ const formConfig = {
       // value must be an array
       value: [],
       multiple: true,
+    },
+    
+    otherSelectOptions: {
+      type: 'select',
       writable: false, // True by dafault. Allow user to write values to reduce select options
     }
   },
