@@ -2,10 +2,7 @@ export const formConfig = {
 
   fields: {
     bebers: {
-    },
-    html: {
-      type: 'html',
-      value: 'zelibobersen'
+      type: 'password'
     },
   },
 
