@@ -6,12 +6,12 @@ const formConfig = {
     fieldWithMask: {
       mask: 'Aaa_##', // See more: https://quasar.dev/vue-components/input#mask
     },
-    fieldSideElements: {
-      innerLeft: {
+    fieldAttachments: { // side elements
+      outerLeft: {
         type: 'icon',
         name: 'settings'  // name of icon
       },
-      innerRight: {
+      innerLeft: {
         type: 'img',
         src: 'url://some url'
       },
@@ -22,6 +22,13 @@ const formConfig = {
           field.value = 'New value'
         }
       },
+      outerRight: {
+        type: 'button',
+        label: 'check value',        
+        onClick: (fb, component, field) => {
+          if (field.value) console.log('checked');
+        }
+      }
     },
     password: {
       type: 'password'

@@ -2,9 +2,18 @@ export const formConfig = {
 
   fields: {
     bebers: {
-      type: 'number',
-      
+      type: 'password',
+      value: 'as',
+      row: 1,
+      outerLeft: {
+        type: 'button',
+        label: 'pus',
+        onClick: (fb, component, field) => {
+          field.value = 'New value'
+        }
+      },
     },
+    peps: {row: 1}
   },
 
   methods: {

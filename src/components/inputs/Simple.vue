@@ -1,5 +1,5 @@
 <template>
-  <div class="q-gutter-md" v-if="rest.visible">
+  <div class="q-gutter-md col" v-if="rest.visible">
     <q-input
       v-bind="rest"
       @focus="onFocus"
@@ -9,34 +9,10 @@
       class="fb-field-content"
     >
       <template v-slot:prepend v-if="innerLeft">
-        <q-icon v-if="innerLeft.type === 'icon'" v-bind="innerLeft" />
-        <q-avatar v-else-if="innerLeft.type === 'img'">
-          <img v-bind="innerLeft" />
-        </q-avatar>
-        <q-btn
-          v-else-if="innerLeft.type === 'button'"
-          round
-          dense
-          flat
-          v-bind="innerLeft"
-          @click="innerLeftClick"
-        />
+        <Attachment :config="innerLeft" :f="innerLeftClick" />
       </template>
       <template v-slot:append v-if="innerRight || isPassword">
-        <div v-if="innerRight">
-          <q-icon v-if="innerRight.type === 'icon'" v-bind="innerRight" />
-          <q-avatar v-else-if="innerRight.type === 'img'">
-            <img v-bind="innerRight" />
-          </q-avatar>
-          <q-btn
-            v-else-if="innerRight.type === 'button'"
-            round
-            dense
-            flat
-            v-bind="innerRight"
-            @click="innerRightClick"
-          />
-        </div>
+        <Attachment :config="innerRight" :f="innerRightClick" />
         <q-icon
           v-if="isPassword"
           :name="isPassword ? 'visibility_off' : 'visibility'"
@@ -49,11 +25,13 @@
 </template>
 
 <script>
+import Attachment from "./Attachment";
 import { fbGlobal } from "src/arguments";
 import { checkRulesBool, commonMethods, strMethods } from "./common";
 
 export default {
   name: "SimpleInput",
+  components: { Attachment },
   props: {
     keyName: {
       type: String,

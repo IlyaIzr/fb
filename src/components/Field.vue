@@ -5,7 +5,10 @@
     "
     style="min-width: 160px"
   >
-    <div class="fb-field column q-my-sm">
+    <div class="fb-field row q-my-sm">
+      <!-- Outer prefix -->
+      <Attachment :config="rest.outerLeft" :f="outerLeftClick" />
+
       <SimpleInput
         v-if="inputType === 'simple'"
         :keyName="fieldInfo.key"
@@ -42,6 +45,8 @@
       <div v-if="inputType === 'err'">
         err, wrong type: {{ fieldInfo.type }}
       </div>
+
+      <Attachment :config="rest.outerRight" :f="outerRightClick" />
     </div>
   </div>
 </template>
@@ -55,6 +60,7 @@ import Date from "./inputs/Date";
 import Checkbox from "./inputs/Checkbox";
 import Html from "./inputs/Html";
 import Editor from "./inputs/Editor";
+import Attachment from "./inputs/Attachment";
 import { fbGlobal } from "src/arguments";
 import { validator } from "./inputs/validator";
 
@@ -88,6 +94,7 @@ export default {
     Checkbox,
     Html,
     Editor,
+    Attachment,
   },
   computed: {
     inputType() {
@@ -182,6 +189,16 @@ export default {
 
       // console.log({ ...res }, res.key, {...res.value});
       return res;
+    },
+  },
+  methods: {
+    async outerLeftClick() {
+      const f = this.rest.outerLeft?.onClick;
+      if (f) await f?.(fbGlobal, this.$children[0], this.rest);
+    },
+    async outerRightClick() {
+      const f = this.rest.outerLeft?.onClick;
+      if (f) await f?.(fbGlobal, this.$children[0], this.rest);
     },
   },
   beforeMount() {
