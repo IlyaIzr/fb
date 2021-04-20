@@ -16,6 +16,14 @@ const formConfig = {
       rules: [],
     },
 
+    universalProps: {
+      row: 1,
+      order: 1,
+      label: 'some string',
+      hint: 'some string down the field',
+      disabled: false, // needs testing
+    },
+
     // Simple input
     simpleInput: {
       label: 'Simple as that'
@@ -259,4 +267,27 @@ const formConfig = {
     },
   },
 
+  // Buttons 
+
+  buttons: {
+    // Submit is the only default button. 
+    // String as button label
+    submit: 'Send',
+    // Config for verbose button config
+    // See more: https://quasar.dev/vue-components/button#qbtn-api
+    reset: {
+      label: 'reset',
+      color: 'danger'
+    },
+    clear: {
+      label: 'clear',
+      color: 'warning'
+    },
+
+    // Redifine tabs buttons
+    next: "Next step",
+    back: "Go back",
+    // Redifine modal close button
+    close: 'X'
+  }
 }
