@@ -2,7 +2,8 @@ export const formConfig = {
 
   fields: {
     bebers: {
-      type: 'password'
+      type: 'number',
+      
     },
   },
 

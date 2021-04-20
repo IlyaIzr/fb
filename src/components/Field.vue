@@ -98,11 +98,9 @@ export default {
         "password",
         "textarea",
         "email",
-        "search",
-        "tel",
         "number",
-        "url",
-        "timedate",
+        "time",
+        "dateNative",
       ];
       if (simpleTypes.find((value) => value === type)) {
         return "simple";

@@ -4,9 +4,53 @@ const formConfig = {
   fields: {
     textField: {},
     fieldWithMask: {
-      mask: 'Aaa_##', // see more: https://quasar.dev/vue-components/input#mask
+      mask: 'Aaa_##', // See more: https://quasar.dev/vue-components/input#mask
     },
-    
+    fieldSideElements: {
+      innerLeft: {
+        type: 'icon',
+        name: 'settings'  // name of icon
+      },
+      innerRight: {
+        type: 'img',
+        src: 'url://some url'
+      },
+      innerRight: {
+        type: 'button',
+        icon: 'warning',
+        onClick: (fb, component, field) => {
+          field.value = 'New value'
+        }
+      },
+    },
+    password: {
+      type: 'password'
+    },
+    email: {
+      type: 'email',
+      postfix: '@gmail.com'
+    },
+    number: {
+      type: 'number',
+      value: 5
+    },
+    time: {      
+      type: 'time',
+      value: '12.24'
+    },
+    dateNative: {
+      // native html date input interface
+      type: 'dateNative',
+      value: '12.12.2012'
+    },
+    textarea: {
+      type: 'textarea'
+    },
+    otherInputOptions: {
+      // See more: https://quasar.dev/vue-components/input#qinput-api
+      prefix: 'email: ',
+      suffix: '@gmail.com'
+    }
   },
 
 

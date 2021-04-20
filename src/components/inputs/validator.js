@@ -29,6 +29,17 @@ function inputMethods(val) {
 
 
 const commonProps = {
+  row(val, f) {
+    let number = numberer(val, f)
+    if (number < 1) number = 1
+    return number
+  },
+  order(val, f) {
+    let number = numberer(val, f)
+    if (number < 1) number = 1
+    return number
+  },
+
   label(val, f) { return stringer(val, f) },
   hint(val, f) { return stringer(val, f) },
   requiredMessage(val, f) { return stringer(val, f) },
@@ -36,6 +47,9 @@ const commonProps = {
   required(val, f) { return booleaner(val, f) },
   clearable(val, f) { return booleaner(val, f) },
   disable(val, f) { return booleaner(val, f) },
+  clearable(val, f) { return booleaner(val, f) }, //??
+  "clear-icon"(val, f) { return stringer(val, f) || "close" },
+  loading(val, f) { return booleaner(val, f) },
   service(val, f) {
     if (f.type === 'html') return true
     return booleaner(val, f)
@@ -49,25 +63,44 @@ const commonProps = {
   onBlur(val) { return inputMethods(val) },
 }
 
+const textMeta = {
+  ...commonProps,
+  mask(val, f) { return stringer(val, f) },
+  prefix(val, f) { return stringer(val, f) },
+  suffix(val, f) { return stringer(val, f) }, 
+  autogrow(val, f) { return booleaner(val, f) },
+}
+
 export const validator = {
   text: {
-    ...commonProps,
+    ...textMeta,
     value(val, f) { return stringer(val, f) },
-    row(val, f) {
-      let number = numberer(val, f)
-      if (number < 1) number = 1
-      return number
-    },
-    order(val, f) {
-      let number = numberer(val, f)
-      if (number < 1) number = 1
-      return number
-    },
-
-    clearable(val, f) { return booleaner(val, f) },
-    "clear-icon"(val, f) { return stringer(val, f) || "close" },
-    mask(val, f) { return stringer(val, f) },
   },
+  password: {
+    ...textMeta,
+    value(val, f) { return stringer(val, f) },
+  },
+  email: {
+    ...textMeta,
+    value(val, f) { return stringer(val, f) },
+  },
+  number: {
+    ...textMeta,
+    value(val, f) { return numberer(val, f) },
+  },
+  time: {
+    ...textMeta,
+    value(val, f) { return stringer(val, f) },
+  },
+  dateNative: {
+    ...textMeta,
+    value(val, f) { return stringer(val, f) },
+  },
+  textarea: {
+    ...textMeta,
+    value(val, f) { return stringer(val, f) },
+  },
+  
   select: {
     ...commonProps,
     value(val, f) {
