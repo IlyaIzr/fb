@@ -3,16 +3,29 @@ const formConfig = {
 
   fields: {
     name: {
-      label: 'Click me',
       onFocus(fb) {
-        // Example of reactivity usage
       },
       rules: [val => val?.length > 3 || 'Name too short']
     },
-    nick: {
-      label: 'Ваш никнейм',
+
+    // Common field props
+    defaultPropValues: {
+      type: 'text',
       value: '',
-      rules: [a => a && a.length > 3 || 'err msg'],
+      clearable: true,
+      "clear-icon": 'close',
+      required: false,
+      visible: true,
+      rules: [],
+    },
+
+    // Props that every field can have
+    universalProps: {
+      row: 1,
+      order: 1,
+      label: 'some string',
+      hint: 'some string down the field',
+      disabled: false, // needs testing
     },
   },
 
@@ -22,4 +35,27 @@ const formConfig = {
     }
   },
 
+  // Buttons 
+
+  buttons: {
+    // Submit is the only default button. 
+    // String as button label
+    submit: 'Send',
+    // Config for verbose button config
+    // See more: https://quasar.dev/vue-components/button#qbtn-api
+    reset: {
+      label: 'reset',
+      color: 'danger'
+    },
+    clear: {
+      label: 'clear',
+      color: 'warning'
+    },
+
+    // Redifine tabs buttons
+    next: "Next step",
+    back: "Go back",
+    // Redifine modal close button
+    close: 'X'
+  }
 }
