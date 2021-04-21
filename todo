@@ -4,6 +4,9 @@ prefix and suffix
 ? multiple rendered fields {} chages
 
 
-Changes:
+Changes from first build:
+fields now is object of fields, where object key is field key
 buttons config is now object
 field.tabIndex -> field.tab
+field.rowIndex -> field.row
+no more config.tabs.buttons settings

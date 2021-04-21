@@ -21,13 +21,20 @@ const formConfig = {
 
   // More verbose config
   tabs: {
-    "header-nav": true
+    "header-nav": true,
+    steps: [
+      { title: 'First', icon: 'settings' }, //Icon names: https://material.io/resources/icons/
+      { title: 'Second', icon: 'img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg' }
+    ]
     // More properties: https://quasar.dev/vue-components/stepper#qstepper-api
   },
 
-  methods: {
-    onSubmit(formGlobal, component, values) {
-      console.log(values);
+  global: {
+    tabs: {      
+      steps: {
+        title: 'tab thing',
+        icon: 'settings'
+      }
     }
   },
 

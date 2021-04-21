@@ -1,37 +1,32 @@
+import { fbGlobal } from "src/arguments";
 import { defaultProps, validator } from "./inputs/validator";
 
 export const fieldsToRows = (fields, values = {}, multiKey = false, multiValues = []) => {
   if (!Object.entries(fields).length) return []
-  const fieldsCollector = {}
 
   // Assign required and default values, order rows
   const orderedRows = [];
   const unorderedRows = [];
+
   for (let [key, field] of Object.entries(fields)) {
-    // field = { ...field }   // removes Proxy wrap, but also a connection to fbGlobal
-    
+
+    // Assign globals
+    if (fbGlobal.global?.fields) for (const [key, value] of Object.entries(fbGlobal.global.fields)) {
+      if (field[key] === undefined) field[key] = value
+    }
+
+    // service keys
     if (!field.watcher) field.watcher = 1
     if (multiKey) field.multiKey = multiKey
-
-    // Assign required and default values
-    defaultProps(field)
-
     // correct getters '_key' value
     field.key = String(key).replace("_", "")
-    fieldsCollector[field.key] = []
 
-    if (field.key in values) field.value = values[field.key]
+    // Assign required and default values
+    defaultProps(field) // mutates field
 
-    // Assign default rest values
+    // Assign values from fb second-argument. 
     // Should be last one to have highest priority
-    // for (const [key, value] of Object.entries(globalRest)) {
-    //   if (field[key] !== undefined) {
-    //   } else if (typeof value === "function") {
-    //     field[key] = value(this.settings, field);
-    //   } else if (typeof value === "string") {
-    //     field[key] = value;
-    //   }
-    // }
+    if (field.key in values) field.value = values[field.key]
 
 
     // Validate initial entries
@@ -40,6 +35,7 @@ export const fieldsToRows = (fields, values = {}, multiKey = false, multiValues 
       if (validated !== undefined) field[prop] = validated;
     })
 
+    // Assign rows
     if (field.row === undefined) {
       unorderedRows.push([field]);  // [field] means every new field gets new entire row
     } else {

@@ -72,6 +72,7 @@ export default {
         steps: [{ title: "" }, { title: "" }],
       };
       const t = fbGlobal.tabs;
+      const gs = fbGlobal.global?.tabs;
       if (t && t.steps && Object.keys(t).length) {
         Object.keys(t).forEach((key) => (res[key] = t[key]));
       } else if (t) {
@@ -79,6 +80,17 @@ export default {
         for (let i = 0; i < diff; i++) {
           res.steps.push({ title: "" });
         }
+      }
+      if (gs && typeof gs === "object") {
+        Object.keys(gs).forEach((key) => {
+          if (key === "steps")
+            res.steps.forEach((step) => {
+              Object.keys(gs.steps).forEach(
+                (prop) => (step[prop] = gs.steps[prop])
+              );
+            });
+          else res[key] = gs[key];
+        });
       }
       return res;
     },

@@ -13,7 +13,7 @@ export const formConfig = {
         }
       },
     },
-    peps: {row: 1}
+    peps: { row: 1, label: 'pepser', tab: 2 }
   },
 
   methods: {
@@ -21,14 +21,25 @@ export const formConfig = {
       console.log(values);
     }
   },
-  // modal: {
-  //   maximized: true
-  // },
-  // modal: true,
+  
+  tabs: {
+    steps: [
+      { title: 'First', icon: 'settings' }, //Icon names: https://material.io/resources/icons/
+      { title: 'Second', icon: 'img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg' }
+    ]
+  },
 
-  // tabs: {
-  //   "header-nav": true
-  // },
+  global: {
+    fields: {
+      label: 'Imma field'
+    },
+    tabs: {
+      steps: {
+        title: 'tab thing',
+        icon: 'settings'
+      }
+    }
+  },
 
   title: 'Dev title'
 }

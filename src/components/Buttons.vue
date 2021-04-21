@@ -110,7 +110,6 @@ export default {
   watch: {
     stepperStore: {
       handler(val) {
-        console.log({...val});
         this.step = val.step
         this.validated = val.validated  
       },

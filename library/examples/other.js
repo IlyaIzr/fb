@@ -46,6 +46,21 @@ const formConfig = {
 
   },
 
+  // Global values
+  // lowest priority
+  
+  global: {
+    fields: {
+      label: 'Label for fields without label'
+    },
+    tabs: {
+      steps: {
+        title: 'tab thing',
+        icon: 'settings'
+      }
+    }
+  },
+
 
   // Form event handlers
   methods: {
