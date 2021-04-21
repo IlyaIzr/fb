@@ -81,7 +81,6 @@ export default {
     const self = this;
     const field = fbGlobal.fields[this.keyName];
     if (!field.fields) field.fields = [];
-    if (!field.watcher) field.watcher = 1;
 
     // console.log({ ...field });
 

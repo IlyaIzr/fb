@@ -163,7 +163,6 @@ export default {
           },
         };
 
-        field.watcher = 1;
         const reactive = new Proxy(field, reactiveFieldWrap);
         fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key] = reactive;
         res = reactive;

@@ -266,9 +266,8 @@ export default {
           field.type && validator[field.type]?.[prop]?.(value, field);
         if (validated !== undefined) value = validated;
 
-        // This lets vue watch objects even on new properties addition
-        if (!field.watcher) field.watcher = 1;
-        else field.watcher += 1;
+        // This lets vue watch objects even on new properties additionc
+        field.watcher += 1;
         // default assignment
         field[prop] = value;
         // Indicate success
