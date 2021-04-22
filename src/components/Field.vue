@@ -41,6 +41,11 @@
         :keyName="fieldInfo.key"
         :rest="rest"
       />
+      <Button
+        v-if="inputType === 'button'"
+        :keyName="fieldInfo.key"
+        :rest="rest"
+      />
 
       <div v-if="inputType === 'err'">
         err, wrong type: {{ fieldInfo.type }}
@@ -60,6 +65,7 @@ import Date from "./inputs/Date";
 import Checkbox from "./inputs/Checkbox";
 import Html from "./inputs/Html";
 import Editor from "./inputs/Editor";
+import Button from "./inputs/Button";
 import Attachment from "./inputs/Attachment";
 import { fbGlobal } from "src/arguments";
 import { validator } from "./inputs/validator";
@@ -95,6 +101,7 @@ export default {
     Html,
     Editor,
     Attachment,
+    Button,
   },
   computed: {
     inputType() {
@@ -120,6 +127,7 @@ export default {
         "checkbox",
         "html",
         "editor",
+        "button"
       ]);
       if (allowedTypes.has(type)) return type;
       else return "err";

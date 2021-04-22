@@ -51,7 +51,7 @@ const commonProps = {
   "clear-icon"(val, f) { return stringer(val, f) || "close" },
   loading(val, f) { return booleaner(val, f) },
   service(val, f) {
-    if (f.type === 'html') return true
+    if (f.type === 'html' || f.type === 'button') return true
     return booleaner(val, f)
   },
   visible(val, f) { return booleaner(val, f) },
@@ -67,7 +67,7 @@ const textMeta = {
   ...commonProps,
   mask(val, f) { return stringer(val, f) },
   prefix(val, f) { return stringer(val, f) },
-  suffix(val, f) { return stringer(val, f) }, 
+  suffix(val, f) { return stringer(val, f) },
   autogrow(val, f) { return booleaner(val, f) },
 }
 
@@ -100,7 +100,7 @@ export const validator = {
     ...textMeta,
     value(val, f) { return stringer(val, f) },
   },
-  
+
   select: {
     ...commonProps,
     value(val, f) {
@@ -160,7 +160,11 @@ export const validator = {
     value(val, f) { return stringer(val, f) },
     placeholder(val, f) { return stringer(val, f) },
 
-  }
+  },
+
+  button: {
+    ...commonProps,
+  },
 
 }
 

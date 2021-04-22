@@ -21,8 +21,8 @@ const formConfig = {
     },
 
     // Slider
-    
-    slider: { 
+
+    slider: {
       type: 'slider',
       label: 'some slider',
       // value: 12,
@@ -43,12 +43,34 @@ const formConfig = {
       disable: false
     },
 
+    // Button, custom button
+
+    triggerButton: {
+      type: 'button',
+      label: 'custom button',
+      color: 'primary',
+      size: 'sm',
+      onClick(fb, component, fieldConfig) {
+        fb.fields.targetField.visible = true
+      },
+      onInput() {
+        // onClick alias
+      },
+      onFocus() {
+        // onClick alias
+      },
+      onBlur() {
+        // onClick alias
+      },
+      // See more button props: https://quasar.dev/vue-components/button#qbtn-api
+    },
+
 
   },
 
   // Global values
   // lowest priority
-  
+
   global: {
     fields: {
       label: 'Label for fields without label'

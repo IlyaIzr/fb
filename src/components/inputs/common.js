@@ -4,13 +4,13 @@ import { fbGlobal } from "src/arguments";
 export const commonMethods = {
   async onFocus() {
     if (this.rest.onFocus) {
-      const cb = await this.rest.onFocus(fbGlobal);
-      if (typeof cb === "function") await cb(fbGlobal, this, e);
+      const cb = await this.rest.onFocus(fbGlobal, this);
+      if (typeof cb === "function") await cb(fbGlobal, this);
     }
   },
   async onBlur(e) {
     if (this.rest?.onBlur) {
-      const cb = await this.rest.onBlur(fbGlobal);
+      const cb = await this.rest.onBlur(fbGlobal, this);
       if (typeof cb === "function") await cb(fbGlobal, this, e);
     }
   },

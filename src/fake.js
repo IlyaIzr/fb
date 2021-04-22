@@ -1,19 +1,19 @@
 export const formConfig = {
 
   fields: {
-    bebers: {
-      type: 'password',
-      value: 'as',
-      row: 1,
-      outerLeft: {
-        type: 'button',
-        label: 'pus',
-        onClick: (fb, component, field) => {
-          field.value = 'New value'
-        }
-      },
+    triggerButton: {
+      type: 'button',
+      label: 'custom button',
+      color: 'primary',
+      size: 'sm',
+      onClick(fb, component){
+        fb.fields.targetField.visible = true
+      }
     },
-    peps: { row: 1, label: 'pepser', tab: 2 }
+    targetField: {
+      value: 'hidden field',
+      visible: false
+    }
   },
 
   methods: {
@@ -22,24 +22,6 @@ export const formConfig = {
     }
   },
   
-  tabs: {
-    steps: [
-      { title: 'First', icon: 'settings' }, //Icon names: https://material.io/resources/icons/
-      { title: 'Second', icon: 'img:https://cdn.quasar.dev/logo/svg/quasar-logo.svg' }
-    ]
-  },
-
-  global: {
-    fields: {
-      label: 'Imma field'
-    },
-    tabs: {
-      steps: {
-        title: 'tab thing',
-        icon: 'settings'
-      }
-    }
-  },
 
   title: 'Dev title'
 }
