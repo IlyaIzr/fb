@@ -33,6 +33,10 @@ export const strMethods = {
       cb = await this.rest.onInput(fbGlobal, this, val);
     }
     this.rest.value = val;
+    if (this.rest.meta) {
+      const valKey = this.rest.metaValueKey || 'value'
+      this.rest.meta[valKey] = val // cause value been validated
+    }
 
     if (typeof cb === "function") await cb(fbGlobal, this, val);
   },

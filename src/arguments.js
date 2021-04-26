@@ -3,6 +3,7 @@ export const fbGlobal = {
     const values = {};
     Object.entries(this.fields)?.forEach(([key, config]) => {
       if (config.service === true) return;
+      // Case multiple
       if (config.type === "multiple") {
         values[config.key] = {};
         config.fields.length &&
@@ -14,13 +15,19 @@ export const fbGlobal = {
               if (!values[config.key][multiIndex])
                 values[config.key][multiIndex] = {};
 
-              values[config.key][multiIndex][fieldKey] = fieldConfig.value;
+              if (fieldConfig.metaShouldSumbmit)  // case meta submit
+                return values[config.key][multiIndex][fieldKey] = fieldConfig.meta
+
+              return values[config.key][multiIndex][fieldKey] = fieldConfig.value;
             });
           });
-        return true;
+        return;
       }
-      key = String(key).replace("_", "");
-      values[key] = config.value;
+      // Case simple
+      // case meta submit
+      if (config.metaShouldSumbmit) return values[config.key] = config.meta
+      
+      return values[config.key] = config.value;
     });
     return values
   }

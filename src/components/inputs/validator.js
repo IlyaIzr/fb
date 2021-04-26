@@ -43,6 +43,7 @@ const commonProps = {
   label(val, f) { return stringer(val, f) },
   hint(val, f) { return stringer(val, f) },
   requiredMessage(val, f) { return stringer(val, f) },
+  metaValueKey(val, f) { return stringer(val, f) },
 
   required(val, f) { return booleaner(val, f) },
   clearable(val, f) { return booleaner(val, f) },
@@ -55,12 +56,21 @@ const commonProps = {
     return booleaner(val, f)
   },
   visible(val, f) { return booleaner(val, f) },
+  metaShouldSumbmit(val, f) { return booleaner(val, f) },
 
   rules(val, f) { return arrayer(val, f) },
 
   onInput(val) { return inputMethods(val) },
   onFocus(val) { return inputMethods(val) },
   onBlur(val) { return inputMethods(val) },
+
+  meta(metaObj, f) {
+    const metaValKey = f.metaValueKey || 'value'
+    if (metaObj[metaValKey]) {      
+      f.value = metaObj[metaValKey]
+    }
+    return metaObj
+  }
 }
 
 const textMeta = {

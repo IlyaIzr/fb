@@ -105,6 +105,25 @@ const formConfig = {
     }
   },
 
+  // Value meta option
+  
+  metaValueUsage: {
+    meta: {
+      value: 'Pepe',
+      payload: 'some other info'
+    },
+  },
+  metaValueUsage_2: {
+    meta: {
+      superName: 'Pepe',
+      payload: 'some other info'
+    },
+    // define another name for field value inside meta{}
+    metaValueKey: 'superName',
+    // This will submit whole object instead of just it's value, or renamed value
+    metaShouldSumbmit: true
+  },
+
 
   // Form event handlers
   methods: {
