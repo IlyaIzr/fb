@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import { commonMethods } from "./common";
+import { fbGlobal } from 'src/arguments';
+import { commonMethods, wrapedUserRules } from "./common";
 export default {
   name: "CalendarInput",
   props: {
@@ -48,7 +49,7 @@ export default {
   },
   computed: {
     rules() {
-      let res = [];
+      let res = wrapedUserRules(this.rest.rules || [], fbGlobal, "TODO");
       const errMsg = this.rest.requiredMessage || "Incorrect date";
       const noRange = (str) => {
         if (!str) return errMsg;
@@ -67,9 +68,9 @@ export default {
         return true;
       };
       if (this.rest.required && !this.rest.range) {
-        res = [noRange];
+        res = [noRange, ...res];
       } else if (this.rest.required) {
-        res = [range];
+        res = [range, ...res];
       }
       return res;
     },
