@@ -1,5 +1,3 @@
-Rules arguments - (val, subValues, fbGlobal, metaVal ) => true
-
 check required matches -> rules
 
 Meta value

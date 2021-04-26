@@ -38,16 +38,9 @@ export const strMethods = {
   },
 }
 
-
 // Exeptions: Date, Editor, File, Html, SelectInput, Slider
 export function checkRulesBool(rules, required, requiredMessage, metaValue) {
-  let res = []
-  rules.forEach(ruleFunction => {
-    const functionToPush = (val) => {
-      ruleFunction(val, fbGlobal.getFormValues(), fbGlobal, metaValue)
-    }
-    res.push(functionToPush)
-  })
+  let res = wrapedUserRules(rules, fbGlobal, metaValue)
   if (required) {
     res = [
       (val) => Boolean(val) || requiredMessage || "Please fill",
@@ -56,14 +49,9 @@ export function checkRulesBool(rules, required, requiredMessage, metaValue) {
   }
   return res;
 }
+// Used for: slider
 export function checkRulesNum(rules, required, requiredMessage) {
-  let res = []
-  rules.forEach(ruleFunction => {
-    const functionToPush = (val) => {
-      ruleFunction(val, fbGlobal.getFormValues(), fbGlobal, metaValue)
-    }
-    res.push(functionToPush)
-  })
+  let res = wrapedUserRules(rules, fbGlobal, metaValue)
   if (required) {
     res = [
       (val) => Number(val) > 0 || requiredMessage || "Please fill",
@@ -71,6 +59,17 @@ export function checkRulesNum(rules, required, requiredMessage) {
     ];
   }
   return res;
+}
+// helper function
+export function wrapedUserRules(rules, fbGlobal, metaValue) {
+  const res = []
+  rules.forEach(ruleFunction => {
+    const functionToPush = (val) => {
+      ruleFunction(val, fbGlobal.getFormValues(), fbGlobal, metaValue)
+    }
+    res.push(functionToPush)
+  })
+  return res
 }
 
 

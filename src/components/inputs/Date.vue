@@ -53,12 +53,13 @@
 <script>
 import { date } from "quasar";
 import CalendarInput from "./Calendar";
-import { commonMethods } from "./common";
+import { commonMethods, wrapedUserRules } from "./common";
+import { fbGlobal } from "src/arguments";
 function stringdDate(val) {
   if (!val) return "";
-  if (typeof val === 'string') return val;
+  if (typeof val === "string") return val;
   if (val.from) return val.from + " - " + val.to;
-  return ""
+  return "";
 }
 const { formatDate } = date;
 export default {
@@ -78,7 +79,7 @@ export default {
   },
   data() {
     return {
-      inputRules: this.inputDateRules(),
+      inputRules: this.getInputRules(),
       inputValue: "",
     };
   },
@@ -96,7 +97,7 @@ export default {
   methods: {
     ...commonMethods,
 
-    async onInput(val, updateTextInput = true) {
+    async onInput(val) {
       let cb;
       let finalVal = val;
       let inputVal = val;
@@ -110,7 +111,7 @@ export default {
       }
 
       this.rest.value = finalVal;
-      if (updateTextInput) this.inputValue = stringdDate(inputVal);
+      this.inputValue = stringdDate(inputVal);
 
       if (typeof cb === "function") await cb(fbGlobal, this, val);
     },
@@ -119,16 +120,15 @@ export default {
       // Case reset on range value
       if (!val) {
         this.inputValue = "";
-        return await this.onInput("", false);
+        return await this.onInput("");
       }
-      // Case valid length of range value provided
-      if (val.length === 23) {
-        const vals = val.split(" - ");
-        return await this.onInput({ from: vals[0], to: vals[1] }, false);
-      }
+      return await this.onInput({
+        from: val.substr(0, 10),
+        to: val.substr(13, 10),
+      });
     },
-    inputDateRules() {
-      let res = this.rest.rules || [];
+    getInputRules() {
+      let res = wrapedUserRules(this.rest.rules || [], fbGlobal, "TODO"); //metavalue
       // Delimeter
       // const d = this.rest.inputMask?.[2] || ".";
       if (this.rest.required && !this.rest.range) {
@@ -139,6 +139,7 @@ export default {
               dateString.split(".")[2] > 1900) ||
             this.rest.requiredMessage ||
             "Incorrect date",
+          ...res,
         ];
       } else if (this.rest.required) {
         const range = (str) => {
@@ -153,7 +154,7 @@ export default {
           if (day > 31 || month > 12 || year < 1900) return errMsg;
           return true;
         };
-        res = [range];
+        res = [range, ...res];
       }
       return res;
     },

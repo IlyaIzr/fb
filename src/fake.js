@@ -1,11 +1,13 @@
 export const formConfig = {
 
   fields: {
-    field: {
-      type: 'email',
-      autocomplete: false,
-      rules: [(val, formValues, fbGlobal, metaValue = 'In development') => console.log(val, formValues, fbGlobal)]
-    }
+    inputDate: {
+      type: 'date',
+      rules: [(val, formValues, fbGlobal, metaValue = 'In development') => console.log('validation happens', val) === true],
+      required: true,
+      // range: true,
+      // value: { from: '12.12.2012', to: '15.12.2012' },
+    },
   },
 
   methods: {
