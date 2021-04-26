@@ -1,3 +1,16 @@
+Rules arguments - (val, subValues, fbGlobal, metaVal ) => true
+
+check required matches -> rules
+
+Meta value
+meta: {
+  extraInfo: 'fasfnlsafn',
+  value: 'reactivity issue'
+},
+metaKeyName: 'asg',
+metaShouldSumbmit: false
+
+field.reset() field.clear() own methods
 
 prefix and suffix
 

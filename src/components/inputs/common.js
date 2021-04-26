@@ -40,22 +40,34 @@ export const strMethods = {
 
 
 // Exeptions: Date, Editor, File, Html, SelectInput, Slider
-export function checkRulesBool(rules, required, requiredMessage) {
-  let res = rules
+export function checkRulesBool(rules, required, requiredMessage, metaValue) {
+  let res = []
+  rules.forEach(ruleFunction => {
+    const functionToPush = (val) => {
+      ruleFunction(val, fbGlobal.getFormValues(), fbGlobal, metaValue)
+    }
+    res.push(functionToPush)
+  })
   if (required) {
     res = [
       (val) => Boolean(val) || requiredMessage || "Please fill",
-      ...rules,
+      ...res,
     ];
   }
   return res;
 }
 export function checkRulesNum(rules, required, requiredMessage) {
-  let res = rules
+  let res = []
+  rules.forEach(ruleFunction => {
+    const functionToPush = (val) => {
+      ruleFunction(val, fbGlobal.getFormValues(), fbGlobal, metaValue)
+    }
+    res.push(functionToPush)
+  })
   if (required) {
     res = [
       (val) => Number(val) > 0 || requiredMessage || "Please fill",
-      ...rules,
+      ...res,
     ];
   }
   return res;

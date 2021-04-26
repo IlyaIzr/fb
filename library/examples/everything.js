@@ -142,6 +142,27 @@ const formConfig = {
     },
 
 
+    // Field validation rules
+
+    anyField: {
+      rules: [
+        () => {
+          // Rules are array of functions. They happend onInput event and validate user input
+        },
+        (val) => {
+          console.log(val)
+          return true
+          // if faunction returns true, validation is successful
+        },
+        (val) => {
+          // if function result !== true it returns validation error
+          return 'String value will be shown as validation error message'
+        },
+        // You can use extra arguments
+        (val, formValues, fbGlobal, metaValue = 'In development') => console.log(val, formValues, fbGlobal) == false
+      ]
+    },
+    
     // Checkbox
 
     checkbox: {

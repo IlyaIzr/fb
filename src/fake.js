@@ -1,18 +1,10 @@
 export const formConfig = {
 
   fields: {
-    triggerButton: {
-      type: 'button',
-      label: 'custom button',
-      color: 'primary',
-      size: 'sm',
-      onClick(fb, component){
-        fb.fields.targetField.visible = true
-      }
-    },
-    targetField: {
-      value: 'hidden field',
-      visible: false
+    field: {
+      type: 'email',
+      autocomplete: false,
+      rules: [(val, formValues, fbGlobal, metaValue = 'In development') => console.log(val, formValues, fbGlobal)]
     }
   },
 
@@ -21,7 +13,7 @@ export const formConfig = {
       console.log(values);
     }
   },
-  
+
 
   title: 'Dev title'
 }

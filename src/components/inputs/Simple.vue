@@ -82,7 +82,7 @@ export default {
   },
   beforeMount() {
     const field = this.rest;
-    if (field.type === "text") field.autogrow ??= true;
+    // if (field.type === "text") field.autogrow ??= true;
     if (field.type === "dateNative") field.type = "date";
   },
   watch: {

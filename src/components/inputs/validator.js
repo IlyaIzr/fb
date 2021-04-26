@@ -174,6 +174,7 @@ export function defaultProps(field) {
   field.type ??= "text";
   field.value ??= ""
   field.service ??= false
+  // field.autocomplete ??= false
 
   // Additional default props
   if (field.clearable === undefined) field.clearable = true
