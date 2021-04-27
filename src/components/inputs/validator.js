@@ -184,6 +184,7 @@ export function defaultProps(field) {
   field.type ??= "text";
   field.value ??= ""
   field.service ??= false
+  field.visible ??= true
   // field.autocomplete ??= false
 
   // Additional default props

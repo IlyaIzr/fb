@@ -1,5 +1,7 @@
 <template>
   <div
+    v-if="fieldInfo.visible"
+    :key="visibleTrigger"
     :class="
       'fb-field-container col ' + `${!fieldInfo.multiKey ? ' q-mx-md' : ''}`
     "
@@ -75,6 +77,7 @@ export default {
   data() {
     return {
       trigger: 1,
+      visibleTrigger: 1
     };
   },
   props: {
@@ -127,7 +130,7 @@ export default {
         "checkbox",
         "html",
         "editor",
-        "button"
+        "button",
       ]);
       if (allowedTypes.has(type)) return type;
       else return "err";
@@ -228,12 +231,13 @@ export default {
   },
 
   watch: {
-    // rest: {
-    //   handler() {
-    //     console.log("rerest", this.fieldInfo.key);
-    //   },
-    //   deep: true,
-    // },
+    rest: {
+      handler(field) {
+        // console.log("rerest", this.fieldInfo.key, { ...a }, { ...b });
+        if(!field.visible) this.visibleTrigger += 1
+      },
+      deep: true,
+    },
     // trigger() {
     //   console.log("trigger happend");
     // },
@@ -245,5 +249,8 @@ export default {
 .fb-field-label {
   font-size: 1.2em;
   margin: 16px;
+}
+.fb-field {
+  flex-direction: column;
 }
 </style>

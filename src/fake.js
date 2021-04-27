@@ -2,17 +2,22 @@ export const formConfig = {
 
   fields: {
     
-    select: {
-      type: 'select',
-      // Options availible in any of those types
-      // like this
-      options: [{ name: 'Alpha', id: '114aZ' }, { name: 'Beta', id: '2aaaZ' },],
-      // Value though is expected to be string or array of strings for multiple options
-      // value: "114aZ",
-      onInput(fbg, smth) {
-        console.log(fbg, smth);
+    row1: {
+      row: 1,
+      onFocus(fbg){
+        fbg.fields.row2.visible = false
       }
-
+    },
+    row2: {
+      row: 2,
+      label: 'hide me',
+      // visible: true, //would rerender
+    },
+    row23: {
+      row: 2
+    },
+    row24: {
+      row: 2
     },
   },
 
