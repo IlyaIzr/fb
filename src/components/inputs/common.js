@@ -25,7 +25,7 @@ export const commonMethods = {
   },
 }
 
-// Exeptions: Multiple
+// Exeptions: Multiple, Select
 export const strMethods = {
   async onInput(val) {
     let cb;

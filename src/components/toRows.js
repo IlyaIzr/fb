@@ -33,7 +33,7 @@ export const fieldsToRows = (fields, values = {}, multiKey = false, multiValues 
     Object.entries(field).forEach(([prop, value]) => {
       if (prop == 'value') {
         const metaValKey = field.metaValueKey || 'value'
-        value = field.meta[metaValKey] || value
+        value = field.meta?.[metaValKey] || value
       }
       let validated = validator[field.type]?.[prop]?.(value, field);
       if (validated !== undefined) field[prop] = validated;

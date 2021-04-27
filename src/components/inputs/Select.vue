@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { fbGlobal } from 'src/arguments';
 import { commonMethods } from "./common";
 
 function simpleVal(val, isM = false) {
