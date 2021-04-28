@@ -184,7 +184,8 @@ export function defaultProps(field) {
   field.type ??= "text";
   field.value ??= ""
   field.service ??= false
-  field.visible ??= true
+  field.visible ??= true  
+  field.hint ??= "" //for styles
   field.clear = function () {
     this.component.clear()
   }
