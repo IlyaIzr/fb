@@ -1,4 +1,4 @@
-import { fbGlobal } from "src/arguments";
+import { fbGlobal, initConfig } from "src/arguments";
 
 // Exeptions: Multiple
 export const commonMethods = {
@@ -21,7 +21,7 @@ export const commonMethods = {
 
 
   reset() {
-    console.log('TODO TBD');
+    fbGlobal.fields[this.keyName] = { ...initConfig.fields[this.keyName] }
   },
 }
 
@@ -79,7 +79,7 @@ export function wrapedUserRules(rules, fbGlobal, metaValue) {
 // Exeptions: Attachments, Calendar 
 export function onMountCommon(fieldComponent, fieldConfig) {
   Object.defineProperty(fieldConfig, 'component', {
-    get(){
+    get() {
       return fieldComponent
     }
   })

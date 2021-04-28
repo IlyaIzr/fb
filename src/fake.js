@@ -6,7 +6,7 @@ export const formConfig = {
       row: 1,
       onFocus(fbg){
         // console.log();
-        fbg.fields.row2.clear()
+        fbg.fields.row2.reset()
       }
     },
     row2: {

@@ -16,8 +16,6 @@ const formConfig = {
           label: 'Last name'
         },
       },
-
-      row: 1
     },
     reacivity: {
       label: 'Focus on me',

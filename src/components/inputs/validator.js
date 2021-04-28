@@ -188,6 +188,9 @@ export function defaultProps(field) {
   field.clear = function () {
     this.component.clear()
   }
+  field.reset = function () {
+    this.component.reset()
+  }
   // field.autocomplete ??= false
 
   // Additional default props
