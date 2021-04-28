@@ -27,6 +27,7 @@ import { fbGlobal } from "src/arguments";
 import { fieldsToRows } from "src/components/toRows";
 import { validator } from "./validator";
 import MultiMapper from "src/components/MultiMapper";
+import { onMountCommon } from './common';
 export default {
   name: "MultipleInput",
   props: {
@@ -75,6 +76,9 @@ export default {
       this.computeRowsEffect();
       this.computeRawsTrigger += 1;
     },
+    clear(){
+      this.rest.value = []
+    }
   },
 
   beforeMount() {
@@ -125,6 +129,9 @@ export default {
     //     }
     //     field[key] = assignment;
     //   });
+  },
+  mounted(){
+    onMountCommon(this, this.rest)
   },
   watch: {
     // They fire only after component is mounted

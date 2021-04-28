@@ -5,19 +5,13 @@ export const formConfig = {
     row1: {
       row: 1,
       onFocus(fbg){
-        fbg.fields.row2.visible = false
+        // console.log();
+        fbg.fields.row2.clear()
       }
     },
     row2: {
       row: 2,
-      label: 'hide me',
-      // visible: true, //would rerender
-    },
-    row23: {
-      row: 2
-    },
-    row24: {
-      row: 2
+      value: 'BEB'
     },
   },
 

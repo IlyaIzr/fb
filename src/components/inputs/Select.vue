@@ -24,7 +24,7 @@
 
 <script>
 import { fbGlobal } from 'src/arguments';
-import { commonMethods } from "./common";
+import { commonMethods, onMountCommon } from "./common";
 
 function simpleVal(val, isM = false) {
   // case multiple
@@ -182,6 +182,9 @@ export default {
         return true;
       return field["use-input"] || field.writable;
     })();
+  },
+  mounted(){
+    onMountCommon(this, this.rest)
   },
   watch: {
     rest: {

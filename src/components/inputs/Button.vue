@@ -6,6 +6,7 @@
 
 <script>
 import { fbGlobal } from "src/arguments";
+import { onMountCommon } from './common';
 
 export default {
   name: "ButtonElement",
@@ -29,6 +30,10 @@ export default {
       if (typeof f !== "function") return;
       await f(fbGlobal, this, this.rest);
     },
+  },
+  
+  mounted(){
+    onMountCommon(this, this.rest)
   },
 };
 </script>

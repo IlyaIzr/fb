@@ -185,6 +185,9 @@ export function defaultProps(field) {
   field.value ??= ""
   field.service ??= false
   field.visible ??= true
+  field.clear = function () {
+    this.component.clear()
+  }
   // field.autocomplete ??= false
 
   // Additional default props

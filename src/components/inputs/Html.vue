@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { onMountCommon } from './common';
 export default {
   name: "HtmlInjection",
   props: {
@@ -16,6 +17,9 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  mounted(){
+    onMountCommon(this, this.rest)
   },
 };
 </script>

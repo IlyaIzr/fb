@@ -27,7 +27,7 @@
 <script>
 import Attachment from "./Attachment";
 import { fbGlobal } from "src/arguments";
-import { checkRulesBool, commonMethods, strMethods } from "./common";
+import { checkRulesBool, commonMethods, onMountCommon, strMethods } from "./common";
 
 export default {
   name: "SimpleInput",
@@ -84,6 +84,9 @@ export default {
     const field = this.rest;
     // if (field.type === "text") field.autogrow ??= true;
     if (field.type === "dateNative") field.type = "date";
+  },
+  mounted(){
+    onMountCommon(this, this.rest)
   },
   watch: {
     // rest: {

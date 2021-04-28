@@ -16,7 +16,7 @@ export const commonMethods = {
   },
 
   clear() {
-    console.log('TODO TBD');
+    this.onInput('')
   },
 
 
@@ -74,6 +74,15 @@ export function wrapedUserRules(rules, fbGlobal, metaValue) {
     res.push(functionToPush)
   })
   return res
+}
+
+// Exeptions: Attachments, Calendar 
+export function onMountCommon(fieldComponent, fieldConfig) {
+  Object.defineProperty(fieldConfig, 'component', {
+    get(){
+      return fieldComponent
+    }
+  })
 }
 
 

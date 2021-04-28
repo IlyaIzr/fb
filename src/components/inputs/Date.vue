@@ -53,7 +53,7 @@
 <script>
 import { date } from "quasar";
 import CalendarInput from "./Calendar";
-import { commonMethods, wrapedUserRules } from "./common";
+import { commonMethods, onMountCommon, wrapedUserRules } from "./common";
 import { fbGlobal } from "src/arguments";
 function stringdDate(val) {
   if (!val) return "";
@@ -163,6 +163,9 @@ export default {
     const field = this.rest;
     field.withInput ??= true;
     this.inputValue = stringdDate(this.rest.value);
+  },
+  mounted(){
+    onMountCommon(this, this.rest)
   },
 };
 </script>

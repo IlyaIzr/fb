@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { checkRulesBool, commonMethods, strMethods } from "./common";
+import { checkRulesBool, commonMethods, onMountCommon, strMethods } from "./common";
 
 export default {
   name: "CheckboxInput",
@@ -62,6 +62,10 @@ export default {
   },
   beforeMount() {
     this.localVal = this.rest.value;
+  },
+  
+  mounted(){
+    onMountCommon(this, this.rest)
   },
 };
 </script>
