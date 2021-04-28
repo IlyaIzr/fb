@@ -78,7 +78,7 @@ export function wrapedUserRules(rules, fbGlobal, metaValue) {
 
 // Exeptions: Attachments, Calendar 
 export function onMountCommon(fieldComponent, fieldConfig) {
-  Object.defineProperty(fieldConfig, 'component', {
+  if (!fieldConfig.component) Object.defineProperty(fieldConfig, 'component', {
     get() {
       return fieldComponent
     }

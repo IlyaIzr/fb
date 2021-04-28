@@ -50,11 +50,6 @@ export default {
     });
     fbGlobal.values = this.globalValues || {};
     fbGlobal.component = this;
-    Object.defineProperty(fbGlobal, "element", {
-      get() {
-        return this?.component?.$el;
-      },
-    });
   },
 };
 </script>

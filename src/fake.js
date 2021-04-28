@@ -5,8 +5,7 @@ export const formConfig = {
     row1: {
       row: 1,
       onFocus(fbg){
-        // console.log();
-        fbg.fields.row2.reset()
+        console.log(fbg)
       }
     },
     row2: {
@@ -15,12 +14,7 @@ export const formConfig = {
     },
   },
 
-  methods: {
-    onSubmit(formGlobal, component, values) {
-      console.log(values, formGlobal.fields);
-    }
-  },
-
+tabs: true,
 
   title: 'Dev title'
 }

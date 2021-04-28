@@ -60,8 +60,7 @@
 import { fbGlobal, stepperStore } from "src/arguments";
 export default {
   name: "Buttons",
-  props: {
-  },
+  props: {},
   data() {
     return {
       fbGlobal,
@@ -69,7 +68,7 @@ export default {
       common: "q-mr-md ",
       step: stepperStore.step,
       tabLength: stepperStore.tabLength,
-      validated: stepperStore.validated
+      validated: stepperStore.validated,
     };
   },
   computed: {
@@ -107,11 +106,21 @@ export default {
   beforeMount() {
     if (fbGlobal.tabs) this.common = "q-mx-sm ";
   },
+  mounted() {
+    const self = this;
+    if (!fbGlobal.buttons) fbGlobal.buttons = {};
+    if (!fbGlobal.buttons.component)
+      Object.defineProperty(fbGlobal.buttons, "component", {
+        get() {
+          return self;
+        },
+      });
+  },
   watch: {
     stepperStore: {
       handler(val) {
-        this.step = val.step
-        this.validated = val.validated  
+        this.step = val.step;
+        this.validated = val.validated;
       },
       deep: true,
     },

@@ -233,9 +233,6 @@ export default {
       fbGlobal.methods[key] = method;
     });
 
-    fbGlobal.methods.component = this;
-    fbGlobal.methods.element = this.$el;
-
     // Fields assignment
 
     fbGlobal.fields = {};
@@ -285,13 +282,21 @@ export default {
 
     // assign rows once
     this.rows = this.rowsComputed();
+
+    // assign component reference
+    if (!fbGlobal.methods) fbGlobal.methods = {}
+    Object.defineProperty(fbGlobal.methods, 'component', {
+      get(){
+        return self
+      }
+    })
   },
 
   async mounted() {
     if (this.methods.onMount) {
       const cb = await this.methods.onMount(fbGlobal, this, this.$refs.form);
       if (cb && typeof cb === "function") await cb(fbGlobal, this, this.$refs.form);
-    }
+    }    
   },
   watch: {
     computeRawsTrigger: {

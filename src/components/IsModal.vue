@@ -42,12 +42,12 @@ export default {
     if (!fbGlobal.modal) return;
     // fbGlobal
     if (typeof fbGlobal.modal !== "object") fbGlobal.modal = {};
-    fbGlobal.modal.component = this;
-    Object.defineProperty(fbGlobal.modal, "element", {
-      get() {
-        return this?.component?.$el;
-      },
-    });
+    if (!fbGlobal.modal.component)
+      Object.defineProperty(fbGlobal.modal, "component", {
+        get() {
+          return this;
+        },
+      });
     fbGlobal.modal.closeModal = () => (this.isOpen = false);
   },
 };
@@ -68,7 +68,7 @@ export default {
 .q-dialog__inner--maximized .fb-form-content {
   max-height: calc(100vh - 100px);
 }
-.q-dialog__inner--maximized .fb-form-buttons.q-my-md{
+.q-dialog__inner--maximized .fb-form-buttons.q-my-md {
   margin-top: 10px;
 }
 </style>

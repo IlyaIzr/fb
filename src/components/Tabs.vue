@@ -177,6 +177,14 @@ export default {
   mounted() {
     // It doesn't exist before mount, although it happens in parent component
     this.formRef = fbGlobal.methods?.component?.$refs.form;
+    const self = this;
+    if (typeof fbGlobal.tabs === "boolean") fbGlobal.tabs = {};
+    if (!fbGlobal.tabs.component)
+      Object.defineProperty(fbGlobal.tabs, "component", {
+        get() {
+          return self;
+        },
+      });
   },
 };
 </script>
