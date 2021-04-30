@@ -1,6 +1,12 @@
 <template>
-  <div class="q-gutter-md" v-if="rest.visible">
-    <h5 class="fb-field-label">{{ rest.label }}</h5>
+  <div
+    class="fb-multiple q-gutter-md q-pa-sm q-my-md"
+    ref="wrap"
+    v-if="rest.visible"
+  >
+    <h5 class="fb-field-label q-mx-none absolute-center q-px-xs" ref="label">
+      {{ rest.label }}
+    </h5>
 
     <MultiMapper
       :multiRows="rows"
@@ -135,6 +141,9 @@ export default {
   },
   mounted() {
     onMountCommon(this, this.rest);
+    const { label, wrap } = this.$refs;
+    const difference = label.clientHeight - 32;
+    if (difference) wrap.className += ' fb-field-label-double' 
   },
   watch: {
     // They fire only after component is mounted
@@ -171,5 +180,22 @@ export default {
 <style>
 .fb-row.fb-field-content.fb-multiple-content {
   margin-top: 0;
+}
+.fb-multiple {
+  border: 1px solid gray;
+  border-radius: 8px;
+  margin: 8px -4px;
+  position: relative;
+}
+.fb-multiple .fb-field-label {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  position: absolute;
+  top: 0;
+  background-color: #fff;
+  text-align: center;
+}
+.fb-multiple.fb-field-label-double {
+  margin-top: 24px;
 }
 </style>

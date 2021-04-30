@@ -1,15 +1,28 @@
 export const formConfig = {
 
   fields: {
-    
-    date: {
-      type: 'date',
-      // value: '12.12.12',
-      // defaultYearMonth: '12 - 2011'
+    simpleMultiple: {
+      type: 'multiple',
+      label: "Multiple with simpleinputs and some pther long textos",
+      value: [
+        { firstName: 'Peter', lastName: '' },
+        { firstName: 'Lois', lastName: 'Puttershmidt' }
+      ],
+      settings: {
+        firstName: {
+          label: 'First name',
+        },
+        lastName: {
+          label: 'Last name'
+        },
+      },
+    },
+    some: {
+      label: 'babasg'
     }
   },
 
-  
+
 
   title: 'Dev title'
 }
