@@ -27,7 +27,7 @@
         ref="input"
         class="fb-field-content"
       >
-        <template v-slot:append>
+        <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy
               ref="qDateProxy"

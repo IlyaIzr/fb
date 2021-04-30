@@ -25,7 +25,7 @@ export const commonMethods = {
   },
 }
 
-// Exeptions: Multiple, Select
+// Exeptions: Multiple, Select, Button, Calendar, Attachment
 export const strMethods = {
   async onInput(val) {
     let cb;
