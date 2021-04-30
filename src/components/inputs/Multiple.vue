@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fb-multiple q-gutter-md q-pa-sm q-my-md"
+    class="fb-multiple q-gutter-md q-pa-xs q-my-md"
     ref="wrap"
     v-if="rest.visible"
   >

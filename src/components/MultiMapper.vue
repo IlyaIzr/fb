@@ -4,8 +4,9 @@
     <div
       v-for="(rows, multiIndex) in multiRows"
       v-bind:key="multiRows.indexOf(rows)"
-      class="fb-multiple-row col-12"
+      class="fb-multiple-row col-12 q-ma-md"
     >
+    <div class="fb-inner-row">
       <!-- Map regular structure -->
       <RowMapper :rows="rows" />
 
@@ -20,6 +21,7 @@
         :disable="remButton.disabled"
         @click="$emit('remove', multiIndex)"
       />
+      </div>
     </div>
   </div>
 </template>
@@ -79,4 +81,18 @@ export default {
 
 
 <style>
+.fb-multiple-row{
+  margin: 0px;
+
+}
+.fb-multiple .fb-multiple-content.row{
+  margin: 0px;
+}
+.fb-inner-row{
+  margin: 8px;
+  padding: 8px;
+  border: 1px solid gray;
+  border-radius: 8px;
+}
+
 </style>
