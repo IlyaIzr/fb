@@ -19,7 +19,8 @@ export const formConfig = {
     },
     some: {
       label: 'babasg'
-    }
+    },
+    
   },
 
 

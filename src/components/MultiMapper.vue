@@ -6,21 +6,25 @@
       v-bind:key="multiRows.indexOf(rows)"
       class="fb-multiple-row col-12 q-ma-md"
     >
-    <div class="fb-inner-row">
-      <!-- Map regular structure -->
-      <RowMapper :rows="rows" />
+      <div class="fb-inner-row">
+        <!-- Map regular structure -->
+        <RowMapper :rows="rows" />
 
-      <q-btn
-        v-if="multiKey"
-        class="q-mr-md"
-        size="sm"
-        type="button"
-        :label="remButton.text || '-'"
-        :color="remButton.color || 'red'"
-        :text-color="remButton.textColor"
-        :disable="remButton.disabled"
-        @click="$emit('remove', multiIndex)"
-      />
+        <q-btn
+          v-if="multiKey"
+          class="fb-multiple-remove-btn q-mr-md"
+          size="xs"
+          type="button"
+          :label="remButton.label || 'X'"
+          :color="remButton.color || 'red'"
+          :text-color="remButton.textColor"
+          :disable="remButton.disabled"
+          @click="$emit('remove', multiIndex)"
+        >
+          <q-tooltip anchor="top middle" self="bottom middle" :offset="[5, 5]"> 
+            {{ remButton.tooltip || "Убрать" }}
+          </q-tooltip>
+        </q-btn>
       </div>
     </div>
   </div>
@@ -81,18 +85,23 @@ export default {
 
 
 <style>
-.fb-multiple-row{
+.fb-multiple-row {
   margin: 0px;
-
+  position: relative;
 }
-.fb-multiple .fb-multiple-content.row{
+.fb-multiple .fb-multiple-content.row {
   margin: 0px;
 }
-.fb-inner-row{
-  margin: 8px;
+.fb-inner-row {
+  margin: 8px 0;
   padding: 8px;
   border: 1px solid gray;
   border-radius: 8px;
+  position: static;
 }
-
+.fb-multiple-remove-btn {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+}
 </style>

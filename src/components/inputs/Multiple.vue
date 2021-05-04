@@ -17,14 +17,16 @@
     />
 
     <q-btn
-      class="q-mr-md"
+      class="fb-multiple-add-button full-width q-ma-sm"
       size="sm"
-      :label="addButton.text || '+'"
+      :label="addButton.label || 'Добавить'"
       :color="addButton.color || 'green'"
       :text-color="addButton.textColor"
       :disable="addButton.disabled"
       @click="addField"
-    />
+    >
+    <i>+</i>
+    </q-btn>
   </div>
 </template>
 
@@ -141,9 +143,11 @@ export default {
   },
   mounted() {
     onMountCommon(this, this.rest);
+
+    // Styling
     const { label, wrap } = this.$refs;
     const difference = label.clientHeight - 32;
-    if (difference) wrap.className += ' fb-field-label-double' 
+    if (difference) wrap.className += ' fb-field-big-label-case' 
   },
   watch: {
     // They fire only after component is mounted
@@ -186,6 +190,7 @@ export default {
   border-radius: 8px;
   margin: 8px -4px;
   position: relative;
+  padding: 24px 8px;
 }
 .fb-multiple .fb-field-label {
   margin-top: 0px;
@@ -195,7 +200,14 @@ export default {
   background-color: #fff;
   text-align: center;
 }
-.fb-multiple.fb-field-label-double {
+.fb-multiple.fb-field-big-label-case {
   margin-top: 24px;
+  padding-top: 32px;
+}
+.fb-multiple-add-button i{
+  position: absolute;
+  right: 15px;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 </style>
