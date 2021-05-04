@@ -106,7 +106,7 @@ const formConfig = {
   },
 
   // Value meta option
-  
+
   metaValueUsage: {
     meta: {
       value: 'Pepe',
@@ -127,8 +127,13 @@ const formConfig = {
 
   // Form event handlers
   methods: {
-    async onSubmit(formGlobal, component, values) {
+    async onSubmit(formGlobal, component, values, notifyRef) {
       console.log(values);
+      notifyRef({
+        type: 'positive',
+        message: 'Finished',
+        timeout: 333
+      })
     },
     async onReset(formGlobal, component) {
       // Callback functions availible for all event handlers
@@ -159,5 +164,13 @@ const formConfig = {
       // runs after form component did mount
     }
   },
+
+  // Set up notify actions on form submit
+  notify: {
+    message: 'Sended!',
+    timeout: 333,
+    type: 'ongoing',
+    // See more at https://quasar.dev/quasar-plugins/notify
+  }
 
 }

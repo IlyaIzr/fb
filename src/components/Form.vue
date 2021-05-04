@@ -108,11 +108,17 @@ export default {
     },
     // Event Handlers
     async onSubmit() {
-      const values = fbGlobal.getFormValues()
+      const values = fbGlobal.getFormValues();
+
+      // Notify submit
+      const notify = fbGlobal.notify || {};
+      if (!notify.message) notify.message = "Отправлено";
+      if (!notify.timeout) notify.timeout = 200;
+      const notifyRef = this.$q.notify(notify);
 
       if (this.methods.onSubmit) {
-        const cb = await this.methods.onSubmit(fbGlobal, this, values);
-        if (typeof cb === "function") cb(fbGlobal, this, values);
+        const cb = await this.methods.onSubmit(fbGlobal, this, values, notifyRef);
+        if (typeof cb === "function") cb(fbGlobal, this, values, notifyRef);
       }
     },
     async onReset() {
@@ -284,19 +290,20 @@ export default {
     this.rows = this.rowsComputed();
 
     // assign component reference
-    if (!fbGlobal.methods) fbGlobal.methods = {}
-    Object.defineProperty(fbGlobal.methods, 'component', {
-      get(){
-        return self
-      }
-    })
+    if (!fbGlobal.methods) fbGlobal.methods = {};
+    Object.defineProperty(fbGlobal.methods, "component", {
+      get() {
+        return self;
+      },
+    });
   },
 
   async mounted() {
     if (this.methods.onMount) {
       const cb = await this.methods.onMount(fbGlobal, this, this.$refs.form);
-      if (cb && typeof cb === "function") await cb(fbGlobal, this, this.$refs.form);
-    }    
+      if (cb && typeof cb === "function")
+        await cb(fbGlobal, this, this.$refs.form);
+    }
   },
   watch: {
     computeRawsTrigger: {
