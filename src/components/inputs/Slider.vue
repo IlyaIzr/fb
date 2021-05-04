@@ -1,7 +1,7 @@
 <template>
-  <div class="q-gutter-md" v-if="rest.visible" style="min-width: 180px">
+  <div class="q-gutter-md fb-field-slider" v-if="rest.visible" style="min-width: 180px">
     <q-field
-      class="fb-field-label"
+      class="fb-field-label-slider"
       borderless
       ref="input"
       :label="rest.label"
@@ -63,4 +63,11 @@ export default {
 </script>
 
 <style>
+.fb-field-slider label{
+  padding-bottom: 0;
+}
+.fb-field-slider .q-field__control-container .fb-field-content{
+  position: absolute;
+  bottom: -10px;
+}
 </style>

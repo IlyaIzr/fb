@@ -1,33 +1,26 @@
 export const formConfig = {
 
   fields: {
-    simpleMultiple: {
-      type: 'multiple',
-      label: "Multiple with simpleinputs and some pther long textos",
-      value: [
-        { firstName: 'Peter', lastName: '' },
-        { firstName: 'Lois', lastName: 'griffin' }
-      ],
-      settings: {
-        firstName: {
-          label: 'First name',
-          row: 1,
-        },
-        lastName: {
-          label: 'Last name',
-          type: 'select',
-          options: ['griffin', 'bebser'],
-          row: 1
-        },
-      },
+    firstName: {
+      label: 'First name',
+      row: 1,
+      order: 1,
+    },
+    button: {
+      type: 'button',
+      row: 1,
+      order: 2,
+      label: 'Aboba'
     },
     some: {
-      label: 'babasg'
+      label: 'babasg', row: 1,
     },
     
   },
 
-
+  methods: {
+    onSubmit(fb, _, res) {console.log(res)}
+  },
 
   title: 'Dev title'
 }

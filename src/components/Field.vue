@@ -1,11 +1,10 @@
 <template>
   <div
-    v-if="fieldInfo.visible"
+    v-if="fieldInfo.visible && inputType !== 'button'"
     :key="visibleTrigger"
     :class="
       'fb-field-container col ' + `${!fieldInfo.multiKey ? ' q-mx-md' : ''}`
     "
-    style="min-width: 160px"
   >
     <div class="fb-field row q-my-sm">
       <!-- Outer prefix -->
@@ -43,11 +42,6 @@
         :keyName="fieldInfo.key"
         :rest="rest"
       />
-      <Button
-        v-if="inputType === 'button'"
-        :keyName="fieldInfo.key"
-        :rest="rest"
-      />
 
       <div v-if="inputType === 'err'">
         err, wrong type: {{ fieldInfo.type }}
@@ -55,6 +49,13 @@
 
       <Attachment :config="rest.outerRight" :f="outerRightClick" />
     </div>
+  </div>
+  <div v-else-if="inputType === 'button'">
+    <Button
+      v-if="inputType === 'button'"
+      :keyName="fieldInfo.key"
+      :rest="rest"
+    />
   </div>
 </template>
 
@@ -77,7 +78,7 @@ export default {
   data() {
     return {
       trigger: 1,
-      visibleTrigger: 1
+      visibleTrigger: 1,
     };
   },
   props: {
@@ -234,7 +235,7 @@ export default {
     rest: {
       handler(field) {
         // console.log("rerest", this.fieldInfo.key, { ...a }, { ...b });
-        if(!field.visible) this.visibleTrigger += 1
+        if (!field.visible) this.visibleTrigger += 1;
       },
       deep: true,
     },
@@ -246,6 +247,9 @@ export default {
 </script>
 
 <style>
+.fb-form .fb-row .fb-field-container {
+  min-width: 185px;
+}
 .fb-field-label {
   font-size: 1.2em;
   margin: 16px;
@@ -253,4 +257,7 @@ export default {
 .fb-field {
   flex-direction: column;
 }
+/* .fb-field input{
+  height: 61px;
+} */
 </style>

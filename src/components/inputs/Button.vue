@@ -1,6 +1,17 @@
 <template>
-  <div class="q-gutter-md" v-if="rest.visible">
-    <q-btn v-bind="rest" @click="onClick"></q-btn>
+  <div class="fb-field-button q-mr-md" v-if="rest.visible">
+    <q-btn v-bind="rest" @click="onClick">
+      
+      <q-tooltip
+        v-if="rest.tooltip"
+        anchor="top middle"
+        self="bottom middle"
+        :offset="[5, 5]"
+      >
+        {{ rest.tooltip }}
+      </q-tooltip>
+      
+    </q-btn>
   </div>
 </template>
 

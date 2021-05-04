@@ -1,7 +1,7 @@
 <template>
   <div class="q-gutter-md" v-if="rest.visible">
     <q-select
-    class="fb-field-content"
+      class="fb-field-content"
       v-bind="rest"
       :rules="rules"
       :value="localValue"
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { fbGlobal } from 'src/arguments';
+import { fbGlobal } from "src/arguments";
 import { commonMethods, onMountCommon } from "./common";
 
 function simpleVal(val, isM = false) {
@@ -183,8 +183,8 @@ export default {
       return field["use-input"] || field.writable;
     })();
   },
-  mounted(){
-    onMountCommon(this, this.rest)
+  mounted() {
+    onMountCommon(this, this.rest);
   },
   watch: {
     rest: {
@@ -202,4 +202,8 @@ export default {
 </script>
 
 <style>
+.q-chip.no-wrap {
+margin-top: 0;
+margin-bottom: 0;
+}
 </style>

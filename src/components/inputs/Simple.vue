@@ -1,5 +1,5 @@
 <template>
-  <div class="q-gutter-md col" v-if="rest.visible">
+  <div class="q-gutter-md col fb-field-simple" v-if="rest.visible">
     <q-input
       v-bind="rest"
       @focus="onFocus"
