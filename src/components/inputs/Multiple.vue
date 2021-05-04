@@ -25,7 +25,15 @@
       :disable="addButton.disabled"
       @click="addField"
     >
-    <i>+</i>
+      <i>+</i>
+      <q-tooltip
+        v-if="addButton.tooltip"
+        anchor="top middle"
+        self="bottom middle"
+        :offset="[5, 5]"
+      >
+        {{ addButton.tooltip || "Добавить поле" }}
+      </q-tooltip>
     </q-btn>
   </div>
 </template>
@@ -147,7 +155,7 @@ export default {
     // Styling
     const { label, wrap } = this.$refs;
     const difference = label.clientHeight - 32;
-    if (difference) wrap.className += ' fb-field-big-label-case' 
+    if (difference) wrap.className += " fb-field-big-label-case";
   },
   watch: {
     // They fire only after component is mounted
@@ -204,7 +212,7 @@ export default {
   margin-top: 24px;
   padding-top: 32px;
 }
-.fb-multiple-add-button i{
+.fb-multiple-add-button i {
   position: absolute;
   right: 15px;
   font-size: 16px;

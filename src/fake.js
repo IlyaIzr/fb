@@ -6,14 +6,18 @@ export const formConfig = {
       label: "Multiple with simpleinputs and some pther long textos",
       value: [
         { firstName: 'Peter', lastName: '' },
-        { firstName: 'Lois', lastName: 'Puttershmidt' }
+        { firstName: 'Lois', lastName: 'griffin' }
       ],
       settings: {
         firstName: {
           label: 'First name',
+          row: 1,
         },
         lastName: {
-          label: 'Last name'
+          label: 'Last name',
+          type: 'select',
+          options: ['griffin', 'bebser'],
+          row: 1
         },
       },
     },

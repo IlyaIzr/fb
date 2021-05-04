@@ -51,6 +51,20 @@ const formConfig = {
     },
   },
 
+  // Control buttons
+
+  buttons: {
+    // See more button props: https://quasar.dev/vue-components/button#qbtn-api
+    multipleAdd: {
+      label: '+1 field',
+      tooltip: 'Add another group of fields'
+    },
+    multipleRemove: {
+      label: '-',
+      tooltip: 'delete this group of fields'
+    },
+  },
+
   methods: {
     onSubmit(formGlobal, component, values) {
       console.log(values);
