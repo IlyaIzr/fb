@@ -40,7 +40,11 @@ const commonProps = {
     return number
   },
 
-  label(val, f) { return stringer(val, f) },
+  label(val, f) {
+    let res = stringer(val, f)
+    if (f.required && res?.[0] !== '*') res = '* ' + res
+    return res
+  },
   hint(val, f) { return stringer(val, f) },
   requiredMessage(val, f) { return stringer(val, f) },
   metaValueKey(val, f) { return stringer(val, f) },
@@ -66,7 +70,7 @@ const commonProps = {
 
   meta(metaObj, f) {
     const metaValKey = f.metaValueKey || 'value'
-    if (metaObj[metaValKey]) {      
+    if (metaObj[metaValKey]) {
       f.value = metaObj[metaValKey]
     }
     return metaObj
@@ -184,7 +188,7 @@ export function defaultProps(field) {
   field.type ??= "text";
   field.value ??= ""
   field.service ??= false
-  field.visible ??= true  
+  field.visible ??= true
   field.hint ??= "" //for styles
   field.clear = function () {
     this.component.clear()
@@ -201,6 +205,7 @@ export function defaultProps(field) {
   if (field.visible === undefined) field.visible = true
   if (typeof field.rules !== 'object') field.rules = []
 
+  if (field.required && !field.label) field.label = '*'
 
   return field
 }

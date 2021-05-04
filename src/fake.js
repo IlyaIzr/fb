@@ -5,6 +5,7 @@ export const formConfig = {
       label: 'First name',
       row: 1,
       order: 1,
+      required: true
     },
     button: {
       type: 'button',
