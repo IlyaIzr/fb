@@ -91,3 +91,20 @@ step | `0.01` | `Number` | slider step
 showValue | `true` | `Boolean` | if `false`, there will be no icon of current value on top of slider
 
 > More properties here: https://quasar.dev/vue-components/slider#qslider-api
+
+#### Text editor
+Key | Default value | Expected types | Description
+--- | --- | --- | --- 
+type  | `"editor"` | `"editor"` | rich text editor with simple Html markup tools
+value | `''` | `String` that can contain html | Example: `HTML <em>tags</em>`
+
+> Unlike field.type: 'html' text editor has user input
+
+#### Custom button
+Key | Default value | Expected types | Description
+--- | --- | --- | --- 
+type  | `"button"` | `"button"` | should be used for custom reactivity binded to user actions
+label | `''` | `String` | button label (inner text)
+color | `'primary'` | `String` | button color
+size | `'md'` | `String` | button size
+onClick | `onClick = async (globalConfig, component, fieldConfig) => {}` | `Function` | Semantic name for only event that <br> button can have. You can also use <br> onInput, onFocus or onBlur handlers, that will also fire
