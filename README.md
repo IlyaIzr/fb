@@ -17,5 +17,21 @@ clearable | `true`  | `Boolean` | adds clear input icon if the field is input
 required | `false`  | `Boolean` | required inputs need to have value, <br> so that `Boolean(value) === true`
 visible | `true`  | `Boolean` | field visibility. Invisible fields don't validate <br> but can hold values
 rules | `[]`  | array of functions  | array of rules to validate input value <br> rules are functions with arguments  <br> `(value, formValues, globalConfig, metaValue)` <br> every function must return `true` <br> to pass validation
-Simple inputs
-mask  | `undefined` | `String`  | [Mask usage example](https://quasar.dev/vue-components/input#mask)
+
+#### Field event handlers (functions)
+Name  | With arguments  | Description
+onInput | `onInput = async (globalConfig, component, value) => {}` | Fires when field's value changes
+onFocus | `onFocus = async (globalConfig, component) => {}` | Fires when field gets focus on it
+onBlur | `onBlur = async (globalConfig, component) => {}` | Fires when field loses focus
+* globalConfig - reactive object that holds all the information about the form
+* component - reference to Vue's field component
+
+### Keys sorted by type
+#### Simple inputs
+Key | Expected types | Description
+type  | "text","password","textarea",<br>"email","number","time","dateNative" | input field type
+mask  | `String`  | [Mask usage example](https://quasar.dev/vue-components/input#mask)
+prefix  | `String` |  Static string before user input
+suffix  | `String` |  Static string after user input
+> See more: https://quasar.dev/vue-components/input#qinput-api
+> If field type is "number", `typeof value === 'number'`

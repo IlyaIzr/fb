@@ -35,7 +35,7 @@ const formConfig = {
     },
     email: {
       type: 'email',
-      postfix: '@gmail.com'
+      suffix: '@gmail.com'
     },
     number: {
       type: 'number',
