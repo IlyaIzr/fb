@@ -5,4 +5,5 @@
 
 Key | Default Value | Expected types | Description
 --- | --- | --- | --- 
-type | 'text' | "text","password","textarea","email","number","time","dateNative","select","multiple","slider","date","checkbox","html","editor","button" | defines input type
+type | 'text' | "text","password","textarea",<br>"email","number","time","dateNative",<br>"select","multiple","slider","date",<br>"checkbox","html","editor","button" | defines input type
+value | '' or [] | depends on input type  | field value
