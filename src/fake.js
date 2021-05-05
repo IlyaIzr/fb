@@ -5,7 +5,7 @@ export const formConfig = {
     rangeInput: {
       type: 'date',
       range: true,
-      value: { from: '12.12.2012', to: '15.12.2012' },
+      // value: { from: '12.12.2012', to: '15.12.2012' },
     },
     
   },

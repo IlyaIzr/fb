@@ -6,6 +6,7 @@
     @input="onInput"
     :mask="mask"
     class="fb-field-content"
+    :value="rest.value || today"
   >
     <div v-if="rest.withInput" class="row items-center justify-end">
       <q-btn v-close-popup label="Close" color="primary" flat ref="btn" />
@@ -84,6 +85,9 @@ export default {
       }
       return mask;
     },
+    today(){
+      return (new Date()).toLocaleDateString('ru')
+    }
   },
   methods: {
     async onInput(val) {
