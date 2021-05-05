@@ -1,13 +1,29 @@
 import { fbGlobal, initConfig } from "src/arguments";
 
-// Exeptions: Multiple 
 export const commonMethods = {
+  async onInput(val) {
+    let cb;
+    if (this.rest?.onInput) {
+      cb = await this.rest.onInput(fbGlobal, this, val);
+    }
+    this.rest.value = val;
+    if (this.rest.meta) {
+      const valKey = this.rest.metaValueKey || 'value'
+      this.rest.meta[valKey] = val // cause value been validated
+    }
+
+    if (typeof cb === "function") await cb(fbGlobal, this, val);
+  },
+
+  // Exeption: Multiple
   async onFocus() {
     if (this.rest.onFocus) {
       const cb = await this.rest.onFocus(fbGlobal, this);
       if (typeof cb === "function") await cb(fbGlobal, this);
     }
   },
+  
+  // Exeption: Multiple
   async onBlur(e) {
     if (this.rest?.onBlur) {
       const cb = await this.rest.onBlur(fbGlobal, this);
@@ -25,21 +41,7 @@ export const commonMethods = {
   },
 }
 
-// Exeptions: Multiple
 export const strMethods = {
-  async onInput(val) {
-    let cb;
-    if (this.rest?.onInput) {
-      cb = await this.rest.onInput(fbGlobal, this, val);
-    }
-    this.rest.value = val;
-    if (this.rest.meta) {
-      const valKey = this.rest.metaValueKey || 'value'
-      this.rest.meta[valKey] = val // cause value been validated
-    }
-
-    if (typeof cb === "function") await cb(fbGlobal, this, val);
-  },
 }
 
 // Exeptions: Date, Editor, File, Html, SelectInput, Slider

@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { commonMethods, strMethods, checkRulesBool, onMountCommon } from "./common";
+import { commonMethods, checkRulesBool, onMountCommon } from "./common";
 export default {
   name: "SliderInput",
   props: {
@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     ...commonMethods,
-    ...strMethods,
   },
   beforeMount() {
     const field = this.rest;

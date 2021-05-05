@@ -38,7 +38,7 @@
                 :keyName="keyName"
                 :rest="rest"
                 :textInputValue="inputValue"
-                @input="onInput"
+                @input="onInputLocal"
                 @focus="onFocus"
                 @blur="onBlur"
               />
@@ -97,32 +97,26 @@ export default {
   methods: {
     ...commonMethods,
 
-    async onInput(val) {
-      let cb;
+    async onInputLocal(val) {
       let finalVal = val;
       let inputVal = val;
 
-      if (this.rest?.onInput) {
-        cb = await this.rest.onInput(fbGlobal, this, val);
-      }
 
       if (typeof val === "object" && val?.from && val.to) {
         inputVal = val.from + " - " + val.to;
       }
 
-      this.rest.value = finalVal;
+      await this.onInput(finalVal)
       this.inputValue = stringdDate(inputVal);
-
-      if (typeof cb === "function") await cb(fbGlobal, this, val);
     },
     async onTextInput(val) {
-      if (!this.rest.range) return await this.onInput(val);
+      if (!this.rest.range) return await this.onInputLocal(val);
       // Case reset on range value
       if (!val) {
         this.inputValue = "";
-        return await this.onInput("");
+        return await this.onInputLocal("");
       }
-      return await this.onInput({
+      return await this.onInputLocal({
         from: val.substr(0, 10),
         to: val.substr(13, 10),
       });

@@ -43,7 +43,7 @@ import { fbGlobal } from "src/arguments";
 import { fieldsToRows } from "src/components/toRows";
 import { validator } from "./validator";
 import MultiMapper from "src/components/MultiMapper";
-import { onMountCommon } from "./common";
+import { commonMethods, onMountCommon } from "./common";
 export default {
   name: "MultipleInput",
   props: {
@@ -67,6 +67,7 @@ export default {
   },
   computed: {},
   methods: {
+    ...commonMethods,
     computeRowsEffect() {
       const rows = fieldsToRows(
         this.rest.settings,
@@ -76,16 +77,16 @@ export default {
       );
       this.rows = rows;
     },
-    addField() {
+    async addField() {
       const obj = {};
       Object.keys(this.rest.settings).forEach((key) => (obj[key] = ""));
-      this.rest.value.push(obj);
+      await this.onInput([...this.rest.value, obj]);
       this.redrawChildren();
     },
-    removeField(index) {
+    async removeField(index) {
       const newVals = [...this.rest.value];
       newVals.splice(index, 1);
-      this.rest.value = newVals;
+      await this.onInput(newVals);
       this.redrawChildren();
     },
     redrawChildren() {

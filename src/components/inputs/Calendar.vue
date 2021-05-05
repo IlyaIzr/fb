@@ -27,7 +27,7 @@
 
 <script>
 import { fbGlobal } from 'src/arguments';
-import { commonMethods, wrapedUserRules } from "./common";
+import { wrapedUserRules } from "./common";
 export default {
   name: "CalendarInput",
   props: {
@@ -86,7 +86,6 @@ export default {
     },
   },
   methods: {
-    ...commonMethods,
     async onInput(val) {
       this.$emit("input", val);
     },

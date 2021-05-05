@@ -27,7 +27,7 @@
 <script>
 import Attachment from "./Attachment";
 import { fbGlobal } from "src/arguments";
-import { checkRulesBool, commonMethods, onMountCommon, strMethods } from "./common";
+import { checkRulesBool, commonMethods, onMountCommon } from "./common";
 
 export default {
   name: "SimpleInput",
@@ -67,7 +67,6 @@ export default {
   },
   methods: {
     ...commonMethods,
-    ...strMethods,
     async innerLeftClick() {
       if (this.innerLeft?.onClick)
         await this.innerLeft.onClick?.(fbGlobal, this, this.rest);

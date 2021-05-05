@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { commonMethods, onMountCommon, strMethods } from './common';
+import { commonMethods, onMountCommon } from './common';
 export default {
   name: "EditorInput",
   props: {
@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     ...commonMethods,
-    ...strMethods,
   },
   beforeMount(){
     this.rest.localization ||= "ru"

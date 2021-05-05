@@ -24,7 +24,7 @@
 
 <script>
 import { fbGlobal } from "src/arguments";
-import { commonMethods, onMountCommon, strMethods } from "./common";
+import { commonMethods, onMountCommon } from "./common";
 
 function simpleVal(val, isM = false) {
   // case multiple
@@ -71,7 +71,6 @@ export default {
   },
   methods: {
     ...commonMethods,
-    ...strMethods,
     parseValue(val) {
       // So far it runs only on init
 
