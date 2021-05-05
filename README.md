@@ -20,6 +20,7 @@ rules | `[]`  | array of functions  | array of rules to validate input value <br
 
 #### Field event handlers (functions)
 Name  | With arguments  | Description
+--- | --- | --- 
 onInput | `onInput = async (globalConfig, component, value) => {}` | Fires when field's value changes
 onFocus | `onFocus = async (globalConfig, component) => {}` | Fires when field gets focus on it
 onBlur | `onBlur = async (globalConfig, component) => {}` | Fires when field loses focus
@@ -27,11 +28,26 @@ onBlur | `onBlur = async (globalConfig, component) => {}` | Fires when field los
 * component - reference to Vue's field component
 
 ### Keys sorted by type
+----------------
 #### Simple inputs
 Key | Expected types | Description
+--- | --- | --- 
 type  | "text","password","textarea",<br>"email","number","time","dateNative" | input field type
 mask  | `String`  | [Mask usage example](https://quasar.dev/vue-components/input#mask)
 prefix  | `String` |  Static string before user input
 suffix  | `String` |  Static string after user input
+value  | `String || Number` | `Number` is for type "number", rest of cases has type of `String`
+
 > See more: https://quasar.dev/vue-components/input#qinput-api
-> If field type is "number", `typeof value === 'number'`
+
+#### Select
+Key | Default value | Expected types | Description
+--- | --- | --- 
+type  | --- | `"select"` | ---
+options  | `[]` | `Array`  | Select options. Array elements allowed to have 1 of 3 types <br>
+`{ name: String, id: String }`
+`{ label: String, value: String }`
+`String`
+multiple  | `false` | `Boolean` | Allows to pick several options
+value | `'' || []` | `String || Array` | `Array` is for multiple select
+writable | `false` | `Boolean` | Allows to sort options by user input
