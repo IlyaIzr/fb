@@ -1,22 +1,3 @@
-styles
-вернуть стили мультиплам, но выделить всё поле мультиплоф графически
-не забыть про много текста в лейбле
-инпут+слайдер+инпут
-инпут+баттон
-___
-
-config .md
-
-onInput refactor
-
-required + * label
-
-notify onSubmit()
-
-field.reset() field.clear() own methods
-
-prefix and suffix
-
 ? multiple rendered fields {} chages
 
 

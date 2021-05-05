@@ -6,6 +6,11 @@
 Key | Default Value | Expected types | Description
 --- | --- | --- | --- 
 type | `'text'` | "text","password","textarea",<br>"email","number","time","dateNative",<br>"select","multiple","slider","date",<br>"checkbox","html","editor","button" | defines input type
+row | first availible index after all <br> declared indexes | `Number`  | you can place several fields in one row
+order | first availible index after all <br> declared order indexes | `Number`  | specify field order in the same row
+label | `undefined` | `String`  | field label
+hint | `undefined` | `String`  | field hint placed below field content
+disabled | `undefined` | `Boolean`  | disable field input
 value | `''` or `[]` | depends on input type  | field value
 clearable | `true`  | boolean | adds clear input icon if the field is input
 "clear-icon"  | `'close'` | any material ui icon name | [Icon names](https://material.io/resources/icons/)
