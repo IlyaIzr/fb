@@ -12,8 +12,10 @@ label | `undefined` | `String`  | field label
 hint | `undefined` | `String`  | field hint placed below field content
 disabled | `undefined` | `Boolean`  | disable field input
 value | `''` or `[]` | depends on input type  | field value
-clearable | `true`  | boolean | adds clear input icon if the field is input
+clearable | `true`  | `Boolean` | adds clear input icon if the field is input
 "clear-icon"  | `'close'` | any material ui icon name | [Icon names](https://material.io/resources/icons/)
-required | `false`  | boolean | required inputs need to have value, <br> so that `Boolean(value) === true`
-visible | `true`  | boolean | field visibility. Invisible fields don't validate <br> but can hold values
+required | `false`  | `Boolean` | required inputs need to have value, <br> so that `Boolean(value) === true`
+visible | `true`  | `Boolean` | field visibility. Invisible fields don't validate <br> but can hold values
 rules | `[]`  | array of functions  | array of rules to validate input value <br> rules are functions with arguments  <br> `(value, formValues, globalConfig, metaValue)` <br> every function must return `true` <br> to pass validation
+Simple inputs
+mask  | `undefined` | `String`  | [Mask usage example](https://quasar.dev/vue-components/input#mask)
