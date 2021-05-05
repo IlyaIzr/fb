@@ -6,7 +6,7 @@
     @input="onInput"
     :mask="mask"
     class="fb-field-content"
-    :value="rest.value || today"
+    :value="rest.value !== undefined ? rest.value : today"
   >
     <div v-if="rest.withInput" class="row items-center justify-end">
       <q-btn v-close-popup label="Close" color="primary" flat ref="btn" />
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { fbGlobal } from 'src/arguments';
+import { fbGlobal } from "src/arguments";
 import { wrapedUserRules } from "../inputs/common";
 export default {
   name: "CalendarInput",
@@ -85,9 +85,9 @@ export default {
       }
       return mask;
     },
-    today(){
-      return (new Date()).toLocaleDateString('ru')
-    }
+    today() {
+      return new Date().toLocaleDateString("ru");
+    },
   },
   methods: {
     async onInput(val) {
