@@ -31,6 +31,7 @@ export const commonMethods = {
     }
   },
 
+  // Exeption: Multiple
   clear() {
     this.onInput('')
   },

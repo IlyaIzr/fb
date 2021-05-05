@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import Attachment from "./Attachment";
+import Attachment from "src/components/helpers/Attachment";
 import { fbGlobal } from "src/arguments";
 import { checkRulesBool, commonMethods, onMountCommon } from "./common";
 

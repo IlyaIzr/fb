@@ -27,7 +27,7 @@
 
 <script>
 import { fbGlobal } from 'src/arguments';
-import { wrapedUserRules } from "./common";
+import { wrapedUserRules } from "../inputs/common";
 export default {
   name: "CalendarInput",
   props: {

@@ -17,7 +17,7 @@
 
 <script>
 import { fbGlobal } from "src/arguments";
-import { onMountCommon } from './common';
+import { onMountCommon } from '../inputs/common';
 
 export default {
   name: "ButtonElement",

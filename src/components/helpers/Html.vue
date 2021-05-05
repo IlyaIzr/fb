@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { onMountCommon } from './common';
+import { onMountCommon } from '../inputs/common';
 export default {
   name: "HtmlInjection",
   props: {

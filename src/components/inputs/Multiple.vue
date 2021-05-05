@@ -96,9 +96,6 @@ export default {
     clear() {
       this.rest.value = [];
     },
-    reset() {
-      fbGlobal.fields[this.keyName] = { ...initConfig.fields[this.keyName] };
-    },
   },
 
   beforeMount() {

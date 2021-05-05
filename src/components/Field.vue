@@ -66,10 +66,10 @@ import Select from "./inputs/Select";
 import Slider from "./inputs/Slider";
 import Date from "./inputs/Date";
 import Checkbox from "./inputs/Checkbox";
-import Html from "./inputs/Html";
+import Html from "./helpers/Html";
 import Editor from "./inputs/Editor";
-import Button from "./inputs/Button";
-import Attachment from "./inputs/Attachment";
+import Button from "./helpers/Button";
+import Attachment from "./helpers/Attachment";
 import { fbGlobal } from "src/arguments";
 import { validator } from "./inputs/validator";
 
