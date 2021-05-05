@@ -22,6 +22,7 @@ const formConfig = {
       label: 'some string',
       hint: 'some string down the field',
       disabled: false, // needs testing
+      service: false,
     },
 
     // Simple input

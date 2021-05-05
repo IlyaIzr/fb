@@ -17,6 +17,7 @@ clearable | `true`  | `Boolean` | adds clear input icon if the field is input
 required | `false`  | `Boolean` | required inputs need to have value, <br> so that `Boolean(value) === true`
 visible | `true`  | `Boolean` | field visibility. Invisible fields don't validate <br> but can hold values
 rules | `[]`  | array of functions  | array of rules to validate input value <br> rules are functions with arguments  <br> `(value, formValues, globalConfig, metaValue)` <br> every function must return `true` <br> to pass validation
+service | `false` | `Boolean` | if set to `false` field value won't appear in object of submited values
 
 #### Field event handlers (functions)
 Name  | With arguments  | Description
@@ -63,3 +64,30 @@ type  | `"date"` | `"date"` | -
 withInput  | `true` | `Boolean` | Adds text input with date mask
 range  | `false` | `Boolean` | Allows to pick a period between two dates
 value | `String` or `{ from: String, to: String }` | `DD.MM.YYYY` or `{ from: 'DD.MM.YYYY' , to: 'DD.MM.YYYY' }` | Date value
+
+> More properties here: https://quasar.dev/vue-components/date#qdate-api
+
+#### Checkbox
+Key | Default value | Expected types | Description
+--- | --- | --- | --- 
+type  | `"checkbox"` | `"checkbox"` | -
+value | `false` | `Boolean` | define if checkbox checked
+
+#### Html
+Key | Default value | Expected types | Description
+--- | --- | --- | --- 
+type  | `"html"` | `"html"` | -
+value | `''` | `String` that can contain html | Example: `HTML <em>tags</em>`
+service | `true` | `Boolean` | html has no need to be submited
+
+#### Slider
+Key | Default value | Expected types | Description
+--- | --- | --- | --- 
+type  | `"slider"` | `"slider"` | -
+value | `0` | `Number` | -
+min | `0` | `Number` | lowest allowed slider value
+max | `100` | `Number` | highest allowed slider value
+step | `0.01` | `Number` | slider step
+showValue | `true` | `Boolean` | if `false`, there will be no icon of current value on top of slider
+
+> More properties here: https://quasar.dev/vue-components/slider#qslider-api
