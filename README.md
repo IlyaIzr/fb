@@ -42,8 +42,8 @@ value  | `String || Number` | `Number` is for type "number", rest of cases has t
 
 #### Select
 Key | Default value | Expected types | Description
---- | --- | --- 
-type  | --- | `"select"` | ---
+--- | --- | --- | --- 
+type  |  | `"select"` |
 options  | `[]` | `Array`  | Select options. Array elements allowed to have 1 of 3 types <br>
 `{ name: String, id: String }`
 `{ label: String, value: String }`
