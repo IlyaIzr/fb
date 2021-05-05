@@ -1,20 +1,22 @@
 export const formConfig = {
 
   fields: {
-    firstName: {
-      label: 'First name',
-      row: 1,
-      order: 1,
-      required: true
-    },
-    button: {
-      type: 'button',
-      row: 1,
-      order: 2,
-      label: 'Aboba'
-    },
-    some: {
-      label: 'babasg', row: 1,
+    
+    simpleMultiple: {
+      type: 'multiple',
+      label: "Multiple with simpleinputs",
+      value: [
+        { firstName: 'Peter', lastName: '' },
+        { firstName: 'Lois', lastName: 'Puttershmidt' }
+      ],
+      settings: {
+        firstName: {
+          label: 'First name',
+        },
+        lastName: {
+          label: 'Last name'
+        },
+      },
     },
     
   },

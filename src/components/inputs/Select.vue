@@ -7,7 +7,7 @@
       :value="localValue"
       :use-chips="Boolean(rest.value && rest.value.length)"
       :options="localOptions"
-      @input="onInput"
+      @input="onInputLocal"
       @input-value="shorthenOptions"
       @focus="onFocus"
     >
@@ -24,7 +24,7 @@
 
 <script>
 import { fbGlobal } from "src/arguments";
-import { commonMethods, onMountCommon } from "./common";
+import { commonMethods, onMountCommon, strMethods } from "./common";
 
 function simpleVal(val, isM = false) {
   // case multiple
@@ -71,6 +71,7 @@ export default {
   },
   methods: {
     ...commonMethods,
+    ...strMethods,
     parseValue(val) {
       // So far it runs only on init
 
@@ -112,26 +113,19 @@ export default {
       });
       return res;
     },
-    async onInput(val) {
+    async onInputLocal(val) {
       const isM = Boolean(this.rest.multiple);
       const simpleValue = simpleVal(val, isM);
-
-      let cb;
-      if (this.rest?.onInput) {
-        cb = await this.rest.onInput(fbGlobal, this, val);
-      }
 
       // Assign global value as simple string or array of them. Assign local value to whatever it gives us
       if (isM) {
         if (!val) val = [];
-        this.rest.value = [...simpleValue];
+        this.onInput([...simpleValue]);
         this.localValue = [...val];
       } else {
-        this.rest.value = simpleValue;
+        this.onInput(simpleValue);
         this.localValue = val;
       }
-
-      if (typeof cb === "function") await cb(fbGlobal, this, val);
     },
     async shorthenOptions(val) {
       const needle = val.toLocaleLowerCase?.();
@@ -203,7 +197,7 @@ export default {
 
 <style>
 .q-chip.no-wrap {
-margin-top: 0;
-margin-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 </style>

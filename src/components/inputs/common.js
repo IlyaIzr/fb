@@ -1,6 +1,6 @@
 import { fbGlobal, initConfig } from "src/arguments";
 
-// Exeptions: Multiple
+// Exeptions: Multiple 
 export const commonMethods = {
   async onFocus() {
     if (this.rest.onFocus) {
@@ -25,7 +25,7 @@ export const commonMethods = {
   },
 }
 
-// Exeptions: Multiple, Select, Button, Calendar, Attachment
+// Exeptions: Multiple
 export const strMethods = {
   async onInput(val) {
     let cb;
