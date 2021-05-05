@@ -41,13 +41,20 @@ value  | `String || Number` | `Number` is for type "number", rest of cases has t
 > See more: https://quasar.dev/vue-components/input#qinput-api
 
 #### Select
-Key | Default value | Expected types | Description
---- | --- | --- | --- 
-type  |  | `"select"` |
-options  | `[]` | `Array`  | Select options. Array elements allowed to have 1 of 3 types <br>
+Key       | Default value | Expected types | Description
+---       | --- | --- | --- 
+type      | `"select"` | `"select"` | -
+options   | `[]` | `Array`  | Select options. Array elements allowed to have 1 of 3 types <br>
 `{ name: String, id: String }`
 `{ label: String, value: String }`
 `String`
 multiple  | `false` | `Boolean` | Allows to pick several options
-value | `'' || []` | `String || Array` | `Array` is for multiple select
-writable | `false` | `Boolean` | Allows to sort options by user input
+value     | `'' || []` | `String || Array` | `Array` is for multiple select
+writable  | `false` | `Boolean` | Allows to sort options by user input
+
+#### Multiple
+Key | Default value | Expected types | Description
+--- | --- | --- | --- 
+type  | `"multiple"` | `"multiple"` | -
+value | `[]` | `[Object]` | Array of objects with fieldKey: fieldValue pairs <br> `{ firstName: 'Peter', lastName: 'Griffin' }`
+settings | `{}` | fieldKey: fieldConfig{} | Field configs that will be used. <br> Keys correspond to value keys
