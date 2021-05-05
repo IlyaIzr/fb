@@ -12,9 +12,11 @@ export const formConfig = {
       settings: {
         firstName: {
           label: 'First name',
+          row: 1
         },
         lastName: {
-          label: 'Last name'
+          label: 'Last name',
+          row: 1
         },
       },
     },

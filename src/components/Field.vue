@@ -147,12 +147,13 @@ export default {
       if (i.multiKey) {
         const field = fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key];
 
-        if (field.watcher) {
-          res = field;
-          return res;
-        }
+        // Why have i aded this? It ruins multiple.value bonding
+        // if (field.watcher) {
+        //   res = field;
+        //   return res;
+        // }
 
-        // Case first time assignment of reactive wrap
+        // Assignment of reactive wrap
         const reactiveFieldWrap = {
           set: function (field, prop, value) {
             // Make changes and additions observable
