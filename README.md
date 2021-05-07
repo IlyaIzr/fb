@@ -93,17 +93,21 @@ showValue | `true` | `Boolean` | if `false`, there will be no icon of current va
 > More properties here: https://quasar.dev/vue-components/slider#qslider-api
 
 #### Text editor
+Rrich text editor with simple Html markup tools
+
 Key | Default value | Expected types | Description
 --- | --- | --- | --- 
-type  | `"editor"` | `"editor"` | rich text editor with simple Html markup tools
+type  | `"editor"` | `"editor"` | -
 value | `''` | `String` that can contain html | Example: `HTML <em>tags</em>`
 
 > Unlike field.type: 'html' text editor has user input
 
 #### Custom button
+Button should be used for custom reactivity binded to user actions
+
 Key | Default value | Expected types | Description
 --- | --- | --- | --- 
-type  | `"button"` | `"button"` | should be used for custom reactivity binded to user actions
+type  | `"button"` | `"button"` | -
 label | `''` | `String` | button label (inner text)
 color | `'primary'` | `String` | button color
 size | `'md'` | `String` | button size
