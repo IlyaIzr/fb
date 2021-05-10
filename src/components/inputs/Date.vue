@@ -20,7 +20,7 @@
         @input="onTextInput"
         :value="inputValue"
         :mask="rest.inputMask || textInputMask"
-        :rules="inputRules"
+        :rules="rules"
         :label="rest.label"
         :clearable="rest.clearable"
         :clear-icon="rest['clear-icon']"
@@ -54,8 +54,7 @@
 <script>
 import { date } from "quasar";
 import CalendarInput from "src/components/helpers/Calendar";
-import { commonMethods, onMountCommon, wrapedUserRules } from "./common";
-import { fbGlobal } from "src/arguments";
+import { commonMethods, computedRules, onMountCommon } from "./common";
 function stringdDate(val) {
   if (!val) return "";
   if (typeof val === "string") return val;
@@ -80,11 +79,11 @@ export default {
   },
   data() {
     return {
-      inputRules: this.getInputRules(),
       inputValue: "",
     };
   },
   computed: {
+    ...computedRules,
     textInputMask() {
       let mask = "";
       mask = this.rest.range ? "##.##.#### - ##.##.####" : "##.##.####";
@@ -121,37 +120,6 @@ export default {
         from: val.substr(0, 10),
         to: val.substr(13, 10),
       });
-    },
-    getInputRules() {
-      let res = wrapedUserRules(this.rest.rules || [], fbGlobal, "TODO"); //metavalue
-      // Delimeter
-      // const d = this.rest.inputMask?.[2] || ".";
-      if (this.rest.required && !this.rest.range) {
-        res = [
-          (dateString) =>
-            (dateString.split(".")[0] < 32 &&
-              dateString.split(".")[1] < 13 &&
-              dateString.split(".")[2] > 1900) ||
-            this.rest.requiredMessage ||
-            "Incorrect date",
-          ...res,
-        ];
-      } else if (this.rest.required) {
-        const range = (str) => {
-          const obj = this.rest.value;
-          // !console.log("im runing", this.rest.value, str);
-          const errMsg = this.rest.requiredMessage || "Incorrect date";
-          if (!str || str.length < 23) return errMsg;
-          const { from, to } = obj;
-          let [day, month, year] = from.split(".");
-          if (day > 31 || month > 12 || year < 1900) return errMsg;
-          [day, month, year] = to.split(".");
-          if (day > 31 || month > 12 || year < 1900) return errMsg;
-          return true;
-        };
-        res = [range, ...res];
-      }
-      return res;
     },
   },
   beforeMount() {

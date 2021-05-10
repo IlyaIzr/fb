@@ -1,5 +1,9 @@
 <template>
-  <div class="q-gutter-md fb-field-slider" v-if="rest.visible" style="min-width: 180px">
+  <div
+    class="q-gutter-md fb-field-slider"
+    v-if="rest.visible"
+    style="min-width: 180px"
+  >
     <q-field
       class="fb-field-label-slider"
       borderless
@@ -26,7 +30,7 @@
 </template>
 
 <script>
-import { commonMethods, checkRulesBool, onMountCommon } from "./common";
+import { commonMethods, onMountCommon, computedRules } from "./common";
 export default {
   name: "SliderInput",
   props: {
@@ -40,13 +44,10 @@ export default {
     },
   },
   data() {
-    return {
-      rules: checkRulesBool(
-        this.rest.rules,
-        this.rest.required,
-        this.rest.requiredMessage
-      ),
-    };
+    return {};
+  },
+  computed: {
+    ...computedRules,
   },
   methods: {
     ...commonMethods,
@@ -55,17 +56,17 @@ export default {
     const field = this.rest;
     field.showValue ??= true;
   },
-  mounted(){
-    onMountCommon(this, this.rest)
+  mounted() {
+    onMountCommon(this, this.rest);
   },
 };
 </script>
 
 <style>
-.fb-field-slider label{
+.fb-field-slider label {
   padding-bottom: 0;
 }
-.fb-field-slider .q-field__control-container .fb-field-content{
+.fb-field-slider .q-field__control-container .fb-field-content {
   position: absolute;
   bottom: -10px;
 }

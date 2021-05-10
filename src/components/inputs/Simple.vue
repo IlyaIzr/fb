@@ -27,7 +27,7 @@
 <script>
 import Attachment from "src/components/helpers/Attachment";
 import { fbGlobal } from "src/arguments";
-import { commonMethods, computedRulesBool, onMountCommon } from "./common";
+import { commonMethods, computedRules, onMountCommon } from "./common";
 
 export default {
   name: "SimpleInput",
@@ -45,7 +45,7 @@ export default {
     };
   },
   computed: {
-    ...computedRulesBool,
+    ...computedRules,
     innerLeft() {
       let conf = {};
       if (!this.rest.innerLeft) return null;

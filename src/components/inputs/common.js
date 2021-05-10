@@ -64,14 +64,56 @@ export function wrapedUserRules(rules, fbGlobal, metaValue) {
 // Validation Rules
 // used for: Simple, Checkbox 
 // Exeptions: Date, Editor, File, SelectInput, Slider
-export const computedRulesBool = {
+export const computedRules = {
   rules() {
-    return checkRulesBool(
+    return getRules(
       this.rest.rules,
       this.rest.required,
-      this.rest.requiredMessage
+      this.rest.requiredMessage,
+      this.rest.metaValue,
+      this.rest
     )
   }
+}
+// Rules wrapper
+function getRules(rules, required, requiredMessage, metaValue, rest) {
+  let res = wrapedUserRules(rules, fbGlobal, metaValue)
+  const reqMsg = requiredMessage || 'Please fill'
+
+  if (required) {
+    let requiredFunction
+    const type = rest.type
+    if (type === 'select' && rest.multiple)
+      requiredFunction = (val) => (val && val.length) || reqMsg
+
+    if (type === 'date' && !rest.range)
+      requiredFunction = (dateString) =>
+        (dateString.split(".")[0] < 32 &&
+          dateString.split(".")[1] < 13 &&
+          dateString.split(".")[2] > 1900) ||
+        reqMsg
+
+    if (type === 'date')
+      requiredFunction = (str) => {
+        const obj = rest.value;
+        if (!str || str.length < 23) return reqMsg;
+        const { from, to } = obj;
+        let [day, month, year] = from.split(".");
+        if (day > 31 || month > 12 || year < 1900) return reqMsg;
+        [day, month, year] = to.split(".");
+        if (day > 31 || month > 12 || year < 1900) return reqMsg;
+        return true;
+      }
+
+    if (type === 'slider') requiredFunction = val => Number(val) > 0 || reqMsg
+
+    requiredFunction = (val) => Boolean(val) || reqMsg
+
+
+    res = [requiredFunction, ...res,];
+  }
+
+  return res
 }
 // helper function
 function checkRulesBool(rules, required, requiredMessage, metaValue) {

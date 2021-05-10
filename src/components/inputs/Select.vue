@@ -24,7 +24,7 @@
 
 <script>
 import { fbGlobal } from "src/arguments";
-import { commonMethods, onMountCommon } from "./common";
+import { commonMethods, computedRules, onMountCommon } from "./common";
 
 function simpleVal(val, isM = false) {
   // case multiple
@@ -55,14 +55,10 @@ export default {
       localValue: this.parseValue(this.rest.value),
       localOptions: this.parseOptions(this.rest.options),
       initOptions: this.parseOptions(this.rest.options),
-      rules: this.selectRules(
-        this.rest.rules,
-        this.rest.required,
-        this.rest.requiredMessage
-      ),
     };
   },
   computed: {
+    ...computedRules,
     // localValue() {
     //   let res = "";
     //   res = this.parseValue(this.rest.value)
@@ -145,23 +141,6 @@ export default {
         this.$refs.input?.resetValidation?.();
       });
       if (typeof cb === "function") await cb(fbGlobal, this, val);
-    },
-    selectRules(rules, required, requiredMessage) {
-      let res = rules;
-      let multy = this.rest.multiple;
-      if (required && multy) {
-        return [
-          (val) => (val && val.length) || requiredMessage || "Please fill",
-          ...rules,
-        ];
-      }
-      if (required) {
-        res = [
-          (val) => Boolean(val) || requiredMessage || "Please fill",
-          ...rules,
-        ];
-      }
-      return res;
     },
   },
 

@@ -214,3 +214,13 @@ export function defaultProps(field) {
 
   return field
 }
+
+export const simpleTypes = [
+  "text",
+  "password",
+  "textarea",
+  "email",
+  "number",
+  "time",
+  "dateNative",
+];

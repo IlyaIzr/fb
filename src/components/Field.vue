@@ -71,7 +71,7 @@ import Editor from "./inputs/Editor";
 import Button from "./helpers/Button";
 import Attachment from "./helpers/Attachment";
 import { fbGlobal } from "src/arguments";
-import { validator } from "./inputs/validator";
+import { simpleTypes, validator } from "./inputs/validator";
 
 export default {
   name: "FieldSorter",
@@ -111,15 +111,6 @@ export default {
     inputType() {
       let type = ""; // here you go stupid vetur. No other reason for that reassignment
       type = this.fieldInfo.type;
-      const simpleTypes = [
-        "text",
-        "password",
-        "textarea",
-        "email",
-        "number",
-        "time",
-        "dateNative",
-      ];
       if (simpleTypes.find((value) => value === type)) {
         return "simple";
       }
