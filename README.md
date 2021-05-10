@@ -10,7 +10,7 @@ row | first availible index after all <br> declared indexes | `Number`  | you ca
 order | first availible index after all <br> declared order indexes | `Number`  | specify field order in the same row
 label | `undefined` | `String`  | field label
 hint | `undefined` | `String`  | field hint placed below field content
-disabled | `undefined` | `Boolean`  | disable field input
+disable | `undefined` | `Boolean`  | disable field input
 value | `''` or `[]` | depends on input type  | field value
 clearable | `true`  | `Boolean` | adds clear input icon if the field is input
 "clear-icon"  | `'close'` | any material ui icon name | [Icon names](https://material.io/resources/icons/)

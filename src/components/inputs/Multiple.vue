@@ -22,7 +22,7 @@
       :label="addButton.label || 'Добавить'"
       :color="addButton.color || 'green'"
       :text-color="addButton.textColor"
-      :disable="addButton.disabled"
+      :disable="addButton.disable"
       @click="addField"
     >
       <i>+</i>

@@ -25,7 +25,7 @@ const formConfig = {
       order: 1,
       label: 'some string',
       hint: 'some string down the field',
-      disabled: false, // needs testing
+      disable: false, // needs testing
     },
   },
 

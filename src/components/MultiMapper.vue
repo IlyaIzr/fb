@@ -18,7 +18,7 @@
           :label="remButton.label || 'X'"
           :color="remButton.color || 'red'"
           :text-color="remButton.textColor"
-          :disable="remButton.disabled"
+          :disable="remButton.disable"
           @click="$emit('remove', multiIndex)"
         >
           <q-tooltip anchor="top middle" self="bottom middle" :offset="[5, 5]"> 

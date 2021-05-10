@@ -24,6 +24,7 @@
         :label="rest.label"
         :clearable="rest.clearable"
         :clear-icon="rest['clear-icon']"
+        :disable="rest.disable"
         ref="input"
         class="fb-field-content"
       >
