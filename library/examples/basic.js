@@ -45,7 +45,7 @@ const formConfig = {
     // See more: https://quasar.dev/vue-components/button#qbtn-api
     reset: {
       label: 'reset',
-      color: 'danger'
+      color: 'accent'
     },
     clear: {
       label: 'clear',

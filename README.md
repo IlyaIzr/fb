@@ -109,6 +109,6 @@ Key | Default value | Expected types | Description
 --- | --- | --- | --- 
 type  | `"button"` | `"button"` | -
 label | `''` | `String` | button label (inner text)
-color | `'primary'` | `String` | button color
+color | `'primary'` | `String` | button color, [examples](https://quasar.dev/style/color-palette)
 size | `'md'` | `String` | button size
 onClick | `onClick = async (globalConfig, component, fieldConfig) => {}` | `Function` | Semantic name for only event that <br> button can have. You can also use <br> onInput, onFocus or onBlur handlers, that will also fire
