@@ -52,6 +52,8 @@ const commonProps = {
   required(val, f) { return booleaner(val, f) },
   clearable(val, f) { return booleaner(val, f) },
   disable(val, f) { return booleaner(val, f) },
+  // migration / alias
+  disabled(val, f) { f.disable = booleaner(val, f); return f.disable },
   clearable(val, f) { return booleaner(val, f) }, //??
   "clear-icon"(val, f) { return stringer(val, f) || "close" },
   loading(val, f) { return booleaner(val, f) },
