@@ -22,7 +22,7 @@ export const commonMethods = {
       if (typeof cb === "function") await cb(fbGlobal, this);
     }
   },
-  
+
   // Exeption: Multiple
   async onBlur(e) {
     if (this.rest?.onBlur) {
@@ -31,22 +31,50 @@ export const commonMethods = {
     }
   },
 
+  reset() {
+    fbGlobal.fields[this.keyName] = { ...initConfig.fields[this.keyName] }
+  },
+
+  rerender() {
+    this.$forceUpdate()
+  },
+
   // Exeption: Multiple
   clear() {
     this.onInput('')
   },
 
-
-  reset() {
-    fbGlobal.fields[this.keyName] = { ...initConfig.fields[this.keyName] }
-  },
 }
 
 export const strMethods = {
 }
 
-// Exeptions: Date, Editor, File, Html, SelectInput, Slider
-export function checkRulesBool(rules, required, requiredMessage, metaValue) {
+// helper function
+export function wrapedUserRules(rules, fbGlobal, metaValue) {
+  const res = []
+  rules.forEach(ruleFunction => {
+    const functionToPush = (val) => {
+      return ruleFunction(val, fbGlobal.getFormValues(), fbGlobal, metaValue)
+    }
+    res.push(functionToPush)
+  })
+  return res
+}
+
+// Validation Rules
+// used for: Simple, Checkbox 
+// Exeptions: Date, Editor, File, SelectInput, Slider
+export const computedRulesBool = {
+  rules() {
+    return checkRulesBool(
+      this.rest.rules,
+      this.rest.required,
+      this.rest.requiredMessage
+    )
+  }
+}
+// helper function
+function checkRulesBool(rules, required, requiredMessage, metaValue) {
   let res = wrapedUserRules(rules, fbGlobal, metaValue)
   if (required) {
     res = [
@@ -56,6 +84,7 @@ export function checkRulesBool(rules, required, requiredMessage, metaValue) {
   }
   return res;
 }
+
 // Used for: slider
 export function checkRulesNum(rules, required, requiredMessage) {
   let res = wrapedUserRules(rules, fbGlobal, metaValue)
@@ -66,17 +95,6 @@ export function checkRulesNum(rules, required, requiredMessage) {
     ];
   }
   return res;
-}
-// helper function
-export function wrapedUserRules(rules, fbGlobal, metaValue) {
-  const res = []
-  rules.forEach(ruleFunction => {
-    const functionToPush = (val) => {
-      ruleFunction(val, fbGlobal.getFormValues(), fbGlobal, metaValue)
-    }
-    res.push(functionToPush)
-  })
-  return res
 }
 
 // Exeptions: Attachments, Calendar 

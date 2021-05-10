@@ -27,7 +27,7 @@
 <script>
 import Attachment from "src/components/helpers/Attachment";
 import { fbGlobal } from "src/arguments";
-import { checkRulesBool, commonMethods, onMountCommon } from "./common";
+import { commonMethods, computedRulesBool, onMountCommon } from "./common";
 
 export default {
   name: "SimpleInput",
@@ -41,15 +41,11 @@ export default {
   },
   data() {
     return {
-      rules: checkRulesBool(
-        this.rest.rules,
-        this.rest.required,
-        this.rest.requiredMessage
-      ),
       isPassword: this.rest.type === "password",
     };
   },
   computed: {
+    ...computedRulesBool,
     innerLeft() {
       let conf = {};
       if (!this.rest.innerLeft) return null;

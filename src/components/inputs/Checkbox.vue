@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { checkRulesBool, commonMethods, onMountCommon } from "./common";
+import { commonMethods, computedRulesBool, onMountCommon } from "./common";
 
 export default {
   name: "CheckboxInput",
@@ -41,15 +41,12 @@ export default {
   },
   data() {
     return {
-      rules: checkRulesBool(
-        this.rest.rules,
-        this.rest.required,
-        this.rest.requiredMessage
-      ),
       localVal: false,
     };
   },
-  computed: {},
+  computed: {
+    ...computedRulesBool
+  },
   methods: {
     ...commonMethods,
 
