@@ -1,6 +1,6 @@
 <template>
   <div
-    class="q-gutter-md fb-field-slider"
+    class="q-gutter-md col fb-field-slider"
     v-if="rest.visible"
     style="min-width: 180px"
   >

@@ -1,7 +1,7 @@
 <template>
   <div v-if="rest.visible">
     <!-- No input -->
-    <div v-if="!rest.withInput" class="q-gutter-md">
+    <div v-if="!rest.withInput" class="q-gutter-md col fb-field-date">
       <h5 class="fb-field-label text-subtitle1 q-mb-none">{{ rest.label }}</h5>
       <CalendarInput
         :label="rest.label"
@@ -15,7 +15,7 @@
       />
     </div>
     <!-- With input -->
-    <div v-else class="q-gutter-md">
+    <div v-else class="q-gutter-md col fb-field-date">
       <q-input
         @input="onTextInput"
         :value="inputValue"

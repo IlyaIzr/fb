@@ -1,5 +1,5 @@
 <template>
-  <div class="q-gutter-md" v-if="rest.visible">
+  <div class="q-gutter-md col fb-field-select" v-if="rest.visible">
     <q-select
       class="fb-field-content"
       v-bind="rest"
@@ -18,13 +18,21 @@
           </q-item-section>
         </q-item>
       </template>
+      
+      <template v-slot:prepend v-if="innerLeft">
+        <Attachment :config="innerLeft" :f="innerLeftClick" />
+      </template>
+      <template v-slot:append v-if="innerRight">
+        <Attachment :config="innerRight" :f="innerRightClick" />
+      </template>
     </q-select>
   </div>
 </template>
 
 <script>
 import { fbGlobal } from "src/arguments";
-import { commonMethods, computedRules, onMountCommon } from "./common";
+import { commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
+import Attachment from "src/components/helpers/Attachment";
 
 function simpleVal(val, isM = false) {
   // case multiple
@@ -40,6 +48,7 @@ function simpleVal(val, isM = false) {
 }
 export default {
   name: "Select",
+  components: { Attachment },
   props: {
     keyName: {
       type: String,
@@ -59,6 +68,7 @@ export default {
   },
   computed: {
     ...computedRules,
+    ...computedAttachments
     // localValue() {
     //   let res = "";
     //   res = this.parseValue(this.rest.value)

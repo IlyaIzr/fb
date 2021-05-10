@@ -46,9 +46,6 @@ export const commonMethods = {
 
 }
 
-export const strMethods = {
-}
-
 // helper function
 export function wrapedUserRules(rules, fbGlobal, metaValue) {
   const res = []
@@ -115,28 +112,23 @@ function getRules(rules, required, requiredMessage, metaValue, rest) {
 
   return res
 }
-// helper function
-function checkRulesBool(rules, required, requiredMessage, metaValue) {
-  let res = wrapedUserRules(rules, fbGlobal, metaValue)
-  if (required) {
-    res = [
-      (val) => Boolean(val) || requiredMessage || "Please fill",
-      ...res,
-    ];
-  }
-  return res;
-}
 
-// Used for: slider
-export function checkRulesNum(rules, required, requiredMessage) {
-  let res = wrapedUserRules(rules, fbGlobal, metaValue)
-  if (required) {
-    res = [
-      (val) => Number(val) > 0 || requiredMessage || "Please fill",
-      ...res,
-    ];
-  }
-  return res;
+
+export const computedAttachments = {
+  innerLeft() {
+    let conf = {};
+    if (!this.rest.innerLeft) return null;
+    conf = this.rest.innerLeft;
+    if (!conf.type) return null;
+    return conf;
+  },
+  innerRight() {
+    let conf = {};
+    if (!this.rest.innerRight) return null;
+    conf = this.rest.innerRight;
+    if (!conf.type) return null;
+    return conf;
+  },
 }
 
 // Exeptions: Attachments, Calendar 

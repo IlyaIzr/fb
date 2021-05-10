@@ -3,9 +3,8 @@ export const formConfig = {
   fields: {
 
     date: {
-      // type: 'slider',
-      // options: ['asf', 'afag'],
-      required: 1
+      type: 'select',
+      options: ['asf', 'afag'],
     }
 
   },
