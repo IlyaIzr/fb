@@ -59,8 +59,7 @@ export function wrapedUserRules(rules, fbGlobal, metaValue) {
 }
 
 // Validation Rules
-// used for: Simple, Checkbox 
-// Exeptions: Date, Editor, File, SelectInput, Slider
+// Exeptions: Multiple, TODO Calendar
 export const computedRules = {
   rules() {
     return getRules(
@@ -131,7 +130,7 @@ export const computedAttachments = {
   },
 }
 
-// Exeptions: Attachments, Calendar 
+// Exeptions: Calendar 
 export function onMountCommon(fieldComponent, fieldConfig) {
   if (!fieldConfig.component) Object.defineProperty(fieldConfig, 'component', {
     get() {

@@ -112,9 +112,9 @@ export default {
           field.type && validator[field.type]?.[prop]?.(value, field);
         if (validated !== undefined) value = validated;
 
-        // console.log('changes simp setting');]
+        // console.log('changes simp setting');
         self.stringUpdates = { field, prop, value };
-        // console.log(field.key, 'change');
+        // console.log(field.key, 'assigned value ', value);
         field[prop] = value;
 
         return true;
@@ -174,9 +174,11 @@ export default {
     // },
     stringUpdates({ field, prop, value }) {
       // updates already rendered fields
-      const mult = fbGlobal.fields[this.keyName];
-      if (mult.fields?.[field.multiIndex]?.[prop])
-        mult.fields[field.multiIndex][prop] = value;
+      const multiField = fbGlobal.fields[this.keyName];
+      if (multiField?.fields?.length)
+        multiField.fields.forEach((fieldsGroup) => {
+          fieldsGroup[field.key] && (fieldsGroup[field.key][prop] = value);
+        });
     },
     // trigger() {
     //   console.log("trigger happend");
