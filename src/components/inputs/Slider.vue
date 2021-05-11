@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="q-gutter-md col fb-field-slider"
-    v-if="rest.visible"
-    style="min-width: 180px"
-  >
+  <div class="q-gutter-md col fb-field-slider" v-if="rest.visible">
     <q-field
       class="fb-field-label-slider"
       borderless
@@ -13,26 +9,38 @@
       :value="rest.value"
       :hint="rest.hint"
     >
-      <q-slider
-        class="fb-field-content"
-        ref="slider"
-        :min="rest.min || 0"
-        :max="rest.max || 100"
-        :step="rest.step || 0.01"
-        :reverse="rest.reverse || false"
-        :label="rest.showValue"
-        v-bind="rest"
-        @change="onBlur"
-        @input="onInput"
-      />
+      <template v-slot:control>
+        <q-slider
+          style="min-width: 180px"
+          class="fb-field-content"
+          ref="slider"
+          :min="rest.min || 0"
+          :max="rest.max || 100"
+          :step="rest.step || 0.01"
+          :reverse="rest.reverse || false"
+          :label="rest.showValue"
+          v-bind="rest"
+          @change="onBlur"
+          @input="onInput"
+        />
+      </template>
+      <!-- Attachments -->
+      <template v-slot:prepend v-if="innerLeft">
+        <Attachment :config="innerLeft" :f="innerLeftClick" />
+      </template>
+      <template v-slot:append v-if="innerRight">
+        <Attachment :config="innerRight" :f="innerRightClick" />
+      </template>
     </q-field>
   </div>
 </template>
 
 <script>
-import { commonMethods, onMountCommon, computedRules } from "./common";
+import { commonMethods, onMountCommon, computedRules, computedAttachments } from "./common";
+import Attachment from "src/components/helpers/Attachment";
 export default {
   name: "SliderInput",
+  components: { Attachment },
   props: {
     keyName: {
       type: String,
@@ -48,6 +56,7 @@ export default {
   },
   computed: {
     ...computedRules,
+    ...computedAttachments
   },
   methods: {
     ...commonMethods,
@@ -65,9 +74,14 @@ export default {
 <style>
 .fb-field-slider label {
   padding-bottom: 0;
+  margin-top: 8px;
+  /* margin-bottom: 4px; */
 }
 .fb-field-slider .q-field__control-container .fb-field-content {
   position: absolute;
-  bottom: -10px;
+  bottom: -13px;
+}
+.fb-field-slider .q-field__append.q-anchor--skip{
+  display: none;
 }
 </style>
