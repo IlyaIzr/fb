@@ -69,7 +69,7 @@ import RowMapper from "./RowMapper";
 import Buttons from "./Buttons";
 import Tabs from "./Tabs";
 import { fieldsToRows, sortByTabs } from "./toRows";
-import { fbGlobal, initConfig, initRules } from "src/arguments";
+import { fbGlobal, initConfig } from "src/arguments";
 import { validator } from "./inputs/validator";
 export default {
   name: "Form",
@@ -243,7 +243,6 @@ export default {
       // initial config setting
       fbGlobal.fields[key] = config;
       // store init rules and config
-      initRules[key] = config.rules;
       initConfig[key] = {...config}
     });
 

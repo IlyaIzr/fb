@@ -96,6 +96,10 @@ export default {
     clear() {
       this.rest.value = [];
     },
+    rerender(){
+      console.log('actual rerender did run');
+      this.redrawChildren()
+    }
   },
 
   beforeMount() {
@@ -174,11 +178,14 @@ export default {
     // },
     stringUpdates({ field, prop, value }) {
       // updates already rendered fields
-      const multiField = fbGlobal.fields[this.keyName];
-      if (multiField?.fields?.length)
-        multiField.fields.forEach((fieldsGroup) => {
-          fieldsGroup[field.key] && (fieldsGroup[field.key][prop] = value);
-        });
+      // const multiField = fbGlobal.fields[this.keyName];
+      // if (multiField?.fields?.length)
+      //   multiField.fields.forEach((fieldsGroup) => {
+      //     fieldsGroup[field.key] && (fieldsGroup[field.key][prop] = value);
+      //   });
+      const mult = fbGlobal.fields[this.keyName];
+      if (mult.fields?.[field.multiIndex]?.[prop])
+        mult.fields[field.multiIndex][prop] = value;
     },
     // trigger() {
     //   console.log("trigger happend");

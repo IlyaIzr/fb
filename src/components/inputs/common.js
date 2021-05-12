@@ -23,6 +23,10 @@ export const commonMethods = {
     }
   },
 
+  reset() {
+    fbGlobal.fields[this.keyName] = { ...initConfig[this.keyName] }
+  },
+
   // Exeption: Multiple
   async onBlur(e) {
     if (this.rest?.onBlur) {
@@ -31,10 +35,7 @@ export const commonMethods = {
     }
   },
 
-  reset() {
-    fbGlobal.fields[this.keyName] = { ...initConfig[this.keyName] }
-  },
-
+  // Exeption: Multiple
   rerender() {
     this.$forceUpdate()
   },
