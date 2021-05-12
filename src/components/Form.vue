@@ -150,7 +150,7 @@ export default {
         });
 
         // rerender needed because values persists for second reset
-        fbGlobal.fields[key].component.rerender();
+        fbGlobal.fields[key].component?.rerender();
       });
 
       this.computeRawsTrigger += 1;

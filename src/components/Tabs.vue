@@ -159,19 +159,21 @@ export default {
       this.step = step;
       stepperStore.step = step;
     },
+    rowsToTabs() {
+      this.rows.length &&
+        this.rows.forEach((tabRow) => {
+          const res = fieldsToRows(tabRow, fbGlobal.values);
+          this.filteredRows.push(res);
+        });
+      // Assign 'done' statuses
+      for (let i = 0; i < this.filteredRows.length; i++) {
+        this.validated[i] = false;
+        stepperStore.validated[i] = false;
+      }
+    },
   },
   beforeMount() {
-    this.rows.length &&
-      this.rows.forEach((tabRow) => {
-        const res = fieldsToRows(tabRow, fbGlobal.values);
-        this.filteredRows.push(res);
-      });
-    // Assign 'done' statuses
-    for (let i = 0; i < this.filteredRows.length; i++) {
-      this.validated[i] = false;
-      stepperStore.validated[i] = false;
-    }
-
+    this.rowsToTabs();
     stepperStore.tabLength = this.tabs.steps.length;
   },
   mounted() {
@@ -185,6 +187,16 @@ export default {
           return self;
         },
       });
+  },
+
+  watch: {
+    rows: {
+      handler() {
+        // Reset case
+        this.rowsToTabs();
+        this.setStep(0);
+      },
+    },
   },
 };
 </script>
