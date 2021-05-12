@@ -36,8 +36,52 @@ export const fbGlobal = {
     return values
   },
   resetFormInputs(){
-    this.form.component.onReset()
-    // todo
+    const fields = this.fields
+
+    Object.keys(fields).forEach((key) => {
+      key = String(key).replace("_", "");
+
+      Object.keys(fields[key]).forEach((prop) => {
+        // Case multiple
+        if (prop === "fields") return;
+        // Case rules - we can't properly copy rules to initConfig with JSON copying
+        if (prop === "rules") {
+          fields[key].rules = initRules[key];
+          return;
+        }
+        // rest actions
+        if (prop in initConfig.fields[key])
+          fields[key][prop] = initConfig.fields[key][prop];
+        else delete fields[key][prop];
+      });
+
+      // rerender needed because values persists for second reset
+      fields[key].component?.rerender();
+    });
+
+    this.form.component.computeRawsTrigger += 1;
+  },
+  clearFormInputs(){
+    const fields = this.fields
+    
+    Object.entries(fields).forEach(([key, config]) => {
+      if (config.type === "multiple") {
+        config.fields.length &&
+          config.fields.forEach((row, multiIndex) => {
+            Object.entries(row).forEach(([fieldKey, fieldConfig]) => {
+              fieldConfig.value = "";
+            });
+          });
+        return true;
+      }
+
+      key = String(key).replace("_", "");
+      fields[key].value = "";
+    });
+
+    this.form.component.$nextTick(() => {
+      this.form.ref.resetValidation();
+    });
   }
 }
 

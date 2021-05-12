@@ -6,7 +6,7 @@ export const formConfig = {
     },
     rea: {
       label: 'R',
-      onFocus(fb){
+      onFocus: (fb)=>{
         fb.fields.name.hint = 'new hint'
       },
       required: 1,
@@ -43,7 +43,7 @@ export const formConfig = {
 
   title: 'Dev title',
   buttons: {
-    reset: 'res me'
+    clear: 'c; me'
   }
 }
 

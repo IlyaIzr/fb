@@ -131,29 +131,7 @@ export default {
       if (this.confMethods.onReset) {
         cb = await this.confMethods.onReset(fbGlobal, this);
       }
-
-      Object.keys(fbGlobal.fields).forEach((key) => {
-        key = String(key).replace("_", "");
-
-        Object.keys(fbGlobal.fields[key]).forEach((prop) => {
-          // Case multiple
-          if (prop === "fields") return;
-          // Case rules - we can't properly copy rules to initConfig with JSON copying
-          if (prop === "rules") {
-            fbGlobal.fields[key].rules = initRules[key];
-            return;
-          }
-          // rest actions
-          if (prop in initConfig.fields[key])
-            fbGlobal.fields[key][prop] = initConfig.fields[key][prop];
-          else delete fbGlobal.fields[key][prop];
-        });
-
-        // rerender needed because values persists for second reset
-        fbGlobal.fields[key].component?.rerender();
-      });
-
-      this.computeRawsTrigger += 1;
+      fbGlobal.resetFormInputs();
 
       if (typeof cb === "function") await cb(fbGlobal, this);
     },
@@ -163,23 +141,7 @@ export default {
         cb = await this.confMethods.onClear(fbGlobal, this);
       }
 
-      Object.entries(fbGlobal.fields).forEach(([key, config]) => {
-        if (config.type === "multiple") {
-          config.fields.length &&
-            config.fields.forEach((row, multiIndex) => {
-              Object.entries(row).forEach(([fieldKey, fieldConfig]) => {
-                fieldConfig.value = "";
-              });
-            });
-          return true;
-        }
-
-        key = String(key).replace("_", "");
-        fbGlobal.fields[key].value = "";
-      });
-      this.$nextTick(() => {
-        this.$refs.form.resetValidation();
-      });
+      fbGlobal.clearFormInputs();
 
       if (typeof cb === "function") await cb(fbGlobal, this);
     },
