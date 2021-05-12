@@ -1,7 +1,10 @@
 export const formConfig = {
 
   fields: {
-    p: {}
+    p: {
+      type: 'file',
+      onInput(fb, some, val){console.log(val, typeof val);}
+    }
   },
 
 

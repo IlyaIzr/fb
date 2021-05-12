@@ -64,7 +64,7 @@ const commonProps = {
   visible(val, f) { return booleaner(val, f) },
   metaShouldSumbmit(val, f) { return booleaner(val, f) },
 
-  rules(val, f) { 
+  rules(val, f) {
     let res = arrayer(val, f)
     if (!res?.[0]) res = []
     return res
@@ -186,6 +186,10 @@ export const validator = {
     ...commonProps,
   },
 
+  file: {
+    ...commonProps,
+    value(val, f) { return typeof val === 'object' ? val : null },
+  },
 }
 
 
@@ -228,3 +232,15 @@ export const simpleTypes = [
   "time",
   "dateNative",
 ];
+
+export const allowedTypes = new Set([
+  "select",
+  "multiple",
+  "slider",
+  "date",
+  "checkbox",
+  "html",
+  "editor",
+  "button",
+  "file"
+]);

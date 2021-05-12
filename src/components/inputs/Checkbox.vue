@@ -1,5 +1,5 @@
 <template>
-  <div class="q-gutter-md" v-if="rest.visible">
+  <div class="q-gutter-md col fb-field-checkbox" v-if="rest.visible">
     <q-field
       ref="input"
       :value="localVal"

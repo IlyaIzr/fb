@@ -112,3 +112,17 @@ label | `''` | `String` | button label (inner text)
 color | `'primary'` | `String` | button color, [examples](https://quasar.dev/style/color-palette)
 size | `'md'` | `String` | button size
 onClick | `onClick = async (globalConfig, component, fieldConfig) => {}` | `Function` | Semantic name for only event that <br> button can have. You can also use <br> onInput, onFocus or onBlur handlers, that will also fire
+
+
+#### File uploader
+
+Key | Default value | Expected types | Description
+--- | --- | --- | --- 
+type  | `"file"` | `"file"` | -
+value | `null` | `File`, `FileList`, `Array`, `null` | `Filelist` and `Array` expected if `field.multiple === true`
+multiple  | `false` | `Boolean` | Allows to pick several files
+accept | `'*'` | `String` | Comma separated list of unique file type specifiers. <br> Maps to 'accept' attribute of native input type=file element
+max-files | 1 | `Number` or `String` | Maximum number of files to contain
+max-file-size | `undefined` | `Number` or `String` | Maximum size of individual file in bytes
+
+> More properties here: https://quasar.dev/vue-components/file-picker#qfile-api

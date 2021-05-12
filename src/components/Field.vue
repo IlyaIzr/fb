@@ -36,6 +36,11 @@
         :keyName="fieldInfo.key"
         :rest="rest"
       />
+      <File
+        v-if="inputType === 'file'"
+        :keyName="fieldInfo.key"
+        :rest="rest"
+      />
       <Html v-if="inputType === 'html'" :keyName="fieldInfo.key" :rest="rest" />
       <Editor
         v-if="inputType === 'editor'"
@@ -66,12 +71,13 @@ import Select from "./inputs/Select";
 import Slider from "./inputs/Slider";
 import Date from "./inputs/Date";
 import Checkbox from "./inputs/Checkbox";
+import File from "./inputs/File";
 import Html from "./helpers/Html";
 import Editor from "./inputs/Editor";
 import Button from "./helpers/Button";
 import Attachment from "./helpers/Attachment";
 import { fbGlobal } from "src/arguments";
-import { simpleTypes, validator } from "./inputs/validator";
+import { allowedTypes, simpleTypes, validator } from "./inputs/validator";
 
 export default {
   name: "FieldSorter",
@@ -106,6 +112,7 @@ export default {
     Editor,
     Attachment,
     Button,
+    File
   },
   computed: {
     inputType() {
@@ -114,16 +121,6 @@ export default {
       if (simpleTypes.find((value) => value === type)) {
         return "simple";
       }
-      const allowedTypes = new Set([
-        "select",
-        "multiple",
-        "slider",
-        "date",
-        "checkbox",
-        "html",
-        "editor",
-        "button",
-      ]);
       if (allowedTypes.has(type)) return type;
       else return "err";
     },
