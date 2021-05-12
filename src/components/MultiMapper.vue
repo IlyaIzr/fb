@@ -43,11 +43,6 @@ export default {
       type: Array,
       required: true,
     },
-    settings: {
-      type: Object,
-      required: false,
-      default: {},
-    },
     multiKey: {
       type: String,
     },

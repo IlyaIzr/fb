@@ -17,6 +17,17 @@ export const formConfig = {
         },
       },
     },
+    react: {
+      onFocus(fb){
+        // console.log({...fb.fields.simpleMultiple.settings});
+        fb.fields.simpleMultiple.settings.lastName.hint = 'new hint'
+        
+        // fb.fields.simpleMultiple.settings.lastName = {
+        //   label: 'Family name',
+        //   hint: 'a.k.a second name'
+        // }
+      }
+    }
   },
 
 

@@ -10,7 +10,6 @@
 
     <MultiMapper
       :multiRows="rows"
-      :settings="{}"
       :multiKey="rest.key"
       :key="computeRawsTrigger"
       @remove="removeField"
@@ -69,8 +68,12 @@ export default {
   methods: {
     ...commonMethods,
     computeRowsEffect() {
+      const clearSettings = {};
+      Object.entries(this.rest.settings).forEach(([key, conf]) => {
+        clearSettings[key] = { ...conf };
+      });
       const rows = fieldsToRows(
-        this.rest.settings,
+        { ...clearSettings },
         fbGlobal.values?.[this.keyName],
         this.keyName,
         this.rest.value
@@ -96,10 +99,9 @@ export default {
     clear() {
       this.rest.value = [];
     },
-    rerender(){
-      console.log('actual rerender did run');
-      this.redrawChildren()
-    }
+    rerender() {
+      this.redrawChildren();
+    },
   },
 
   beforeMount() {
@@ -114,42 +116,23 @@ export default {
       set: function (field, prop, value) {
         let validated =
           field.type && validator[field.type]?.[prop]?.(value, field);
-        if (validated !== undefined) value = validated;
 
+        if (validated !== undefined) value = validated;
         // console.log('changes simp setting');
         self.stringUpdates = { field, prop, value };
         // console.log(field.key, 'assigned value ', value);
         field[prop] = value;
-
         return true;
       },
     };
     const s = fbGlobal.fields[this.keyName].settings;
     Object.keys(s).forEach((key) => {
-      fbGlobal.fields[this.keyName].settings[key] = new Proxy(
-        s[key],
-        redrawWrap
-      );
+      // for string changes injections we got to transfer field key somehow
+      s[key].key = key;
+      s[key] = new Proxy(s[key], redrawWrap);
     });
 
     this.computeRowsEffect();
-
-    // VALIDATION STUFF
-    // Validate props for this specific input. Example: define select value
-    //   Object.entries(field).forEach(([key, val]) => {
-    //     let assignment;
-    //     if (shouldEval(key, val)) {
-    //       assignment = val(fbGlobal, this);
-    //     } else assignment = val;
-
-    //     // Assignment validation
-    //     switch (key) {
-    //       case "label":
-    //         assignment &&= String(assignment);
-    //         break;
-    //     }
-    //     field[key] = assignment;
-    //   });
   },
   mounted() {
     onMountCommon(this, this.rest);
@@ -178,14 +161,11 @@ export default {
     // },
     stringUpdates({ field, prop, value }) {
       // updates already rendered fields
-      // const multiField = fbGlobal.fields[this.keyName];
-      // if (multiField?.fields?.length)
-      //   multiField.fields.forEach((fieldsGroup) => {
-      //     fieldsGroup[field.key] && (fieldsGroup[field.key][prop] = value);
-      //   });
-      const mult = fbGlobal.fields[this.keyName];
-      if (mult.fields?.[field.multiIndex]?.[prop])
-        mult.fields[field.multiIndex][prop] = value;
+      const multiField = fbGlobal.fields[this.keyName];
+      if (multiField?.fields?.length)
+        multiField.fields.forEach((fieldsGroup) => {
+          fieldsGroup[field.key] && (fieldsGroup[field.key][prop] = value);
+        });
     },
     // trigger() {
     //   console.log("trigger happend");
