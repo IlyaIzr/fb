@@ -18,21 +18,21 @@ export const commonMethods = {
   // Exeption: Multiple
   async onFocus() {
     if (this.rest.onFocus) {
-      const cb = await this.rest.onFocus(fbGlobal, this);
-      if (typeof cb === "function") await cb(fbGlobal, this);
+      const cb = await this.rest.onFocus(fbGlobal, this, this.rest);
+      if (typeof cb === "function") await cb(fbGlobal, this, this.rest);
     }
   },
 
   // Exeption: Multiple
   async onBlur(e) {
     if (this.rest?.onBlur) {
-      const cb = await this.rest.onBlur(fbGlobal, this);
+      const cb = await this.rest.onBlur(fbGlobal, this, this.rest);
       if (typeof cb === "function") await cb(fbGlobal, this, e);
     }
   },
 
   reset() {
-    fbGlobal.fields[this.keyName] = { ...initConfig.fields[this.keyName] }
+    fbGlobal.fields[this.keyName] = { ...initConfig[this.keyName] }
   },
 
   rerender() {

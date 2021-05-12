@@ -1,5 +1,4 @@
 export const initConfig = {}
-export const initRules = {}
 
 export const fbGlobal = {
   form: {},
@@ -30,12 +29,12 @@ export const fbGlobal = {
       // Case simple
       // case meta submit
       if (config.metaShouldSumbmit) return values[config.key] = config.meta
-      
+
       return values[config.key] = config.value;
     });
     return values
   },
-  resetFormInputs(){
+  resetFormInputs() {
     const fields = this.fields
 
     Object.keys(fields).forEach((key) => {
@@ -44,14 +43,10 @@ export const fbGlobal = {
       Object.keys(fields[key]).forEach((prop) => {
         // Case multiple
         if (prop === "fields") return;
-        // Case rules - we can't properly copy rules to initConfig with JSON copying
-        if (prop === "rules") {
-          fields[key].rules = initRules[key];
-          return;
-        }
+        
         // rest actions
-        if (prop in initConfig.fields[key])
-          fields[key][prop] = initConfig.fields[key][prop];
+        if (prop in initConfig[key])
+          fields[key][prop] = initConfig[key][prop];
         else delete fields[key][prop];
       });
 
@@ -61,9 +56,9 @@ export const fbGlobal = {
 
     this.form.component.computeRawsTrigger += 1;
   },
-  clearFormInputs(){
+  clearFormInputs() {
     const fields = this.fields
-    
+
     Object.entries(fields).forEach(([key, config]) => {
       if (config.type === "multiple") {
         config.fields.length &&
@@ -92,3 +87,15 @@ export const stepperStore = new Proxy({ watcher: 1, step: 0, tabLength: 1, valid
     return true;
   },
 })
+
+// const a = {
+//   methos: {
+//     onA() {
+//       console.log('init func');
+//     }
+//   }
+// }
+// const b = { ...a }
+// a.methos.onA = () => console.log('neuve func');
+
+// b.methos.onA()

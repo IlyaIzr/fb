@@ -242,8 +242,9 @@ export default {
 
       // initial config setting
       fbGlobal.fields[key] = config;
-      // store init rules
+      // store init rules and config
       initRules[key] = config.rules;
+      initConfig[key] = {...config}
     });
 
     // assign rows once
