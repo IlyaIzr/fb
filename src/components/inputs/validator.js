@@ -64,7 +64,11 @@ const commonProps = {
   visible(val, f) { return booleaner(val, f) },
   metaShouldSumbmit(val, f) { return booleaner(val, f) },
 
-  rules(val, f) { return arrayer(val, f) },
+  rules(val, f) { 
+    let res = arrayer(val, f)
+    if (!res?.[0]) res = []
+    return res
+  },
 
   onInput(val) { return inputMethods(val) },
   onFocus(val) { return inputMethods(val) },

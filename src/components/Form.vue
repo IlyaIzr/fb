@@ -69,7 +69,7 @@ import RowMapper from "./RowMapper";
 import Buttons from "./Buttons";
 import Tabs from "./Tabs";
 import { fieldsToRows, sortByTabs } from "./toRows";
-import { fbGlobal, initConfig } from "src/arguments";
+import { fbGlobal, initConfig, initRules } from "src/arguments";
 import { validator } from "./inputs/validator";
 export default {
   name: "Form",
@@ -80,7 +80,7 @@ export default {
   },
   data() {
     return {
-      methods: this.settings?.methods || {},
+      confMethods: this.settings?.methods || {},
       fbGlobal,
       computeRawsTrigger: 1,
       rows: [],
@@ -116,15 +116,20 @@ export default {
       if (!notify.timeout) notify.timeout = 200;
       const notifyRef = this.$q.notify(notify);
 
-      if (this.methods.onSubmit) {
-        const cb = await this.methods.onSubmit(fbGlobal, this, values, notifyRef);
+      if (this.confMethods.onSubmit) {
+        const cb = await this.confMethods.onSubmit(
+          fbGlobal,
+          this,
+          values,
+          notifyRef
+        );
         if (typeof cb === "function") cb(fbGlobal, this, values, notifyRef);
       }
     },
     async onReset() {
       let cb;
-      if (this.methods.onReset) {
-        cb = await this.methods.onReset(fbGlobal, this);
+      if (this.confMethods.onReset) {
+        cb = await this.confMethods.onReset(fbGlobal, this);
       }
 
       Object.keys(fbGlobal.fields).forEach((key) => {
@@ -133,20 +138,29 @@ export default {
         Object.keys(fbGlobal.fields[key]).forEach((prop) => {
           // Case multiple
           if (prop === "fields") return;
+          // Case rules - we can't properly copy rules to initConfig with JSON copying
+          if (prop === "rules") {
+            fbGlobal.fields[key].rules = initRules[key];
+            return;
+          }
           // rest actions
           if (prop in initConfig.fields[key])
             fbGlobal.fields[key][prop] = initConfig.fields[key][prop];
           else delete fbGlobal.fields[key][prop];
         });
-        this.computeRawsTrigger += 1;
+
+        // rerender needed because values persists for second reset
+        fbGlobal.fields[key].component.rerender();
       });
+
+      this.computeRawsTrigger += 1;
 
       if (typeof cb === "function") await cb(fbGlobal, this);
     },
     async onClear() {
       let cb;
-      if (this.methods.onClear) {
-        cb = await this.methods.onClear(fbGlobal, this);
+      if (this.confMethods.onClear) {
+        cb = await this.confMethods.onClear(fbGlobal, this);
       }
 
       Object.entries(fbGlobal.fields).forEach(([key, config]) => {
@@ -170,13 +184,14 @@ export default {
       if (typeof cb === "function") await cb(fbGlobal, this);
     },
     async onValidateSuccess() {
-      if (this.methods.onValidateSuccess) {
-        const cb = await this.methods.onValidateSuccess(fbGlobal, this);
+      if (this.confMethods.onValidateSuccess) {
+        const cb = await this.confMethods.onValidateSuccess(fbGlobal, this);
         if (typeof cb === "function") cb(fbGlobal, this);
       }
     },
     async onValidateError(err) {
-      const f = this.methods.onValidateError || this.methods.onValidationError;
+      const f =
+        this.confMethods.onValidateError || this.confMethods.onValidationError;
       if (f) {
         const cb = await f(fbGlobal, this, err);
         if (typeof cb === "function") await cb(fbGlobal, this, err);
@@ -219,25 +234,6 @@ export default {
 
     // fbGlobal
     const self = this;
-
-    // Methods assignment, WIP
-    this.methods = this.methods ?? {};
-    Object.keys(this.methods).forEach((key) => {
-      const method = self.methods[key];
-      // const methods = {}
-      Object.defineProperty(fbGlobal.methods, key, {
-        set: function (val) {
-          this["_" + key] = val;
-          // ??????????????????????????????????????????????????????
-          self.methods["_" + key] = val; //dunno why
-        },
-        get: function () {
-          return this["_" + key];
-        },
-      });
-
-      fbGlobal.methods[key] = method;
-    });
 
     // Fields assignment
 
@@ -284,23 +280,33 @@ export default {
 
       // initial config setting
       fbGlobal.fields[key] = config;
+      // store init rules
+      initRules[key] = config.rules;
     });
 
     // assign rows once
     this.rows = this.rowsComputed();
 
     // assign component reference
-    if (!fbGlobal.methods) fbGlobal.methods = {};
-    Object.defineProperty(fbGlobal.methods, "component", {
+    Object.defineProperty(fbGlobal.form, "component", {
       get() {
         return self;
+      },
+    });
+    Object.defineProperty(fbGlobal.form, "ref", {
+      get() {
+        return self.$refs.form;
       },
     });
   },
 
   async mounted() {
-    if (this.methods.onMount) {
-      const cb = await this.methods.onMount(fbGlobal, this, this.$refs.form);
+    if (this.confMethods.onMount) {
+      const cb = await this.confMethods.onMount(
+        fbGlobal,
+        this,
+        this.$refs.form
+      );
       if (cb && typeof cb === "function")
         await cb(fbGlobal, this, this.$refs.form);
     }

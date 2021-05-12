@@ -1,4 +1,8 @@
+export const initConfig = {}
+export const initRules = {}
+
 export const fbGlobal = {
+  form: {},
   getFormValues() {
     const values = {};
     Object.entries(this.fields)?.forEach(([key, config]) => {
@@ -30,9 +34,11 @@ export const fbGlobal = {
       return values[config.key] = config.value;
     });
     return values
+  },
+  resetFormInputs(){
+    this.form.component.onReset()
+    // todo
   }
-}
-export const initConfig = {
 }
 
 export const stepperStore = new Proxy({ watcher: 1, step: 0, tabLength: 1, validated: [] }, {
