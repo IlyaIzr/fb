@@ -34,10 +34,11 @@ onBlur | `onBlur = async (globalConfig, component) => {}` | Fires when field los
 Key | Expected types | Description
 --- | --- | --- 
 type  | "text","password","textarea",<br>"email","number","time","dateNative" | input field type
+value  | `String || Number` | `Number` is for type "number", rest of cases has type of `String`
+fieldAttachments | `undefined` | `Object` | Describe field attachments
 mask  | `String`  | [Mask usage example](https://quasar.dev/vue-components/input#mask)
 prefix  | `String` |  Static string before user input
 suffix  | `String` |  Static string after user input
-value  | `String || Number` | `Number` is for type "number", rest of cases has type of `String`
 
 > See more: https://quasar.dev/vue-components/input#qinput-api
 
@@ -48,6 +49,7 @@ type      | `"select"` | `"select"` | -
 options   | `[]` | `Array`  | Select options. Array elements allowed to have 1 of 3 types <br>`{ name: String, id: String }`<br>`{ label: String, value: String }`<br>`String`
 multiple  | `false` | `Boolean` | Allows to pick several options
 value     | `''` or `[]` | `String` or `Array` | `Array` is for multiple select
+fieldAttachments | `undefined` | `Object` | Describe field attachments
 writable  | `false` | `Boolean` | Allows to sort options by user input
 
 #### Multiple
@@ -64,6 +66,7 @@ type  | `"date"` | `"date"` | -
 withInput  | `true` | `Boolean` | Adds text input with date mask
 range  | `false` | `Boolean` | Allows to pick a period between two dates
 value | `String` or `{ from: String, to: String }` | `DD.MM.YYYY` or `{ from: 'DD.MM.YYYY' , to: 'DD.MM.YYYY' }` | Date value
+fieldAttachments | `undefined` | `Object` | Describe field attachments
 
 > More properties here: https://quasar.dev/vue-components/date#qdate-api
 
@@ -72,6 +75,7 @@ Key | Default value | Expected types | Description
 --- | --- | --- | --- 
 type  | `"checkbox"` | `"checkbox"` | -
 value | `false` | `Boolean` | define if checkbox checked
+fieldAttachments | `undefined` | `Object` | Describe field attachments
 
 #### Html
 Key | Default value | Expected types | Description
@@ -85,6 +89,7 @@ Key | Default value | Expected types | Description
 --- | --- | --- | --- 
 type  | `"slider"` | `"slider"` | -
 value | `0` | `Number` | -
+fieldAttachments | `undefined` | `Object` | Describe field attachments
 min | `0` | `Number` | lowest allowed slider value
 max | `100` | `Number` | highest allowed slider value
 step | `0.01` | `Number` | slider step
@@ -120,9 +125,48 @@ Key | Default value | Expected types | Description
 --- | --- | --- | --- 
 type  | `"file"` | `"file"` | -
 value | `null` | `File`, `FileList`, `Array`, `null` | `Filelist` and `Array` expected if `field.multiple === true`
+fieldAttachments | `undefined` | `Object` | Describe field attachments. <br> `fieldAttachments.innerLeft` will replace upload icon
 multiple  | `false` | `Boolean` | Allows to pick several files
 accept | `'*'` | `String` | Comma separated list of unique file type specifiers. <br> Maps to 'accept' attribute of native input type=file element
 max-files | 1 | `Number` or `String` | Maximum number of files to contain
 max-file-size | `undefined` | `Number` or `String` | Maximum size of individual file in bytes
 
 > More properties here: https://quasar.dev/vue-components/file-picker#qfile-api
+
+### Field Attachments
+You can attach different icons and buttons to various inputs. You can also add functionality to them. Field attachment is an `Object` inside field config
+```javascript
+field: {
+  fieldAttachments: {
+    // here you can describe where to put an attachment
+  }
+}
+```
+
+
+There are 4 keys availible to describe attachment position: 'outerLeft', 'innerLeft', 'innerRight', 'outerRight'
+Inside those keys you can describe attachment itself. There're 3 types availible:
+*Icon. Expects a material-icon name, [see names](https://material.io/resources/icons/) 
+```javascript
+      outerLeft: {
+        type: 'icon',
+        name: 'settings'  // name of the icon
+      },
+```
+* Image. Expects image url
+```javascript
+      innerLeft: {
+        type: 'img',
+        src: 'url://some url'
+      },
+```
+* Button. Allows you to run action on user click
+```javascript
+      innerRight: {
+        type: 'button',
+        icon: 'warning',
+        onClick: (fb, component, field) => {
+          field.value = 'New value'
+        }
+      },
+```
