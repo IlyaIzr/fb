@@ -1,9 +1,8 @@
 export const formConfig = {
 
   fields: {
-    p: {
-      type: 'file',
-      onInput(fb, some, val){console.log(val, typeof val);}
+    date: {
+      type: 'date'
     }
   },
 
@@ -13,9 +12,6 @@ export const formConfig = {
   },
 
   title: 'Dev title',
-  buttons: {
-    reset: 'resme'
-  }
 }
 
 

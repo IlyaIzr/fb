@@ -86,3 +86,39 @@ export const values = {
     }
   }
 }
+
+
+// Config to test form reset() bug
+// relevant only for settings reactivity
+const bugcase = {
+  fields: {
+    simpleMultiple: {
+      type: 'multiple',
+      label: "Multiple with simpleinputs",
+      value: [
+        { firstName: 'Peter', lastName: '' },
+        { firstName: 'Lois', lastName: 'Puttershmidt' }
+      ],
+      settings: {
+        firstName: {
+          label: 'First name',
+        },
+        lastName: {
+          label: 'Last name'
+        },
+      },
+    },
+    p: {
+      onFocus(fb, some, val) {
+        fb.fields.simpleMultiple.fields[0].firstName.onFocus = () => { console.log('just checking') }
+        console.log(fb.fields.simpleMultiple.settings.firstName);
+      }
+    }
+  },
+
+  buttons: {
+    reset: 'resme'
+  }
+
+
+}
