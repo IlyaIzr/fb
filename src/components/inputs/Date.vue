@@ -52,7 +52,6 @@
 </template>
 
 <script>
-import { date } from "quasar";
 import CalendarInput from "src/components/helpers/Calendar";
 import { commonMethods, computedRules, onMountCommon } from "./common";
 function stringdDate(val) {
@@ -61,7 +60,6 @@ function stringdDate(val) {
   if (val.from) return val.from + " - " + val.to;
   return "";
 }
-const { formatDate } = date;
 export default {
   name: "DateInput",
   components: {

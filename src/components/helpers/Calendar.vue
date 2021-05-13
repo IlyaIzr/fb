@@ -5,8 +5,8 @@
     today-btn
     @input="onInput"
     :mask="mask"
-    class="fb-field-content"
-    :value="rest.value !== undefined ? rest.value : today"
+    class="fb-field-content fb-field-date-calendar"
+    :value="rest.value || today"
   >
     <div v-if="rest.withInput" class="row items-center justify-end">
       <q-btn v-close-popup label="Close" color="primary" flat ref="btn" />
@@ -94,6 +94,10 @@ export default {
       this.$emit("input", val);
     },
   },
+  mounted(){
+    const todayIcon = document.querySelector('.fb-field-date-calendar .q-date__header button span i')
+    todayIcon.title = 'Сегодня'
+  }
 };
 </script>
 
