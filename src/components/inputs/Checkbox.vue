@@ -20,15 +20,24 @@
           class="fb-field-content"
         />
       </template>
+      <!-- Attachments -->
+      <template v-slot:prepend v-if="innerLeft">
+        <Attachment :config="innerLeft" :f="innerLeftClick" />
+      </template>
+      <template v-slot:append v-if="innerRight">
+        <Attachment :config="innerRight" :f="innerRightClick" />
+      </template>
     </q-field>
   </div>
 </template>
 
 <script>
-import { commonMethods, computedRules, onMountCommon } from "./common";
+import { commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
+import Attachment from "src/components/helpers/Attachment";
 
 export default {
   name: "CheckboxInput",
+  components: { Attachment },
   props: {
     keyName: {
       type: String,
@@ -49,6 +58,7 @@ export default {
   },
   methods: {
     ...commonMethods,
+    ...computedAttachments,
 
     async onInputLocal(val) {
       this.localVal = val;

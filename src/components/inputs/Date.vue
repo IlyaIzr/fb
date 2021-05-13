@@ -28,8 +28,14 @@
         ref="input"
         class="fb-field-content"
       >
+        <!-- Attachments -->
         <template v-slot:prepend>
-          <q-icon name="event" class="cursor-pointer">
+          <Attachment
+            v-if="innerLeft"
+            :config="innerLeft"
+            :f="innerLeftClick"
+          />
+          <q-icon v-else name="event" class="cursor-pointer">
             <q-popup-proxy
               ref="qDateProxy"
               transition-show="scale"
@@ -46,6 +52,10 @@
             </q-popup-proxy>
           </q-icon>
         </template>
+
+        <template v-slot:append v-if="innerRight">
+          <Attachment :config="innerRight" :f="innerRightClick" />
+        </template>
       </q-input>
     </div>
   </div>
@@ -53,7 +63,8 @@
 
 <script>
 import CalendarInput from "src/components/helpers/Calendar";
-import { commonMethods, computedRules, onMountCommon } from "./common";
+import { commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
+import Attachment from "src/components/helpers/Attachment";
 function stringdDate(val) {
   if (!val) return "";
   if (typeof val === "string") return val;
@@ -63,7 +74,7 @@ function stringdDate(val) {
 export default {
   name: "DateInput",
   components: {
-    CalendarInput,
+    CalendarInput, Attachment
   },
   props: {
     keyName: {
@@ -82,6 +93,7 @@ export default {
   },
   computed: {
     ...computedRules,
+    ...computedAttachments,
     textInputMask() {
       let mask = "";
       mask = this.rest.range ? "##.##.#### - ##.##.####" : "##.##.####";
@@ -99,12 +111,11 @@ export default {
       let finalVal = val;
       let inputVal = val;
 
-
       if (typeof val === "object" && val?.from && val.to) {
         inputVal = val.from + " - " + val.to;
       }
 
-      await this.onInput(finalVal)
+      await this.onInput(finalVal);
       this.inputValue = stringdDate(inputVal);
     },
     async onTextInput(val) {
@@ -125,8 +136,8 @@ export default {
     field.withInput ??= true;
     this.inputValue = stringdDate(this.rest.value);
   },
-  mounted(){
-    onMountCommon(this, this.rest)
+  mounted() {
+    onMountCommon(this, this.rest);
   },
 };
 </script>

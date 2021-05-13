@@ -136,6 +136,7 @@ function getRules(rules, required, requiredMessage, metaValue, rest) {
 }
 
 
+// Exeptions: Multiple, Editor(no slots)
 export const computedAttachments = {
   innerLeft() {
     let conf = {};

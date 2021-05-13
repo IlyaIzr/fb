@@ -8,20 +8,27 @@
       @input="onInput"
       @focus="onFocus"
     >
-      <template v-slot:prepend>
-        <q-icon name="cloud_upload" @click.stop />
-      </template>
-
       <template v-slot:hint class="fb-field-hint"> {{ rest.hint }} </template>
+
+      <!-- Attachments -->
+      <template v-slot:prepend>
+        <Attachment v-if="innerLeft" :config="innerLeft" :f="innerLeftClick" />
+        <q-icon v-else name="cloud_upload" @click.stop />
+      </template>
+      <template v-slot:append v-if="innerRight">
+        <Attachment :config="innerRight" :f="innerRightClick" />
+      </template>
     </q-file>
   </div>
 </template>
 
 <script>
-import { commonMethods, computedRules, onMountCommon } from "./common";
+import { commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
+import Attachment from "src/components/helpers/Attachment";
 
 export default {
   name: "File",
+  components: { Attachment },
   props: {
     keyName: {
       type: String,
@@ -37,6 +44,7 @@ export default {
   },
   computed: {
     ...computedRules,
+    ...computedAttachments
   },
   methods: {
     ...commonMethods,
