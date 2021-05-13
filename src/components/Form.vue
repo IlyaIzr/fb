@@ -242,8 +242,14 @@ export default {
 
       // initial config setting
       fbGlobal.fields[key] = config;
-      // store init rules and config
-      initConfig[key] = {...config}
+      // store copy of config
+      if (config.type === "multiple") {
+        // Make actual copy of settings, so they would persist
+        initConfig[key] = { ...config, settings: {} };
+        Object.entries(config.settings).forEach(
+          ([fKey, fConf]) => (initConfig[key].settings[fKey] = { ...fConf })
+        );
+      } else initConfig[key] = { ...config };
     });
 
     // assign rows once
@@ -284,7 +290,17 @@ export default {
     },
   },
 };
+// btw this copying for init config didn't work, javascript mystery
+
+// initConfig[key] = { ...config };
+// if (config.type === "multiple") {
+//   // Make actual copy of settings, so they would persist
+//   Object.entries(config.settings).forEach(
+//     ([fKey, fConf]) => (initConfig[key].settings[fKey] = { ...fConf })
+//   );
+// }
 </script>
 
 <style>
 </style>
+

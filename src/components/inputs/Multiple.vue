@@ -114,6 +114,7 @@ export default {
     // Wrap settings with reactivity
     const redrawWrap = {
       set: function (field, prop, value) {
+      console.log("set settings updates", { ...field }, prop, value);
         let validated =
           field.type && validator[field.type]?.[prop]?.(value, field);
 
@@ -160,6 +161,7 @@ export default {
     //   deep: true,
     // },
     stringUpdates({ field, prop, value }) {
+      console.log("string updates did run", { ...field }, prop, value);
       // updates already rendered fields
       const multiField = fbGlobal.fields[this.keyName];
       if (multiField?.fields?.length)

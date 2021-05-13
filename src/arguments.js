@@ -43,7 +43,26 @@ export const fbGlobal = {
       Object.keys(fields[key]).forEach((prop) => {
         // Case multiple
         if (prop === "fields") return;
-        
+        // TODO to be tested is this necessary?
+        // if (prop === 'settings') {
+        //   // Reset settings
+        //   this.fields[key].settings = {}
+
+        //   const settings = this.fields[key].settings
+        //   const initSettings = initConfig[key].settings
+        //   // fields[key].settings = {}
+        //   // console.log({ ...this.fields[key].settings });
+        //   Object.entries(initSettings).forEach(([fKey, conf]) => {
+        //     // Define setting field as empty object
+
+        //     if (fKey in initSettings) {
+        //       settings[fKey] = conf;
+        //     }
+        //     else delete settings[fKey];
+        //   })
+        //   return;
+        // }
+
         // rest actions
         if (prop in initConfig[key])
           fields[key][prop] = initConfig[key][prop];
