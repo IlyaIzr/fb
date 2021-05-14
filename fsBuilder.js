@@ -3,7 +3,7 @@ console.log('writing into /library')
 // Update vendor
 const vendor = fs.readdirSync('./dist/spa/js').filter(fn => fn.startsWith('vendor'));
 fs.readFile('./dist/spa/js/' + vendor[0], 'utf8', function (err, data) {
-  const replaced = data.replace(/webpackJsonp/g, 'webpackJsonpFB')
+  const replaced = data.replace(/webpackJsonp/g, 'webpackJsonpFB2') // Migration
 
   fs.writeFile('./library/vendor.js', replaced, 'utf8', function (err) {
     if (err) return console.log(err);
@@ -18,11 +18,11 @@ appMinified = appMinified.replace(/{globalConfig:[A-za-z]/g, '{globalConfig:form
 appMinified = appMinified.replace(/,globalValues:[A-za-z]/g, ',globalValues:formValues')
 appMinified = appMinified.replace(/"#q-app"/g, '"#"+rootId')
 appMinified = appMinified.replace(/"q-app"/g, 'rootId')
-appMinified = appMinified.replace(/webpackJsonp/g, 'webpackJsonpFB')
+appMinified = appMinified.replace(/webpackJsonp/g, 'webpackJsonpFB2') // Migration
 
 
 const formBuilderContent =
-  'window.callForm = (path, data={}, config) => {\n try \n { \n const id = "form" + Date.now();  \nconst div = document.createElement("div");\ndiv.id = id;\nconst pathElement = document.querySelector(path);  \nwhile (pathElement.firstChild) {    \npathElement.removeChild(pathElement.lastChild);  \n}  \npathElement.appendChild(div);\nlet renderer = (rootId, formValues, formConfig) => {\n' +
+  'window.callForm2 = (path, data={}, config) => {\n try \n { \n const id = "form" + Date.now();  \nconst div = document.createElement("div");\ndiv.id = id;\nconst pathElement = document.querySelector(path);  \nwhile (pathElement.firstChild) {    \npathElement.removeChild(pathElement.lastChild);  \n}  \npathElement.appendChild(div);\nlet renderer = (rootId, formValues, formConfig) => {\n' +
   appMinified + '\n};\nrenderer(id, data, config);\n} \ncatch (error) {  \nconsole.log(error);\n}\n}'
 
 
