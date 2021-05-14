@@ -1,22 +1,36 @@
 export const formConfig = {
 
   fields: {
+    simpleMultiple: {
+      type: 'multiple',
+      label: "Multiple with simpleinputs",
+      required: 1,
+      value: [
+        {}
+      ],
+      settings: {
+        firstName: {
+          label: 'First name', required: 1
+        },
+        lastName: {
+          label: 'Last name'
+        },
+      },
+      tab: 1
+    },
     f: {
-      type: 'file',
-      onInput(fb, comp, val){
-        console.log(val);
-        
-      }
-    }
+      onFocus(fb){
+      },
+      tab: 2
+    },
   },
+  tabs: true,
+  modal: true,
 
-  buttons: {
-    reset: 'resme'
-  },
 
 
   methods: {
-    onSubmit(fb, _, res) { console.dir(res.f) }
+    onSubmit(fb, _, res) { console.dir(res) }
   },
 
   title: 'Dev title',

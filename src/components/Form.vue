@@ -114,7 +114,8 @@ export default {
       const notify = fbGlobal.notify || {};
       if (!notify.message) notify.message = "Отправлено";
       if (!notify.timeout) notify.timeout = 200;
-      const notifyRef = this.$q.notify(notify);
+      const notifyRef = ''
+      // this.$q.notify(notify);
 
       if (this.confMethods.onSubmit) {
         const cb = await this.confMethods.onSubmit(
