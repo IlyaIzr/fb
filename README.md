@@ -137,7 +137,7 @@ max-file-size | `undefined` | `Number` or `String` | Maximum size of individual 
 You can attach different icons and buttons to various inputs. You can also add functionality to them. Field attachment is an `Object` inside field config
 ```javascript
 field: {
-  fieldAttachments: {
+  outerLeft: {
     // here you can describe where to put an attachment
   }
 }

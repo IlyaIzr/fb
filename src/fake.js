@@ -10,22 +10,33 @@ export const formConfig = {
       ],
       settings: {
         firstName: {
-          label: 'First name', required: 1
+          label: 'First name', required: 1,
+          row: 1
         },
         lastName: {
-          label: 'Last name'
+          label: 'Last name',
+          service: true,
+          outerRight: {
+            type: 'button',
+            icon: 'settings',  // name of the icon
+            onClick(a, b, c) {
+              console.log(c.component);
+            }
+          },
+          row: 1
         },
       },
-      tab: 1
+      tab: 1,
+
     },
-    f: {
-      onFocus(fb){
+    firstName: {
+      label: 'First name', required: 1,
+      innerLeft: {
+        type: 'button',
+        icon: 'settings'  // name of the icon
       },
-      tab: 2
     },
   },
-  tabs: true,
-  modal: true,
 
 
 
