@@ -1,7 +1,8 @@
 <template>
+<div class="fb-service-visibility-trigger col" :key="visibleTrigger" :style="!fieldInfo.visible && 'display: none'">
   <div
     v-if="fieldInfo.visible && inputType !== 'button'"
-    :key="visibleTrigger"
+    
     :class="
       'fb-field-container col ' + `${!fieldInfo.multiKey ? ' q-mx-md' : ''}`
     "
@@ -62,6 +63,7 @@
       :rest="rest"
     />
   </div>
+  </div>
 </template>
 
 <script>
@@ -76,7 +78,7 @@ import Html from "./helpers/Html";
 import Editor from "./inputs/Editor";
 import Button from "./helpers/Button";
 import Attachment from "./helpers/Attachment";
-import { fbGlobal } from "src/arguments";
+import { fbGlobal, prevVisibility } from "src/arguments";
 import { allowedTypes, simpleTypes, validator } from "./inputs/validator";
 
 export default {
@@ -223,8 +225,10 @@ export default {
   watch: {
     rest: {
       handler(field) {
+        console.log(prevVisibility[this.fieldInfo.key], field.visible);
         // console.log("rerest", this.fieldInfo.key, { ...a }, { ...b });
-        if (!field.visible) this.visibleTrigger += 1;
+        if (field.visible !== prevVisibility[this.fieldInfo.key]) {console.log('retrigger happend');this.visibleTrigger += 1;}
+        prevVisibility[this.fieldInfo.key] = field.visible
       },
       deep: true,
     },

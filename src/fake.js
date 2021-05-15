@@ -1,41 +1,31 @@
 export const formConfig = {
 
   fields: {
-    simpleMultiple: {
-      type: 'multiple',
-      label: "Multiple with simpleinputs",
-      required: 1,
-      value: [
-        {}
-      ],
-      settings: {
-        firstName: {
-          label: 'First name', required: 1,
-          row: 1
-        },
-        lastName: {
-          label: 'Last name',
-          service: true,
-          outerRight: {
-            type: 'button',
-            icon: 'settings',  // name of the icon
-            onClick(a, b, c) {
-              console.log(c.component);
-            }
-          },
-          row: 1
-        },
-      },
-      tab: 1,
-
+    target: {
+      label: 'im target', row: 1
     },
+    tar2: {row: 1},
     firstName: {
-      label: 'First name', required: 1,
-      innerLeft: {
-        type: 'button',
-        icon: 'settings'  // name of the icon
-      },
+      label: 'Im a hider', 
+      onFocus(fb){
+        fb.fields.target.visible = false
+      }
     },
+    s: {
+      label: 'Im a revealer', 
+      onFocus(fb){
+        fb.fields.target.visible = true
+      }
+
+    }
+    ,
+    sb: {
+      label: 'Im dont affect visibility', 
+      onFocus(fb){
+        fb.fields.target.label = true
+      }
+
+    }
   },
 
 

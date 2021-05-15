@@ -107,6 +107,8 @@ export const stepperStore = new Proxy({ watcher: 1, step: 0, tabLength: 1, valid
   },
 })
 
+export const prevVisibility = {}
+
 // const a = {
 //   methos: {
 //     onA() {
