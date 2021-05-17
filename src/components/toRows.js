@@ -109,7 +109,7 @@ export const fieldsToRows = (fields, values = {}, multiKey = false, multiValues 
   return muliLevelPopulated
 }
 
-export function sortByTabs(fields, defaultTab) {
+export function sortByTabs(fields, defaultTab = 1) {
   if (!Object.entries(fields).length) return []
   const indexedGroup = []
   const unIndexedFields = {}

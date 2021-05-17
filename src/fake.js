@@ -1,21 +1,23 @@
 export const formConfig = {
 
+
   fields: {
-    simpleMultiple: {
-      type: 'multiple',
-      settings: {
-        user: {
-          type: 'select',
-          options: ['a', 'b']
-        },
-        abuser: {
-          type: 'select',
-          options: ['a', 'b']
-        }
-      },
-      // onInput(a, b, c){console.log({...a}, b, c)}
+    bio: {
+      label: 'Tell us about yourself'
+    },
+    name: {
+      label: 'Ваше имя',
+      value: 'Anton',
+      tab: 2
+    },
+    city: {
+      label: 'City',
+      rules: [a => a && a.length > 3 || 'err msg'],
+      tab: 3,
     },
   },
+
+  tabs: true,  // Thats enough
 
 
 

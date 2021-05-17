@@ -160,9 +160,11 @@ export default {
       stepperStore.step = step;
     },
     rowsToTabs() {
+      // console.log(this.rows);
       this.rows.length &&
         this.rows.forEach((tabRow) => {
           const res = fieldsToRows(tabRow, fbGlobal.values);
+
           this.filteredRows.push(res);
         });
       // Assign 'done' statuses
@@ -192,6 +194,7 @@ export default {
   watch: {
     rows: {
       handler() {
+        this.filteredRows = [];
         // Reset case
         this.rowsToTabs();
         this.setStep(0);
