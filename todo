@@ -1,5 +1,13 @@
 ? multiple rendered fields {} chages
 
+try form reset, modal, select, onInput
+
+tabs bug if no tabs defined in field config
+
+attachments styles
+
+multiple fields, selects, submit with whole configs
+
 
 Changes from first build:
 fields now is object of fields, where object key is field key

@@ -1,31 +1,20 @@
 export const formConfig = {
 
   fields: {
-    target: {
-      label: 'im target', row: 1
+    simpleMultiple: {
+      type: 'multiple',
+      settings: {
+        user: {
+          type: 'select',
+          options: ['a', 'b']
+        },
+        abuser: {
+          type: 'select',
+          options: ['a', 'b']
+        }
+      },
+      // onInput(a, b, c){console.log({...a}, b, c)}
     },
-    tar2: {row: 1},
-    firstName: {
-      label: 'Im a hider', 
-      onFocus(fb){
-        fb.fields.target.visible = false
-      }
-    },
-    s: {
-      label: 'Im a revealer', 
-      onFocus(fb){
-        fb.fields.target.visible = true
-      }
-
-    }
-    ,
-    sb: {
-      label: 'Im dont affect visibility', 
-      onFocus(fb){
-        fb.fields.target.label = true
-      }
-
-    }
   },
 
 

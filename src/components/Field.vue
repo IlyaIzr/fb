@@ -225,9 +225,9 @@ export default {
   watch: {
     rest: {
       handler(field) {
-        console.log(prevVisibility[this.fieldInfo.key], field.visible);
+        // console.log(prevVisibility[this.fieldInfo.key], field.visible);
         // console.log("rerest", this.fieldInfo.key, { ...a }, { ...b });
-        if (field.visible !== prevVisibility[this.fieldInfo.key]) {console.log('retrigger happend');this.visibleTrigger += 1;}
+        if (field.visible !== prevVisibility[this.fieldInfo.key]) this.visibleTrigger += 1
         prevVisibility[this.fieldInfo.key] = field.visible
       },
       deep: true,

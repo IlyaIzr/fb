@@ -83,7 +83,7 @@ export default {
     async addField() {
       const obj = {};
       Object.keys(this.rest.settings).forEach((key) => (obj[key] = ""));
-      await this.onInput([...this.rest.value, obj]);
+      await this.onInput([...this.rest.value, obj]);      
       this.redrawChildren();
     },
     async removeField(index) {
@@ -114,7 +114,7 @@ export default {
     // Wrap settings with reactivity
     const redrawWrap = {
       set: function (field, prop, value) {
-      console.log("set settings updates", { ...field }, prop, value);
+      // console.log("set settings updates", { ...field }, prop, value);
         let validated =
           field.type && validator[field.type]?.[prop]?.(value, field);
 
@@ -137,6 +137,7 @@ export default {
   },
   mounted() {
     onMountCommon(this, this.rest);
+    
 
     // Styling
     const { label, wrap } = this.$refs;
@@ -161,7 +162,7 @@ export default {
     //   deep: true,
     // },
     stringUpdates({ field, prop, value }) {
-      console.log("string updates did run", { ...field }, prop, value);
+      // console.log("string updates did run", { ...field }, prop, value);
       // updates already rendered fields
       const multiField = fbGlobal.fields[this.keyName];
       if (multiField?.fields?.length)

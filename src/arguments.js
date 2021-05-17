@@ -8,7 +8,7 @@ export const fbGlobal = {
       if (config.service === true) return;
       // Case multiple
       if (config.type === "multiple") {
-        values[config.key] = {};
+        values[config.key] = [];
         config.fields.length &&
           config.fields.forEach((row, multiIndex) => {
             // Check if it is in the values
