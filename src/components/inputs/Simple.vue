@@ -8,6 +8,10 @@
       ref="input"
       class="fb-field-content"
     >
+      
+      <template v-slot:before>
+        <Attachment :config="outerLeft" :f="outerLeftClick" />
+      </template>
       <template v-slot:prepend v-if="innerLeft">
         <Attachment :config="innerLeft" :f="innerLeftClick" />
       </template>
@@ -19,6 +23,9 @@
           class="cursor-pointer"
           @click="pSwitch"
         />
+      </template>      
+      <template v-slot:after>
+        <Attachment :config="outerRight" :f="outerRightClick" />
       </template>
     </q-input>
   </div>
@@ -26,8 +33,7 @@
 
 <script>
 import Attachment from "src/components/helpers/Attachment";
-import { fbGlobal } from "src/arguments";
-import { commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
+import { attachmentMethods, commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
 
 export default {
   name: "SimpleInput",
@@ -50,14 +56,7 @@ export default {
   },
   methods: {
     ...commonMethods,
-    async innerLeftClick() {
-      if (this.innerLeft?.onClick)
-        await this.innerLeft.onClick?.(fbGlobal, this, this.rest);
-    },
-    async innerRightClick() {
-      if (this.innerRight?.onClick)
-        await this.innerRight.onClick?.(fbGlobal, this, this.rest);
-    },
+    ...attachmentMethods,
     pSwitch() {
       this.rest.type = this.rest.type === "text" ? "password" : "text";
     },

@@ -9,7 +9,7 @@ export const fbGlobal = {
       // Case multiple
       if (config.type === "multiple") {
         values[config.key] = [];
-        config.fields.length &&
+        config.fields?.length &&
           config.fields.forEach((row, multiIndex) => {
             // Check if it is in the values
             if (!config.value[multiIndex]) return;
@@ -80,7 +80,7 @@ export const fbGlobal = {
 
     Object.entries(fields).forEach(([key, config]) => {
       if (config.type === "multiple") {
-        config.fields.length &&
+        config.fields?.length &&
           config.fields.forEach((row, multiIndex) => {
             Object.entries(row).forEach(([fieldKey, fieldConfig]) => {
               fieldConfig.value = "";

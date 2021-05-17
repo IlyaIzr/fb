@@ -11,6 +11,9 @@
       <template v-slot:hint class="fb-field-hint"> {{ rest.hint }} </template>
 
       <!-- Attachments -->
+      <template v-slot:before>
+        <Attachment :config="outerLeft" :f="outerLeftClick" />
+      </template>
       <template v-slot:prepend>
         <Attachment v-if="innerLeft" :config="innerLeft" :f="innerLeftClick" />
         <q-icon v-else name="cloud_upload" @click.stop />
@@ -18,12 +21,15 @@
       <template v-slot:append v-if="innerRight">
         <Attachment :config="innerRight" :f="innerRightClick" />
       </template>
+      <template v-slot:after>
+        <Attachment :config="outerRight" :f="outerRightClick" />
+      </template>
     </q-file>
   </div>
 </template>
 
 <script>
-import { commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
+import { attachmentMethods, commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
 import Attachment from "src/components/helpers/Attachment";
 
 export default {
@@ -48,6 +54,7 @@ export default {
   },
   methods: {
     ...commonMethods,
+    ...attachmentMethods,
   },
   mounted() {
     onMountCommon(this, this.rest);

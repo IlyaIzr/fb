@@ -8,9 +8,6 @@
     "
   >
     <div class="fb-field row q-my-sm">
-      <!-- Outer prefix -->
-      <Attachment :config="rest.outerLeft" :f="outerLeftClick" />
-
       <SimpleInput
         v-if="inputType === 'simple'"
         :keyName="fieldInfo.key"
@@ -53,7 +50,6 @@
         err, wrong type: {{ fieldInfo.type }}
       </div>
 
-      <Attachment :config="rest.outerRight" :f="outerRightClick" />
     </div>
   </div>
   <div v-else-if="inputType === 'button'">
@@ -77,7 +73,6 @@ import File from "./inputs/File";
 import Html from "./helpers/Html";
 import Editor from "./inputs/Editor";
 import Button from "./helpers/Button";
-import Attachment from "./helpers/Attachment";
 import { fbGlobal, prevVisibility } from "src/arguments";
 import { allowedTypes, simpleTypes, validator } from "./inputs/validator";
 
@@ -112,7 +107,6 @@ export default {
     Checkbox,
     Html,
     Editor,
-    Attachment,
     Button,
     File
   },
@@ -194,14 +188,7 @@ export default {
     },
   },
   methods: {
-    async outerLeftClick() {
-      const f = this.rest.outerLeft?.onClick;
-      if (f) await f?.(fbGlobal, this.$children[0], this.rest);
-    },
-    async outerRightClick() {
-      const f = this.rest.outerLeft?.onClick;
-      if (f) await f?.(fbGlobal, this.$children[0], this.rest);
-    },
+    
   },
   beforeMount() {
     //  fbGlobal

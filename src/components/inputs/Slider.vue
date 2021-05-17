@@ -25,18 +25,30 @@
         />
       </template>
       <!-- Attachments -->
+      <template v-slot:before>
+        <Attachment :config="outerLeft" :f="outerLeftClick" />
+      </template>
       <template v-slot:prepend v-if="innerLeft">
         <Attachment :config="innerLeft" :f="innerLeftClick" />
       </template>
       <template v-slot:append v-if="innerRight">
         <Attachment :config="innerRight" :f="innerRightClick" />
       </template>
+      <template v-slot:after>
+        <Attachment :config="outerRight" :f="outerRightClick" />
+      </template>
     </q-field>
   </div>
 </template>
 
 <script>
-import { commonMethods, onMountCommon, computedRules, computedAttachments } from "./common";
+import {
+  commonMethods,
+  onMountCommon,
+  computedRules,
+  computedAttachments,
+  attachmentMethods,
+} from "./common";
 import Attachment from "src/components/helpers/Attachment";
 export default {
   name: "SliderInput",
@@ -56,10 +68,11 @@ export default {
   },
   computed: {
     ...computedRules,
-    ...computedAttachments
+    ...computedAttachments,
   },
   methods: {
     ...commonMethods,
+    ...attachmentMethods,
   },
   beforeMount() {
     const field = this.rest;
@@ -81,7 +94,7 @@ export default {
   position: absolute;
   bottom: -13px;
 }
-.fb-field-slider .q-field__append.q-anchor--skip{
+.fb-field-slider .q-field__append.q-anchor--skip {
   display: none;
 }
 </style>

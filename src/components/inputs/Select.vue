@@ -18,12 +18,18 @@
           </q-item-section>
         </q-item>
       </template>
-      
+      <!-- Attachments -->
+      <template v-slot:before>
+        <Attachment :config="outerLeft" :f="outerLeftClick" />
+      </template>
       <template v-slot:prepend v-if="innerLeft">
         <Attachment :config="innerLeft" :f="innerLeftClick" />
       </template>
       <template v-slot:append v-if="innerRight">
         <Attachment :config="innerRight" :f="innerRightClick" />
+      </template>
+      <template v-slot:after>
+        <Attachment :config="outerRight" :f="outerRightClick" />
       </template>
     </q-select>
   </div>
@@ -31,7 +37,7 @@
 
 <script>
 import { fbGlobal } from "src/arguments";
-import { commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
+import { attachmentMethods, commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
 import Attachment from "src/components/helpers/Attachment";
 
 function simpleVal(val, isM = false) {
@@ -77,6 +83,7 @@ export default {
   },
   methods: {
     ...commonMethods,
+    ...attachmentMethods,
     parseValue(val) {
       // So far it runs only on init
 

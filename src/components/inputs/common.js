@@ -48,6 +48,25 @@ export const commonMethods = {
 
 }
 
+export const attachmentMethods = {
+  async outerLeftClick() {
+    if (this.outerLeftClick?.onClick)
+      await this.outerLeftClick.onClick?.(fbGlobal, this, this.rest);
+  },  
+  async innerLeftClick() {
+    if (this.innerLeft?.onClick)
+      await this.innerLeft.onClick?.(fbGlobal, this, this.rest);
+  },
+  async innerRightClick() {
+    if (this.innerRight?.onClick)
+      await this.innerRight.onClick?.(fbGlobal, this, this.rest);
+  },
+  async outerRightClick() {
+    if (this.outerRightClick?.onClick)
+      await this.outerRightClick.onClick?.(fbGlobal, this, this.rest);
+  },
+}
+
 // helper function
 export function wrapedUserRules(rules, fbGlobal, metaValue) {
   const res = []
@@ -138,6 +157,13 @@ function getRules(rules, required, requiredMessage, metaValue, rest) {
 
 // Exeptions: Multiple, Editor(no slots)
 export const computedAttachments = {
+  outerLeft() {
+    let conf = {};
+    if (!this.rest.outerLeft) return null;
+    conf = this.rest.outerLeft;
+    if (!conf.type) return null;
+    return conf;
+  },
   innerLeft() {
     let conf = {};
     if (!this.rest.innerLeft) return null;
@@ -149,6 +175,13 @@ export const computedAttachments = {
     let conf = {};
     if (!this.rest.innerRight) return null;
     conf = this.rest.innerRight;
+    if (!conf.type) return null;
+    return conf;
+  },
+  outerRight() {
+    let conf = {};
+    if (!this.rest.outerRight) return null;
+    conf = this.rest.outerRight;
     if (!conf.type) return null;
     return conf;
   },

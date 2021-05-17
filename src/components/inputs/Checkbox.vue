@@ -21,18 +21,24 @@
         />
       </template>
       <!-- Attachments -->
+      <template v-slot:before>
+        <Attachment :config="outerLeft" :f="outerLeftClick" />
+      </template>
       <template v-slot:prepend v-if="innerLeft">
         <Attachment :config="innerLeft" :f="innerLeftClick" />
       </template>
       <template v-slot:append v-if="innerRight">
         <Attachment :config="innerRight" :f="innerRightClick" />
       </template>
+      <template v-slot:after>
+        <Attachment :config="outerRight" :f="outerRightClick" />
+      </template>
     </q-field>
   </div>
 </template>
 
 <script>
-import { commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
+import { attachmentMethods, commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
 import Attachment from "src/components/helpers/Attachment";
 
 export default {
@@ -54,11 +60,12 @@ export default {
     };
   },
   computed: {
-    ...computedRules
+    ...computedRules,
+    ...computedAttachments,
   },
   methods: {
     ...commonMethods,
-    ...computedAttachments,
+    ...attachmentMethods,
 
     async onInputLocal(val) {
       this.localVal = val;

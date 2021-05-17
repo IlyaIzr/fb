@@ -3,21 +3,19 @@ export const formConfig = {
 
   fields: {
     bio: {
-      label: 'Tell us about yourself'
-    },
-    name: {
-      label: 'Ваше имя',
-      value: 'Anton',
-      tab: 2
-    },
-    city: {
-      label: 'City',
-      rules: [a => a && a.length > 3 || 'err msg'],
-      tab: 3,
+      label: 'Tell us about yourself',
+      type: 'select',
+      outerLeft: {
+        type: 'button',
+        label: 'be'
+      },
+      innerLeft: {
+        type: 'button',
+        label: 'pe'
+      }
     },
   },
 
-  tabs: true,  // Thats enough
 
 
 

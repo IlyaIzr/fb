@@ -29,6 +29,9 @@
         class="fb-field-content"
       >
         <!-- Attachments -->
+        <template v-slot:before>
+          <Attachment :config="outerLeft" :f="outerLeftClick" />
+        </template>
         <template v-slot:prepend>
           <Attachment
             v-if="innerLeft"
@@ -56,6 +59,9 @@
         <template v-slot:append v-if="innerRight">
           <Attachment :config="innerRight" :f="innerRightClick" />
         </template>
+        <template v-slot:after>
+          <Attachment :config="outerRight" :f="outerRightClick" />
+        </template>
       </q-input>
     </div>
   </div>
@@ -63,7 +69,13 @@
 
 <script>
 import CalendarInput from "src/components/helpers/Calendar";
-import { commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
+import {
+  attachmentMethods,
+  commonMethods,
+  computedAttachments,
+  computedRules,
+  onMountCommon,
+} from "./common";
 import Attachment from "src/components/helpers/Attachment";
 function stringdDate(val) {
   if (!val) return "";
@@ -74,7 +86,8 @@ function stringdDate(val) {
 export default {
   name: "DateInput",
   components: {
-    CalendarInput, Attachment
+    CalendarInput,
+    Attachment,
   },
   props: {
     keyName: {
@@ -106,6 +119,7 @@ export default {
   },
   methods: {
     ...commonMethods,
+    ...attachmentMethods,
 
     async onInputLocal(val) {
       let finalVal = val;
