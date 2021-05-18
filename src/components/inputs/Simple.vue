@@ -65,6 +65,7 @@ export default {
     const field = this.rest;
     // if (field.type === "text") field.autogrow ??= true;
     if (field.type === "dateNative") field.type = "date";
+    field.autocomplete ??= true
   },
   mounted(){
     onMountCommon(this, this.rest)

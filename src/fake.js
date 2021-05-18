@@ -3,16 +3,8 @@ export const formConfig = {
 
   fields: {
     bio: {
-      label: 'Tell us about yourself',
-      // type: 'select',
-      outerLeft: {
-        type: 'html',
-        value: '<div class="customClass"></div>'
-      },
-      innerLeft: {
-        type: 'button',
-        label: 'pe'
-      }
+      name: 'login',
+      // autocomplete: 'off'
     },
   },
 

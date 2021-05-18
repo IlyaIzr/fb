@@ -89,6 +89,12 @@ const textMeta = {
   prefix(val, f) { return stringer(val, f) },
   suffix(val, f) { return stringer(val, f) },
   autogrow(val, f) { return booleaner(val, f) },
+  autocomplete(val, f) { 
+    if (val == 'off') return val
+    const isOn = booleaner(val, f) 
+    if (isOn) return 'on'
+    else return 'off'
+  },
 }
 
 export const validator = {
