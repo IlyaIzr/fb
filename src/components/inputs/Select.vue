@@ -37,7 +37,13 @@
 
 <script>
 import { fbGlobal } from "src/arguments";
-import { attachmentMethods, commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
+import {
+  attachmentMethods,
+  commonMethods,
+  computedAttachments,
+  computedRules,
+  onMountCommon,
+} from "./common";
 import Attachment from "src/components/helpers/Attachment";
 
 function simpleVal(val, isM = false) {
@@ -74,7 +80,7 @@ export default {
   },
   computed: {
     ...computedRules,
-    ...computedAttachments
+    ...computedAttachments,
     // localValue() {
     //   let res = "";
     //   res = this.parseValue(this.rest.value)

@@ -39,11 +39,16 @@ const commonProps = {
     if (number < 1) number = 1
     return number
   },
-
   label(val, f) {
     let res = stringer(val, f)
     if (f.required && res?.[0] !== '*') res = '* ' + res
     return res
+  },
+  autocomplete(val, f) { 
+    if (val == 'off') return val
+    const isOn = booleaner(val, f) 
+    if (isOn) return 'on'
+    else return 'off'
   },
   hint(val, f) { return stringer(val, f) },
   requiredMessage(val, f) { return stringer(val, f) },
@@ -89,12 +94,6 @@ const textMeta = {
   prefix(val, f) { return stringer(val, f) },
   suffix(val, f) { return stringer(val, f) },
   autogrow(val, f) { return booleaner(val, f) },
-  autocomplete(val, f) { 
-    if (val == 'off') return val
-    const isOn = booleaner(val, f) 
-    if (isOn) return 'on'
-    else return 'off'
-  },
 }
 
 export const validator = {

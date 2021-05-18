@@ -2,6 +2,8 @@ import { fbGlobal } from "src/arguments";
 import { defaultProps, validator } from "./inputs/validator";
 
 export const fieldsToRows = (fields, values = {}, multiKey = false, multiValues = []) => {
+
+  // console.log('%c⧭', 'color: #1d3f73', 'Fields To Rows dd tun', {...fields});
   if (!Object.entries(fields).length) return []
 
   // Assign required and default values, order rows

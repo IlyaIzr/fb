@@ -3,11 +3,13 @@ import { fbGlobal, initConfig } from "src/arguments";
 export const commonMethods = {
   // Extended in Select, Multiple, Date, File(TBD), Checkbox 
   async onInput(val) {
-    this.rest.value = val;
     if (this.rest.meta) {
       const valKey = this.rest.metaValueKey || 'value'
       this.rest.meta[valKey] = val // cause value been validated
     }
+    
+    this.rest.value = val;
+    
     if (this.rest?.onInput) {
       await this.rest.onInput(fbGlobal, this, val);
     }

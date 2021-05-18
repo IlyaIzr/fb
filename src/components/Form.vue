@@ -177,13 +177,13 @@ export default {
       this.onSubmit();
     },
 
-    rowsComputed() {
+    rowsComputed(values) {
       const f = fbGlobal;
       if (f.tabs) {
         const sortedFields = sortByTabs(f.fields, f.global?.fields?.tabIndex);
         return sortedFields;
       }
-      const res = fieldsToRows(f.fields, f.values);
+      const res = fieldsToRows(f.fields, values);
       return res;
     },
   },
@@ -236,7 +236,11 @@ export default {
           });
           self.settings.fields[key] = reactiveField;
           this["_" + key] = reactiveField;
+
+          // console.log('%c⧭', 'color: #cc0088',  key, config.value, {...fbGlobal.fields._discipline})
+          // console.log('%c⧭', 'color: #cc0088',  key, config.value, fbGlobal.fields._discipline?.value)
           self.computeRawsTrigger += 1; // This component reactivity, redraws rows
+
           // console.log(key, { ...res }); //works as expected
         },
       });
@@ -254,7 +258,7 @@ export default {
     });
 
     // assign rows once
-    this.rows = this.rowsComputed();
+    this.rows = this.rowsComputed(fbGlobal.values);
 
     // assign component reference
     Object.defineProperty(fbGlobal.form, "component", {
@@ -283,7 +287,6 @@ export default {
   watch: {
     computeRawsTrigger: {
       handler() {
-        // console.log("form redraw happens");
         const newRows = this.rowsComputed();
         this.rows = newRows;
       },

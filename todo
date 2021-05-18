@@ -9,3 +9,5 @@ buttons config is now object
 field.tabIndex -> field.tab
 field.rowIndex -> field.row
 no more config.tabs.buttons settings
+
+select = with clearable === false should not be allowed to clear options
