@@ -129,8 +129,8 @@ export default {
         inputVal = val.from + " - " + val.to;
       }
 
-      await this.onInput(finalVal);
       this.inputValue = stringdDate(inputVal);
+      await this.onInput(finalVal);
     },
     async onTextInput(val) {
       if (!this.rest.range) return await this.onInputLocal(val);

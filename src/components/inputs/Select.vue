@@ -132,11 +132,11 @@ export default {
       // Assign global value as simple string or array of them. Assign local value to whatever it gives us
       if (isM) {
         if (!val) val = [];
-        this.onInput([...simpleValue]);
         this.localValue = [...val];
+        this.onInput([...simpleValue]);
       } else {
-        this.onInput(simpleValue);
         this.localValue = val;
+        this.onInput(simpleValue);
       }
     },
     async shorthenOptions(val) {
@@ -148,16 +148,15 @@ export default {
             return v;
           }
         });
-      let cb;
-      if (this.rest?.onInput) {
-        cb = await this.rest.onInput(fbGlobal, this, val);
-      }
+
       this.localOptions = newOptions;
       this.$emit("optionInput", val);
+      if (this.rest?.onSearchInput) {
+        await this.rest.onSearchInput(fbGlobal, this, val);
+      }
       this.$nextTick(function () {
         this.$refs.input?.resetValidation?.();
       });
-      if (typeof cb === "function") await cb(fbGlobal, this, val);
     },
   },
 

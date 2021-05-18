@@ -25,6 +25,7 @@ Name  | With arguments  | Description
 onInput | `onInput = async (globalConfig, component, value) => {}` | Fires when field's value changes
 onFocus | `onFocus = async (globalConfig, component) => {}` | Fires when field gets focus on it
 onBlur | `onBlur = async (globalConfig, component) => {}` | Fires when field loses focus
+onSearchInput | `onSearchInput = async (globalConfig, component, inputVal) => {}` | Fires only on field type `'select'` when <br> `field.writable == true` (i.e. not disabled from config)
 * globalConfig - reactive object that holds all the information about the form
 * component - reference to Vue's field component
 

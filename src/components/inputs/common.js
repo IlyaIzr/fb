@@ -1,25 +1,22 @@
 import { fbGlobal, initConfig } from "src/arguments";
 
 export const commonMethods = {
+  // Extended in Select, Multiple, Date, File(TBD), Checkbox 
   async onInput(val) {
-    let cb;
-    if (this.rest?.onInput) {
-      cb = await this.rest.onInput(fbGlobal, this, val);
-    }
     this.rest.value = val;
     if (this.rest.meta) {
       const valKey = this.rest.metaValueKey || 'value'
       this.rest.meta[valKey] = val // cause value been validated
     }
-
-    if (typeof cb === "function") await cb(fbGlobal, this, val);
+    if (this.rest?.onInput) {
+      await this.rest.onInput(fbGlobal, this, val);
+    }
   },
 
   // Exeption: Multiple
   async onFocus() {
     if (this.rest.onFocus) {
-      const cb = await this.rest.onFocus(fbGlobal, this, this.rest);
-      if (typeof cb === "function") await cb(fbGlobal, this, this.rest);
+      await this.rest.onFocus(fbGlobal, this, this.rest);
     }
   },
 
@@ -27,8 +24,7 @@ export const commonMethods = {
   // Exeption: Multiple
   async onBlur(e) {
     if (this.rest?.onBlur) {
-      const cb = await this.rest.onBlur(fbGlobal, this, this.rest);
-      if (typeof cb === "function") await cb(fbGlobal, this, e);
+      await this.rest.onBlur(fbGlobal, this, this.rest);
     }
   },
   
