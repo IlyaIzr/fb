@@ -146,8 +146,8 @@ field: {
 
 
 There are 4 keys availible to describe attachment position: 'outerLeft', 'innerLeft', 'innerRight', 'outerRight'
-Inside those keys you can describe attachment itself. There're 3 types availible:
-*Icon. Expects a material-icon name, [see names](https://material.io/resources/icons/) 
+Inside those keys you can describe attachment itself. There're 4 types availible:
+* Icon. Expects a material-icon name, [see names](https://material.io/resources/icons/) 
 ```javascript
       outerLeft: {
         type: 'icon',
@@ -169,5 +169,12 @@ Inside those keys you can describe attachment itself. There're 3 types availible
         onClick: (fb, component, field) => {
           field.value = 'New value'
         }
+      },
+```
+* Html. Expects html injection
+```javascript
+      innerLeft: {
+        type: 'html',
+        value: '<div class="yourCustomClass"></div>'
       },
 ```

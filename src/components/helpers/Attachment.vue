@@ -12,6 +12,10 @@
       v-bind="config"
       @click="f"
     />
+    <q-card-section
+      v-else-if="config.type === 'html'"
+      v-html="config.value"
+    ></q-card-section>
   </div>
 </template>
 
@@ -22,8 +26,8 @@ export default {
     config: {
       required: false,
     },
-    f: Function
-  }
+    f: Function,
+  },
 };
 </script>
 

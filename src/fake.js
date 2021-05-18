@@ -2,26 +2,16 @@ export const formConfig = {
 
 
   fields: {
-    name: {
-      type: 'multiple',
-      label: "Multiple with simpleinputs",
-      value: [
-        { firstName: 'Peter', lastName: '' },
-        { firstName: 'Lois', lastName: 'Puttershmidt' }
-      ],
-      settings: {
-        firstName: {
-          label: 'First name',
-        },
-        lastName: {
-          label: 'Last name'
-        },
+    bio: {
+      label: 'Tell us about yourself',
+      // type: 'select',
+      outerLeft: {
+        type: 'html',
+        value: '<div class="customClass"></div>'
       },
-      
-      onInput(fb, c, val) {
-        console.log(fb.fields.name.value);
-        console.log(val);
-        console.log(fb.getFormValues());
+      innerLeft: {
+        type: 'button',
+        label: 'pe'
       }
     },
   },
@@ -30,9 +20,7 @@ export const formConfig = {
 
 
   methods: {
-    onSubmit(fb, _, res) {
-      console.log(res);
-    }
+    onSubmit(fb, _, res) { console.dir(res) }
   },
 
   title: 'Dev title',
