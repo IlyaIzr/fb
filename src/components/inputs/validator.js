@@ -66,7 +66,11 @@ const commonProps = {
     if (f.type === 'html' || f.type === 'button') return true
     return booleaner(val, f)
   },
-  visible(val, f) { return booleaner(val, f) },
+  visible(val, f) { 
+    const res = booleaner(val, f)
+    if (!res && !fbGlobal.global?.fields?.submitInvisible) f.service = true
+    return res
+  },
   metaShouldSumbmit(val, f) { return booleaner(val, f) },
 
   rules(val, f) {

@@ -178,3 +178,14 @@ Inside those keys you can describe attachment itself. There're 4 types availible
         value: '<div class="yourCustomClass"></div>'
       },
 ```
+
+## Global keys
+### Global field keys
+
+> global fields keys should be assigned to `config.global.fields` instance
+
+Global field keys are assigned to each field inside form if they're not specified in field config
+#### Global only keys
+Key |  Expected types | Description
+--- | --- | --- 
+submitInvisible | `Boolean` | allows you to submit invisible fields. Affects `field.service` option

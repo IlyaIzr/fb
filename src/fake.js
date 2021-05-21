@@ -16,7 +16,7 @@ export const formConfig = {
           visible: false,
           service: true
         }
-        // fb.fields.bio.visible = false
+        fb.fields.bio.visible = false
         // fb.fields.bio.service = false
         // fb.fields.bio.label = 'bebs'
       }
@@ -31,7 +31,7 @@ export const formConfig = {
           hint: 'beobob'
         }
         
-        // fb.fields.bio.visible = true
+        fb.fields.bio.visible = true
         // fb.fields.bio.service = true
       }
     }
@@ -41,7 +41,7 @@ export const formConfig = {
 
 
   methods: {
-    onSubmit(fb, _, res) { console.dir(res) }
+    onSubmit(fb, _, res) { console.dir({...res}) }
   },
 
   title: 'Dev title',
