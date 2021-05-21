@@ -84,6 +84,7 @@ export default {
       fbGlobal,
       computeRawsTrigger: 1,
       rows: [],
+      isMounted: false,
     };
   },
   props: {
@@ -114,7 +115,7 @@ export default {
       const notify = fbGlobal.notify || {};
       if (!notify.message) notify.message = "Отправлено";
       if (!notify.timeout) notify.timeout = 200;
-      const notifyRef = ''
+      const notifyRef = "";
       // this.$q.notify(notify);
 
       if (this.confMethods.onSubmit) {
@@ -228,14 +229,17 @@ export default {
             this["_" + key][prop] = val;
           });
 
-          // Wrap with field-level reactivity
-          const reactiveField = new Proxy(this["_" + key], reactiveHandler);
-          // and activate it
-          Object.entries(this["_" + key]).forEach(([key, val]) => {
-            reactiveField[key] = val;
-          });
-          self.settings.fields[key] = reactiveField;
-          this["_" + key] = reactiveField;
+
+          // Wrap with field-level reactivity on mount
+          if (!self.isMounted) {
+            const reactiveField = new Proxy(this["_" + key], reactiveHandler);
+            // and activate it
+            Object.entries(this["_" + key]).forEach(([prop, val]) => {
+              reactiveField[prop] = val;
+            });
+            self.settings.fields[key] = reactiveField;
+            this["_" + key] = reactiveField;
+          }
 
           // console.log('%c⧭', 'color: #cc0088',  key, config.value, {...fbGlobal.fields._discipline})
           // console.log('%c⧭', 'color: #cc0088',  key, config.value, fbGlobal.fields._discipline?.value)
@@ -274,6 +278,7 @@ export default {
   },
 
   async mounted() {
+    this.isMounted = true;
     if (this.confMethods.onMount) {
       const cb = await this.confMethods.onMount(
         fbGlobal,

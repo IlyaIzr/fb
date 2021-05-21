@@ -1,5 +1,5 @@
 <template>
-  <div id="q-app" style="min-height: 100vh" class="fb-mounting-point bg-white">
+  <div id="q-app" class="fb-mounting-point bg-white">
     <IsModal
       v-if="globalConfig && globalConfig.fields"
       :settings="globalConfig"
