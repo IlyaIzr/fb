@@ -9,7 +9,7 @@ export const formConfig = {
       onInput(fb, _, val) {
         console.log(val);
       },
-      disable: 1
+      clearable: 1
     },
   },
 
