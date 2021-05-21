@@ -8,33 +8,9 @@ export const formConfig = {
       options: ['aboba', 'abeba', 'bab'],
       onInput(fb, _, val) {
         console.log(val);
-      }
+      },
+      disable: 1
     },
-    react: {
-      onFocus(fb) {
-        fb.fields.bio = {
-          visible: false,
-          service: true
-        }
-        fb.fields.bio.visible = false
-        // fb.fields.bio.service = false
-        // fb.fields.bio.label = 'bebs'
-      }
-    },    
-    react2: {
-      onFocus(fb) {
-        // console.log(fb.fields.bio);
-        fb.fields.bio = {
-          visible: true,
-          service: false,
-          value: 'abeba',
-          hint: 'beobob'
-        }
-        
-        fb.fields.bio.visible = true
-        // fb.fields.bio.service = true
-      }
-    }
   },
 
 

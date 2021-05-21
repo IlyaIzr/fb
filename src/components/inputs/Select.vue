@@ -5,7 +5,7 @@
       v-bind="rest"
       :rules="rules"
       :value="localValue"
-      :use-chips="Boolean(rest.value && rest.value.length)"
+      :use-chips="Boolean(rest.value && rest.value.length && !rest.disable)"
       :options="localOptions"
       @input="onInputLocal"
       @input-value="shorthenOptions"
