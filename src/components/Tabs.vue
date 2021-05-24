@@ -21,7 +21,12 @@
       :done="validated[index]"
       class="fb-content-wrap"
     >
-      <RowMapper v-if="filteredRows[index]" :rows="filteredRows[index]" />
+      <GroupMapper
+        v-if="filteredRows[index] && hasGroups"
+        :rows="filteredRows[index]"
+      />
+
+      <RowMapper v-else-if="filteredRows[index]" :rows="filteredRows[index]" />
     </q-step>
 
     <template v-slot:navigation>
@@ -42,12 +47,14 @@
 <script>
 import RowMapper from "./RowMapper";
 import Buttons from "./Buttons";
+import GroupMapper from "./GroupMapper";
 import { fbGlobal, stepperStore } from "src/arguments";
 import { fieldsToRows } from "./toRows";
 export default {
   name: "Tabs",
   components: {
     RowMapper,
+    GroupMapper,
     Buttons,
   },
   data() {
@@ -64,6 +71,10 @@ export default {
     rows: {
       type: Array,
       required: true,
+    },
+    hasGroups: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

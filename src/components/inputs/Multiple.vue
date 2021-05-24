@@ -196,7 +196,6 @@ export default {
   position: absolute;
   top: 0;
   background-color: #fff;
-  text-align: center;
 }
 .fb-multiple.fb-field-big-label-case {
   margin-top: 24px;

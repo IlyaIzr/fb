@@ -2,6 +2,14 @@ const formConfig = {
   title: 'Other type of inputs',
 
   fields: {
+    // two fields from same group
+    a: {
+      group: 1,
+      groupLabel: 'Test group'
+    },
+    b: {
+      group: 1
+    },
 
     // Field validation rules
 

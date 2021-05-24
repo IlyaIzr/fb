@@ -150,3 +150,66 @@ export function sortByTabs(fields, defaultTab = 1) {
 
   return filtered
 }
+
+export function sortByGroup(rowsOfFields = []) {
+  const groups = []
+  const sorted = []
+
+  rowsOfFields.forEach((row, rowIndex) => {
+    sorted.push([])
+    row.forEach(field => {
+      if (field.group) {
+        const groupIndex = field.group
+        // Case first field of the group
+        if (!groups[groupIndex]) {
+
+          const initGroupDescription = {
+            fieldsInsideGroups: {
+              [field.key]: field
+            },
+            groupLabel: field.groupLabel
+          }
+          // Case this row already have somehing
+
+          if (sorted[rowIndex].length || sorted[rowIndex].fieldsInsideGroups) sorted.push(initGroupDescription)
+          // Case first field of this row
+          else sorted[rowIndex] = initGroupDescription
+
+          // then
+          const actualIndex = sorted.length - 1
+          return groups[groupIndex] = {
+            actualIndex: actualIndex, // Number
+            // Repeat rows structure
+            // rows: {
+            //   [field.key]: field
+            // }
+          }
+        }
+        // Case another field of the group
+        const injectionIndex = groups[groupIndex].actualIndex
+        sorted[injectionIndex].fieldsInsideGroups[field.key] = field
+        if (field.groupLabel) sorted[injectionIndex].groupLabel = field.groupLabel
+      }
+      else sorted[rowIndex].push(field)
+    })
+  })
+
+  // delete all empty indexes
+  // const rowsWithGroupsFiltered = sorted.filter((row) => row && row.length || row.fieldsInsideGroups);
+  // handle fieldsInsideGroups
+  const rowsResult = []
+  sorted.forEach(row => {
+    if (!row) return;
+    // Case usual row with no groups
+    if (Array.isArray(row) && row.length) return rowsResult.push(row)
+    // Case group entity
+    if (row.fieldsInsideGroups) {
+      const toPush = {
+        rows: fieldsToRows(row.fieldsInsideGroups),
+        groupLabel: row.groupLabel
+      }
+      return rowsResult.push(toPush)
+    }
+  })
+  return rowsResult
+}

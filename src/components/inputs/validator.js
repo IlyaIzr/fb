@@ -39,6 +39,12 @@ const commonProps = {
     if (number < 1) number = 1
     return number
   },
+  group(val, f) {
+    let number = numberer(val, f)
+    if (number < 1) number = 1
+    return number
+  },
+  groupLabel(val, f) { return stringer(val, f) },
   label(val, f) {
     let res = stringer(val, f)
     if (f.required && res?.[0] !== '*') res = '* ' + res

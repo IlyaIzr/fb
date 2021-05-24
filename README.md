@@ -18,6 +18,8 @@ required | `false`  | `Boolean` | required inputs need to have value, <br> so th
 visible | `true`  | `Boolean` | field visibility. Invisible fields don't validate <br> but can hold values
 rules | `[]`  | array of functions  | array of rules to validate input value <br> rules are functions with arguments  <br> `(value, formValues, globalConfig, metaValue)` <br> every function must return `true` <br> to pass validation
 service | `false` | `Boolean` | if set to `false` field value won't appear in object of submited values
+group | `undefined` | `Number` or `String`  | numerical index of the field-group, natural number
+groupLabel | `undefined` | `String`  | label of the group, if one needed
 
 #### Field event handlers (functions)
 Name  | With arguments  | Description

@@ -40,14 +40,10 @@
         @reset="onReset"
         @clear="onClear"
         ref="tabsComponent"
+        :hasGroups="hasGroups"
       />
-      <RowMapper
-        v-else
-        :rows="rows"
-        @submit="onSubmit"
-        @reset="onReset"
-        @clear="onClear"
-      />
+      <GroupMapper v-else-if="hasGroups" :rows="rows"/>
+      <RowMapper v-else :rows="rows" />
     </q-form>
 
     <q-separator />
@@ -68,6 +64,7 @@
 import RowMapper from "./RowMapper";
 import Buttons from "./Buttons";
 import Tabs from "./Tabs";
+import GroupMapper from './GroupMapper'
 import { fieldsToRows, sortByTabs } from "./toRows";
 import { fbGlobal, initConfig } from "src/arguments";
 import { validator } from "./inputs/validator";
@@ -77,6 +74,7 @@ export default {
     RowMapper,
     Buttons,
     Tabs,
+    GroupMapper
   },
   data() {
     return {
@@ -85,6 +83,7 @@ export default {
       computeRawsTrigger: 1,
       rows: [],
       isMounted: false,
+      hasGroups: false,
     };
   },
   props: {
@@ -218,6 +217,7 @@ export default {
     };
 
     Object.entries(this.settings.fields).forEach(([key, config]) => {
+      if (!this.hasGroups && config.group) this.hasGroups = true;
       Object.defineProperty(fbGlobal.fields, key, {
         get() {
           return this["_" + key];
@@ -228,7 +228,6 @@ export default {
           Object.entries(conf).forEach(([prop, val]) => {
             this["_" + key][prop] = val;
           });
-
 
           // Wrap with field-level reactivity on mount
           if (!self.isMounted) {
