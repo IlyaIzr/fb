@@ -50,9 +50,9 @@ const commonProps = {
     if (f.required && res?.[0] !== '*') res = '* ' + res
     return res
   },
-  autocomplete(val, f) { 
+  autocomplete(val, f) {
     if (val == 'off') return val
-    const isOn = booleaner(val, f) 
+    const isOn = booleaner(val, f)
     if (isOn) return 'on'
     else return 'off'
   },
@@ -72,9 +72,10 @@ const commonProps = {
     if (f.type === 'html' || f.type === 'button') return true
     return booleaner(val, f)
   },
-  visible(val, f) { 
+  visible(val, f) {
     const res = booleaner(val, f)
     if (!res && !fbGlobal.global?.fields?.submitInvisible) f.service = true
+    if (res && f.service !== undefined) f.service = false
     return res
   },
   metaShouldSumbmit(val, f) { return booleaner(val, f) },
