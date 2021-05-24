@@ -191,15 +191,16 @@ export default {
   padding: 24px 8px;
 }
 .fb-multiple .fb-field-label {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  position: absolute;
-  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -34px;
+  padding: 0 8px;
+  margin: 10px 0;
   background-color: #fff;
 }
 .fb-multiple.fb-field-big-label-case {
   margin-top: 24px;
-  padding-top: 32px;
+  padding-top: 48px;
 }
 .fb-multiple-add-button i {
   position: absolute;
