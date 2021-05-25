@@ -79,7 +79,7 @@ export default {
         // reset: { label: "Сбросить" },
       };
 
-      if (fbGlobal.modal) res.close = { label: "Закрыть", color: "warning" };
+      if (fbGlobal.modal) res.close = { label: "Отмена", color: "negative" };
 
       if (fbGlobal.tabs) {
         // delete res.reset;

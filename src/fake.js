@@ -7,7 +7,7 @@ export const formConfig = {
     }
   },
 
-
+modal: true,
 
   methods: {
     onSubmit(fb, _, res) { console.table({ ...res }); 
