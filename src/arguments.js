@@ -1,3 +1,5 @@
+import { serviceFields } from "./components/inputs/validator";
+
 export const initConfig = {}
 
 export const fbGlobal = {
@@ -88,6 +90,7 @@ export const fbGlobal = {
           });
         return true;
       }
+      if (serviceFields.has(config.type)) return;
 
       key = String(key).replace("_", "");
       fields[key].value = "";

@@ -64,7 +64,7 @@ const commonProps = {
   clearable(val, f) { return booleaner(val, f) },
   disable(val, f) { return booleaner(val, f) },
   // migration / alias
-  disabled(val, f) { f.disable = booleaner(val, f); return f.disable },
+  disabled(val, f) { return booleaner(val, f) },
   clearable(val, f) { return booleaner(val, f) }, //??
   "clear-icon"(val, f) { return stringer(val, f) || "close" },
   loading(val, f) { return booleaner(val, f) },
@@ -74,8 +74,8 @@ const commonProps = {
   },
   visible(val, f) {
     const res = booleaner(val, f)
-    if (!res && !fbGlobal.global?.fields?.submitInvisible) f.service = true
-    if (res && f.service !== undefined) f.service = false
+    if (!res && !fbGlobal.global?.fields?.submitInvisible) f.service = this.service(true, f)
+    if (res && f.service !== undefined) f.service = this.service(false, f)
     return res
   },
   metaShouldSumbmit(val, f) { return booleaner(val, f) },
@@ -259,4 +259,9 @@ export const allowedTypes = new Set([
   "editor",
   "button",
   "file"
+]);
+
+export const serviceFields = new Set([
+  "html",
+  "button",
 ]);
