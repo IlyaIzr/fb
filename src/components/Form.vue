@@ -42,7 +42,7 @@
         ref="tabsComponent"
         :hasGroups="hasGroups"
       />
-      <GroupMapper v-else-if="hasGroups" :rows="rows"/>
+      <GroupMapper v-else-if="hasGroups" :rows="rows" />
       <RowMapper v-else :rows="rows" />
     </q-form>
 
@@ -64,7 +64,7 @@
 import RowMapper from "./RowMapper";
 import Buttons from "./Buttons";
 import Tabs from "./Tabs";
-import GroupMapper from './GroupMapper'
+import GroupMapper from "./GroupMapper";
 import { fieldsToRows, sortByTabs } from "./toRows";
 import { fbGlobal, initConfig } from "src/arguments";
 import { validator } from "./inputs/validator";
@@ -74,7 +74,7 @@ export default {
     RowMapper,
     Buttons,
     Tabs,
-    GroupMapper
+    GroupMapper,
   },
   data() {
     return {
@@ -220,24 +220,24 @@ export default {
       if (!this.hasGroups && config.group) this.hasGroups = true;
       Object.defineProperty(fbGlobal.fields, key, {
         get() {
-          return this["_" + key];
+          return this["_?$" + key];
         },
         set(conf) {
-          if (!this["_" + key]) this["_" + key] = {};
+          if (!this["_?$" + key]) this["_?$" + key] = {};
           // Mutate object to keep reactivity
           Object.entries(conf).forEach(([prop, val]) => {
-            this["_" + key][prop] = val;
+            this["_?$" + key][prop] = val;
           });
 
           // Wrap with field-level reactivity on mount
           if (!self.isMounted) {
-            const reactiveField = new Proxy(this["_" + key], reactiveHandler);
+            const reactiveField = new Proxy(this["_?$" + key], reactiveHandler);
             // and activate it
-            Object.entries(this["_" + key]).forEach(([prop, val]) => {
+            Object.entries(this["_?$" + key]).forEach(([prop, val]) => {
               reactiveField[prop] = val;
             });
             self.settings.fields[key] = reactiveField;
-            this["_" + key] = reactiveField;
+            this["_?$" + key] = reactiveField;
           }
 
           // console.log('%c⧭', 'color: #cc0088',  key, config.value, {...fbGlobal.fields._discipline})

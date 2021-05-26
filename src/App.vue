@@ -36,10 +36,10 @@ export default {
 
       Object.defineProperty(fbGlobal, key, {
         get() {
-          return this["_" + key];
+          return this["_?$" + key];
         },
         set(val) {
-          this["_" + key] = val;
+          this["_?$" + key] = val;
           fbGlobal.watcher += 1; //not using this ATM, but makes it observable
           self.globalConfig[key] = val;
         },
