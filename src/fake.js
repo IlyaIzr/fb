@@ -2,18 +2,22 @@ export const formConfig = {
 
 
   fields: {
-    first: {
-      row: 1,
-      
-      group: 2
+    sel: {
+      type: 'select',
+      options: ['aboba', 'abeba', 'abiba'],
+      // writable: true,
+      // multiple: true
     },
-    second: {
-      group: 1
+    sel2: {
+      type: 'select',
+      options: ['aboba', 'abeba', 'abiba'],
+      writable: true,
+      multiple: true
     },
-    third: {
-      group: 1,
-      row: 1,
+    a: {
+      value: 'a'
     },
+    b: {}
   },
 
 

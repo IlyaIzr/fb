@@ -53,7 +53,7 @@ options   | `[]` | `Array`  | Select options. Array elements allowed to have 1 o
 multiple  | `false` | `Boolean` | Allows to pick several options
 value     | `''` or `[]` | `String` or `Array` | `Array` is for multiple select
 fieldAttachments | `undefined` | `Object` | Describe field attachments
-writable  | `false` | `Boolean` | Allows to sort options by user input
+writable  | `true` | `Boolean` | Allows to filter options by user input
 
 #### Multiple
 Key | Default value | Expected types | Description

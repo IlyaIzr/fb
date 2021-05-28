@@ -1,5 +1,9 @@
 <template>
-  <div class="q-gutter-md col fb-field-select" v-if="rest.visible">
+  <div
+    class="q-gutter-md col fb-field-select"
+    v-if="rest.visible"
+    ref="iWrapper"
+  >
     <q-select
       class="fb-field-content"
       v-bind="rest"
@@ -10,6 +14,8 @@
       @input="onInputLocal"
       @input-value="shorthenOptions"
       @focus="onFocus"
+      customInputCatcher
+      ref="input"
     >
       <template v-slot:no-option>
         <q-item>
@@ -140,6 +146,12 @@ export default {
         if (!val) val = [];
         this.localValue = [...val];
         this.onInput([...simpleValue]);
+
+        this.$nextTick(function () {
+          document.querySelector(
+            ".q-field__input.q-placeholder.col.q-field__input--padding"
+          ).value = "";
+        });
       } else {
         this.localValue = val;
         this.onInput(simpleValue);
@@ -172,8 +184,7 @@ export default {
     // Writable handling
     field["use-input"] = (function () {
       if (field.writable || field["use-input"]) return true;
-      if (field.writable === undefined && field.multiple === undefined)
-        return true;
+      if (field.writable === undefined) return true;
       return field["use-input"] || field.writable;
     })();
   },
