@@ -152,13 +152,11 @@ export function sortByTabs(fields, defaultTab = 1) {
 }
 
 export function sortByGroup(rowsOfFields = []) {
-  console.log('%c⧭', 'color: #aa00ff', rowsOfFields);
   const groups = []
   const sorted = []
 
   rowsOfFields.forEach((row, rowIndex) => {
     sorted.push([])
-    console.log('%c⧭', 'color: #e50000', sorted);
     row.forEach(field => {
       if (field.group) {
         const groupIndex = field.group

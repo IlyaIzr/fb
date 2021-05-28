@@ -3,13 +3,6 @@ export const formConfig = {
 
   fields: {
     p:{row: 1},
-    second: {
-      group: 1
-    },
-    third: {
-      group: 1,
-      row: 1,
-    },
     b:{row: 3},
     pd:{row: 5},
     first: {
