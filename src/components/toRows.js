@@ -152,16 +152,19 @@ export function sortByTabs(fields, defaultTab = 1) {
 }
 
 export function sortByGroup(rowsOfFields = []) {
+  console.log('%c⧭', 'color: #aa00ff', rowsOfFields);
   const groups = []
   const sorted = []
 
   rowsOfFields.forEach((row, rowIndex) => {
     sorted.push([])
+    console.log('%c⧭', 'color: #e50000', sorted);
     row.forEach(field => {
       if (field.group) {
         const groupIndex = field.group
         // Case first field of the group
         if (!groups[groupIndex]) {
+          const lastRowIndex = sorted.length - 1
 
           const initGroupDescription = {
             fieldsInsideGroups: {
@@ -171,18 +174,14 @@ export function sortByGroup(rowsOfFields = []) {
           }
           // Case this row already have somehing
 
-          if (sorted[rowIndex].length || sorted[rowIndex].fieldsInsideGroups) sorted.push(initGroupDescription)
+          if (sorted[lastRowIndex].length || sorted[lastRowIndex].fieldsInsideGroups) sorted.push(initGroupDescription)
           // Case first field of this row
-          else sorted[rowIndex] = initGroupDescription
+          else sorted[lastRowIndex] = initGroupDescription
 
           // then
           const actualIndex = sorted.length - 1
           return groups[groupIndex] = {
             actualIndex: actualIndex, // Number
-            // Repeat rows structure
-            // rows: {
-            //   [field.key]: field
-            // }
           }
         }
         // Case another field of the group
@@ -190,7 +189,14 @@ export function sortByGroup(rowsOfFields = []) {
         sorted[injectionIndex].fieldsInsideGroups[field.key] = field
         if (field.groupLabel) sorted[injectionIndex].groupLabel = field.groupLabel
       }
-      else sorted[rowIndex].push(field)
+      else {
+        // Case current row corresponds to row of simple fields
+        if (Array.isArray(sorted[rowIndex])) sorted[rowIndex].push(field)
+        // Case current row corresponds to object of group
+        // So create additional entry
+        else sorted.push([field])
+      }
+
     })
   })
 

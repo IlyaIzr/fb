@@ -2,27 +2,20 @@ export const formConfig = {
 
 
   fields: {
-    a: {
-      value: 'a', 
-      group: 1,
-      groupLabel: 'abob abob abob abob abob abob abob abob abob '
+    p:{row: 1},
+    second: {
+      group: 1
     },
-    simpleMultiple: {
+    third: {
       group: 1,
-      type: 'multiple',
-      label: "Multiple with simpleinputs",
-      value: [
-        { firstName: 'Peter', lastName: '' },
-        { firstName: 'Lois', lastName: 'Puttershmidt' }
-      ],
-      settings: {
-        firstName: {
-          label: 'First name',
-        },
-        lastName: {
-          label: 'Last name'
-        },
-      },
+      row: 1,
+    },
+    b:{row: 3},
+    pd:{row: 5},
+    first: {
+      row: 1,
+      
+      group: 2
     },
   },
 
