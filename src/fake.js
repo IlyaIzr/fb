@@ -2,22 +2,28 @@ export const formConfig = {
 
 
   fields: {
-    sel: {
-      type: 'select',
-      options: ['aboba', 'abeba', 'abiba'],
-      // writable: true,
-      // multiple: true
-    },
-    sel2: {
-      type: 'select',
-      options: ['aboba', 'abeba', 'abiba'],
-      writable: true,
-      multiple: true
-    },
     a: {
-      value: 'a'
+      value: 'a', 
+      group: 1,
+      groupLabel: 'abob abob abob abob abob abob abob abob abob '
     },
-    b: {}
+    simpleMultiple: {
+      group: 1,
+      type: 'multiple',
+      label: "Multiple with simpleinputs",
+      value: [
+        { firstName: 'Peter', lastName: '' },
+        { firstName: 'Lois', lastName: 'Puttershmidt' }
+      ],
+      settings: {
+        firstName: {
+          label: 'First name',
+        },
+        lastName: {
+          label: 'Last name'
+        },
+      },
+    },
   },
 
 

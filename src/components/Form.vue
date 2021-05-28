@@ -288,13 +288,10 @@ export default {
         await cb(fbGlobal, this, this.$refs.form);
     }
 
-    console.log('%c⧭', 'color: #00e600', 'after mount')
   },
   watch: {
     computeRawsTrigger: {
       handler() {
-
-        console.log('%c⧭', 'color: #00a3cc', 'handler')
         const newRows = this.rowsComputed();
         this.rows = newRows;
       },

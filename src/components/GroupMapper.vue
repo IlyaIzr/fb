@@ -82,7 +82,7 @@ export default {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 19px;
+  top: 27px;
   font-size: min(2.8vw, 18px);
   line-height: min(3.2vw, 22px);
   padding: 0 8px;
@@ -93,6 +93,7 @@ export default {
 }
 .fb-group {
   border: 1px solid #cdcdcd;
+  box-shadow: 3px 3px 3px aliceblue ;
   border-radius: 8px;
   margin: 8px -4px;
 }
