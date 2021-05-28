@@ -90,7 +90,8 @@ export default {
 .fb-inner-row {
   margin: 8px 0;
   padding: 8px;
-  border: 1px solid gray;
+  border: 1px solid #e4e4e4;
+  box-shadow: 3px 3px 3px aliceblue ;
   border-radius: 8px;
   position: static;
 }

@@ -21,7 +21,7 @@ export const fieldsToRows = (fields, values = {}, multiKey = false, multiValues 
     if (!field.watcher) field.watcher = 1
     if (multiKey) field.multiKey = multiKey
     // correct getters '_key' value
-    field.key = String(key).replace("_?$", "")
+    field.key = String(key).replace("$fb_", "")
 
     // Assign required and default values
     defaultProps(field) // mutates field
@@ -119,7 +119,7 @@ export function sortByTabs(fields, defaultTab = 1) {
   for (let [key, field] of Object.entries(fields)) {
 
     let index = field.tab || defaultTab
-    key = String(key).replace("_?$", "")
+    key = String(key).replace("$fb_", "")
 
     // Case no index
     if (index === undefined) {

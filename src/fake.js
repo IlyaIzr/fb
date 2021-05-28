@@ -2,37 +2,18 @@ export const formConfig = {
 
 
   fields: {
-    bio: {
-      type: 'select',
-      name: 'login',
-      options: ['aboba', 'abeba', 'bab'],
-      onInput(fb, _, val) {
-        console.log(val);
-      }
+    first: {
+      row: 1,
+      
+      group: 2
     },
-    react: {
-      onFocus(fb) {
-        // fb.fields.bio = {
-        //   visible: false,
-        //   service: true
-        // }
-        fb.fields.bio.visible = false
-        fb.fields.bio.label = 'bebs'
-      }
-    },    
-    react2: {
-      onFocus(fb) {
-        // console.log(fb.fields.bio);
-        // fb.fields.bio = {
-        //   visible: true,
-        //   service: false,
-        //   value: 'abeba',
-        //   hint: 'beobob'
-        // }
-        
-        fb.fields.bio.visible = true
-      }
-    }
+    second: {
+      group: 1
+    },
+    third: {
+      group: 1,
+      row: 1,
+    },
   },
 
 

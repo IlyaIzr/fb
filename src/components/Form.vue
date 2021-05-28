@@ -220,24 +220,24 @@ export default {
       if (!this.hasGroups && config.group) this.hasGroups = true;
       Object.defineProperty(fbGlobal.fields, key, {
         get() {
-          return this["_?$" + key];
+          return this["$fb_" + key];
         },
         set(conf) {
-          if (!this["_?$" + key]) this["_?$" + key] = {};
+          if (!this["$fb_" + key]) this["$fb_" + key] = {};
           // Mutate object to keep reactivity
           Object.entries(conf).forEach(([prop, val]) => {
-            this["_?$" + key][prop] = val;
+            this["$fb_" + key][prop] = val;
           });
 
           // Wrap with field-level reactivity on mount
           if (!self.isMounted) {
-            const reactiveField = new Proxy(this["_?$" + key], reactiveHandler);
+            const reactiveField = new Proxy(this["$fb_" + key], reactiveHandler);
             // and activate it
-            Object.entries(this["_?$" + key]).forEach(([prop, val]) => {
+            Object.entries(this["$fb_" + key]).forEach(([prop, val]) => {
               reactiveField[prop] = val;
             });
             self.settings.fields[key] = reactiveField;
-            this["_?$" + key] = reactiveField;
+            this["$fb_" + key] = reactiveField;
           }
 
           // console.log('%c⧭', 'color: #cc0088',  key, config.value, {...fbGlobal.fields._discipline})
@@ -287,10 +287,14 @@ export default {
       if (cb && typeof cb === "function")
         await cb(fbGlobal, this, this.$refs.form);
     }
+
+    console.log('%c⧭', 'color: #00e600', 'after mount')
   },
   watch: {
     computeRawsTrigger: {
       handler() {
+
+        console.log('%c⧭', 'color: #00a3cc', 'handler')
         const newRows = this.rowsComputed();
         this.rows = newRows;
       },

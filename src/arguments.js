@@ -40,7 +40,7 @@ export const fbGlobal = {
     const fields = this.fields
 
     Object.keys(fields).forEach((key) => {
-      key = String(key).replace("_?$", "");
+      key = String(key).replace("$fb_", "");
 
       Object.keys(fields[key]).forEach((prop) => {
         // Case multiple
@@ -92,7 +92,7 @@ export const fbGlobal = {
       }
       if (serviceFields.has(config.type)) return;
 
-      key = String(key).replace("_?$", "");
+      key = String(key).replace("$fb_", "");
       fields[key].value = "";
     });
 

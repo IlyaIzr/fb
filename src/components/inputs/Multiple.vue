@@ -184,7 +184,7 @@ export default {
   margin-top: 0;
 }
 .fb-multiple {
-  border: 1px solid gray;
+  border: 1px solid #b2b2b2;
   border-radius: 8px;
   margin: 8px -4px;
   position: relative;
@@ -193,7 +193,8 @@ export default {
 .fb-multiple .fb-field-label {
   left: 50%;
   transform: translateX(-50%);
-  top: -34px;
+  top: -27px;
+  font-size: min(2.8vw, 18px);
   padding: 0 8px;
   margin: 10px 0;
   background-color: #fff;

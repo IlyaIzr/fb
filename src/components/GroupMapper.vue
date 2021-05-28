@@ -61,7 +61,7 @@ export default {
   mounted() {
     // Styling
     const { labels, wraps } = this.$refs;
-    labels.forEach((label, index) => {
+    labels?.forEach((label, index) => {
       const difference = label.clientHeight - 32;
       if (difference) wraps[index].className += " fb-group-big-label-case";
     });
@@ -82,7 +82,9 @@ export default {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 0;
+  top: 19px;
+  font-size: min(2.8vw, 18px);
+  line-height: min(3.2vw, 22px);
   padding: 0 8px;
   margin: 10px 0;
   /* margin: 30px 130px; */
@@ -90,7 +92,7 @@ export default {
   background-color: #fff;
 }
 .fb-group {
-  border: 1px solid gray;
+  border: 1px solid #cdcdcd;
   border-radius: 8px;
   margin: 8px -4px;
 }
