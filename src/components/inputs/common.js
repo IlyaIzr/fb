@@ -2,15 +2,16 @@ import { fbGlobal, initConfig } from "src/arguments";
 
 export const commonMethods = {
   // Extended in Select, Multiple, Date, File(TBD), Checkbox 
-  async onInput(val) {
+  async onInput(val, extraVal) {
     if (this.rest.meta) {
       const valKey = this.rest.metaValueKey || 'value'
       this.rest.meta[valKey] = val // cause value been validated
     }
-    
+
     this.rest.value = val;
-    
+
     if (this.rest?.onInput) {
+      if (extraVal !== undefined) val = extraVal
       await this.rest.onInput(fbGlobal, this, val);
     }
   },
@@ -29,7 +30,7 @@ export const commonMethods = {
       await this.rest.onBlur(fbGlobal, this, this.rest);
     }
   },
-  
+
   reset() {
     fbGlobal.fields[this.keyName] = { ...initConfig[this.keyName] }
   },
@@ -50,7 +51,7 @@ export const attachmentMethods = {
   async outerLeftClick() {
     if (this.outerLeftClick?.onClick)
       await this.outerLeftClick.onClick?.(fbGlobal, this, this.rest);
-  },  
+  },
   async innerLeftClick() {
     if (this.innerLeft?.onClick)
       await this.innerLeft.onClick?.(fbGlobal, this, this.rest);
@@ -140,13 +141,13 @@ function getRules(rules, required, requiredMessage, metaValue, rest) {
       return true;
     }
     else baseCheckFunction = (dateString) =>
-    Boolean(dateString) === false ||
-    (dateString.split(".")[0] < 32 &&
-      dateString.split(".")[1] < 13 &&
-      dateString.split(".")[2] > 1900) ||
-    reqMsg
+      Boolean(dateString) === false ||
+      (dateString.split(".")[0] < 32 &&
+        dateString.split(".")[1] < 13 &&
+        dateString.split(".")[2] > 1900) ||
+      reqMsg
   }
-  
+
   res = [baseCheckFunction, ...res,];
 
   return res
@@ -205,4 +206,17 @@ export function shouldEval(key, val) {
   ) {
     return false
   } else return true
+}
+
+
+export function readFileAsync(file) {
+  // returns instance of new ArrayBuffer()
+  return new Promise((resolve, reject) => {
+    let reader = new FileReader();
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
 }

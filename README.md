@@ -133,6 +133,7 @@ multiple  | `false` | `Boolean` | Allows to pick several files
 accept | `'*'` | `String` | Comma separated list of unique file type specifiers. <br> Maps to 'accept' attribute of native input type=file element
 max-files | 1 | `Number` or `String` | Maximum number of files to contain
 max-file-size | `undefined` | `Number` or `String` | Maximum size of individual file in bytes
+rawData | `true` | `Boolean` | recieve file input arguments as `ArrayBuffer` if `true`. Receive as `File` if `false` 
 
 > More properties here: https://quasar.dev/vue-components/file-picker#qfile-api
 

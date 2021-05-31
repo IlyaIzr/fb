@@ -29,6 +29,9 @@ export const fbGlobal = {
         return;
       }
       // Case simple
+      // case file and submit raw data
+      if (config.type === "file" && config.rawData)
+        return values[config.key] = config.rawDataValue
       // case meta submit
       if (config.metaShouldSumbmit) return values[config.key] = config.meta
 

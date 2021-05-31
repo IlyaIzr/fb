@@ -208,6 +208,11 @@ export const validator = {
   file: {
     ...commonProps,
     value(val, f) { return typeof val === 'object' ? val : null },
+    rawData(val, f) { return booleaner(val, f) },
+    multiple(val, f) { return booleaner(val, f) },
+    'max-files'(val, f) { return numberer(val, f) },
+    'max-file-size'(val, f) { return numberer(val, f) },
+    accept(val, f) { return stringer(val, f) },
   },
 }
 

@@ -2,10 +2,11 @@
   <div class="q-gutter-md col fb-field-file" v-if="rest.visible">
     <q-file
       bottom-slots
+      :use-chips="Boolean(rest.value && rest.value.length && rest.clearable)"
       v-bind="rest"
       class="fb-field-content"
       @blur="onBlur"
-      @input="onInput"
+      @input="onInputLocal"
       @focus="onFocus"
     >
       <template v-slot:hint class="fb-field-hint"> {{ rest.hint }} </template>
@@ -29,7 +30,14 @@
 </template>
 
 <script>
-import { attachmentMethods, commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
+import {
+  attachmentMethods,
+  commonMethods,
+  computedAttachments,
+  computedRules,
+  onMountCommon,
+  readFileAsync,
+} from "./common";
 import Attachment from "src/components/helpers/Attachment";
 
 export default {
@@ -50,14 +58,29 @@ export default {
   },
   computed: {
     ...computedRules,
-    ...computedAttachments
+    ...computedAttachments,
   },
   methods: {
     ...commonMethods,
     ...attachmentMethods,
+    async onInputLocal(val) {
+      if (!this.rest.rawData) return await this.onInput(val);
+
+      let fileVal;
+      if (Array.isArray(val)) {
+        fileVal = await Promise.all(
+          val.map(async (singleVal) => await readFileAsync(singleVal))
+        );
+      } else fileVal = await readFileAsync(val);
+      await this.onInput(val, fileVal);
+      this.rest.rawDataValue = fileVal
+    },
   },
   mounted() {
     onMountCommon(this, this.rest);
+  },
+  beforeMount() {
+    this.rest.rawData ??= true;
   },
 };
 </script>
