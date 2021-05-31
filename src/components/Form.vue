@@ -189,6 +189,11 @@ export default {
   },
 
   beforeMount() {
+    import("quasar/lang/" + (this.settings.localization || "ru")).then(
+      (lang) => {
+        this.$q.lang.set(lang.default);
+      }
+    );
 
     // fbGlobal
     const self = this;
