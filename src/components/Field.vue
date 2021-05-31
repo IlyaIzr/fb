@@ -1,64 +1,76 @@
 <template>
-<div class="fb-service-visibility-trigger col" :key="visibleTrigger" :style="!fieldInfo.visible && 'display: none'">
   <div
-    v-if="fieldInfo.visible && inputType !== 'button'"
-    
     :class="
-      'fb-field-container col ' + `${!fieldInfo.multiKey ? ' q-mx-md' : ''}`
+      'fb-service-visibility-trigger' + (inputType == 'button' ? '' : ' col')
     "
+    :key="visibleTrigger"
+    :style="!fieldInfo.visible && 'display: none'"
   >
-    <div class="fb-field row q-my-sm">
-      <SimpleInput
-        v-if="inputType === 'simple'"
-        :keyName="fieldInfo.key"
-        :rest="rest"
-      />
-      <Select
-        v-if="inputType === 'select'"
-        :keyName="fieldInfo.key"
-        :rest="rest"
-      />
-      <Multiple
-        v-if="inputType === 'multiple'"
-        :keyName="fieldInfo.key"
-        :rest="rest"
-      />
-      <Slider
-        v-if="inputType === 'slider'"
-        :keyName="fieldInfo.key"
-        :rest="rest"
-      />
-      <Date v-if="inputType === 'date'" :keyName="fieldInfo.key" :rest="rest" />
-      <Checkbox
-        v-if="inputType === 'checkbox'"
-        :keyName="fieldInfo.key"
-        :rest="rest"
-      />
-      <File
-        v-if="inputType === 'file'"
-        :keyName="fieldInfo.key"
-        :rest="rest"
-      />
-      <Html v-if="inputType === 'html'" :keyName="fieldInfo.key" :rest="rest" />
-      <Editor
-        v-if="inputType === 'editor'"
-        :keyName="fieldInfo.key"
-        :rest="rest"
-      />
+    <div
+      v-if="fieldInfo.visible && inputType !== 'button'"
+      :class="
+        'fb-field-container col ' + `${!fieldInfo.multiKey ? ' q-mx-md' : ''}`
+      "
+    >
+      <div class="fb-field row q-my-sm">
+        <SimpleInput
+          v-if="inputType === 'simple'"
+          :keyName="fieldInfo.key"
+          :rest="rest"
+        />
+        <Select
+          v-if="inputType === 'select'"
+          :keyName="fieldInfo.key"
+          :rest="rest"
+        />
+        <Multiple
+          v-if="inputType === 'multiple'"
+          :keyName="fieldInfo.key"
+          :rest="rest"
+        />
+        <Slider
+          v-if="inputType === 'slider'"
+          :keyName="fieldInfo.key"
+          :rest="rest"
+        />
+        <Date
+          v-if="inputType === 'date'"
+          :keyName="fieldInfo.key"
+          :rest="rest"
+        />
+        <Checkbox
+          v-if="inputType === 'checkbox'"
+          :keyName="fieldInfo.key"
+          :rest="rest"
+        />
+        <File
+          v-if="inputType === 'file'"
+          :keyName="fieldInfo.key"
+          :rest="rest"
+        />
+        <Html
+          v-if="inputType === 'html'"
+          :keyName="fieldInfo.key"
+          :rest="rest"
+        />
+        <Editor
+          v-if="inputType === 'editor'"
+          :keyName="fieldInfo.key"
+          :rest="rest"
+        />
 
-      <div v-if="inputType === 'err'">
-        err, wrong type: {{ fieldInfo.type }}
+        <div v-if="inputType === 'err'">
+          err, wrong type: {{ fieldInfo.type }}
+        </div>
       </div>
-
     </div>
-  </div>
-  <div v-else-if="inputType === 'button'">
-    <Button
-      v-if="inputType === 'button'"
-      :keyName="fieldInfo.key"
-      :rest="rest"
-    />
-  </div>
+    <div v-else-if="inputType === 'button'" class="fb-field-button-container">
+      <Button
+        v-if="inputType === 'button'"
+        :keyName="fieldInfo.key"
+        :rest="rest"
+      />
+    </div>
   </div>
 </template>
 
@@ -108,7 +120,7 @@ export default {
     Html,
     Editor,
     Button,
-    File
+    File,
   },
   computed: {
     inputType() {
@@ -187,9 +199,7 @@ export default {
       return res;
     },
   },
-  methods: {
-    
-  },
+  methods: {},
   beforeMount() {
     //  fbGlobal
     // const self = this;
@@ -214,8 +224,9 @@ export default {
       handler(field) {
         // console.log(prevVisibility[this.fieldInfo.key], field.visible);
         // console.log("rerest", this.fieldInfo.key, { ...a }, { ...b });
-        if (field.visible !== prevVisibility[this.fieldInfo.key]) this.visibleTrigger += 1
-        prevVisibility[this.fieldInfo.key] = field.visible
+        if (field.visible !== prevVisibility[this.fieldInfo.key])
+          this.visibleTrigger += 1;
+        prevVisibility[this.fieldInfo.key] = field.visible;
       },
       deep: true,
     },

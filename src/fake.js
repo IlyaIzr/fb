@@ -2,14 +2,28 @@ export const formConfig = {
 
 
   fields: {
-    p:{row: 1},
-    b:{row: 3},
-    pd:{row: 5},
-    first: {
-      row: 1,
-      
-      group: 2
+    btn: {
+      type: 'button',
+      value: 'seaboba',
+      hint: 'prepersen',
+      label: 'brn label',
+      row: 1
     },
+    re: {
+      onFocus(fb){
+        fb.fields.btn.visible = false
+      }
+    },
+    
+    re2: {
+      onFocus(fb){
+        fb.fields.btn.visible = true
+        fb.fields.btn.value = 'saint bob'
+      },
+      row: 1,
+      hint: 'prepersen',
+      label: 'be bob'
+    }
   },
 
 

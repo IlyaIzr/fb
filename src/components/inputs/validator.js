@@ -200,6 +200,9 @@ export const validator = {
 
   button: {
     ...commonProps,
+    value(val, f) { return stringer(val, f) },
+    color(val, f) { return stringer(val, f) },
+    size(val, f) { return stringer(val, f) },
   },
 
   file: {
