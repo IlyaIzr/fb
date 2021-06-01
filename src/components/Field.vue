@@ -18,8 +18,13 @@
           :keyName="fieldInfo.key"
           :rest="rest"
         />
+        <Creatable
+          v-if="inputType === 'creatable'"
+          :keyName="fieldInfo.key"
+          :rest="rest"
+        />
         <Select
-          v-if="inputType === 'select'"
+          v-else-if="inputType === 'select'"
           :keyName="fieldInfo.key"
           :rest="rest"
         />
@@ -78,6 +83,7 @@
 import SimpleInput from "./inputs/Simple";
 import Multiple from "./inputs/Multiple";
 import Select from "./inputs/Select";
+import Creatable from "./inputs/Creatable";
 import Slider from "./inputs/Slider";
 import Date from "./inputs/Date";
 import Checkbox from "./inputs/Checkbox";
@@ -121,6 +127,7 @@ export default {
     Editor,
     Button,
     File,
+    Creatable
   },
   computed: {
     inputType() {

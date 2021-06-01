@@ -137,6 +137,16 @@ rawData | `true` | `Boolean` | recieve file input arguments as `ArrayBuffer` if 
 
 > More properties here: https://quasar.dev/vue-components/file-picker#qfile-api
 
+#### Creatable
+An input where users can create multiple options manually
+
+Key | Default value | Expected types | Description
+--- | --- | --- | --- 
+type  | `"creatable"` | `"creatable"` | -
+value | `[]` | `Array` of unique `String`s | for example: ['a', 'b', 'abc']
+createOptionMsg | `Введите значение и нажмите 'enter'` | `String` | message to client
+
+
 ### Field Attachments
 You can attach different icons and buttons to various inputs. You can also add functionality to them. Field attachment is an `Object` inside field config
 ```javascript

@@ -147,6 +147,16 @@ export const validator = {
     "use-input"(val, f) { return booleaner(val, f) },
     "use-chips"(val, f) { return booleaner(val, f) },
     multiple(val, f) { return booleaner(val, f) },
+    options(val, f) { return arrayer(val, f) },
+
+  },
+  creatable: {
+    ...commonProps,
+    value(val, f) { return arrayer(val, f) },
+    multiple() { return true },
+    options() { return [] },
+    createOptionMsg(val, f) { return stringer(val, f) },
+    'use-chips'() { return true },
 
   },
   multiple: {
@@ -259,6 +269,7 @@ export const simpleTypes = [
 
 export const allowedTypes = new Set([
   "select",
+  "creatable",
   "multiple",
   "slider",
   "date",
