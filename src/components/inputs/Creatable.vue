@@ -16,6 +16,7 @@
       new-value-mode="add-unique"
       class="fb-field-content"
       ref="input"
+      @input-value="onOptionInput"
       @input="onInput"
       @focus="onFocus"
       @blur="onBlur"
@@ -53,6 +54,7 @@ import {
   computedRules,
   onMountCommon,
 } from "./common";
+import { fbGlobal } from "src/arguments";
 
 // function simpleOptions(ops) {
 //   if (!ops?.length) return [];
@@ -87,6 +89,11 @@ export default {
   methods: {
     ...commonMethods,
     ...attachmentMethods,
+    async onOptionInput(val) {
+      if (this.rest?.onKeyDown) {
+        await this.rest.onKeyDown(fbGlobal, this, val);
+      }
+    },
   },
   mounted() {
     onMountCommon(this, this.rest);

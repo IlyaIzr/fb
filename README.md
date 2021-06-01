@@ -28,6 +28,8 @@ onInput | `onInput = async (globalConfig, component, value) => {}` | Fires when 
 onFocus | `onFocus = async (globalConfig, component) => {}` | Fires when field gets focus on it
 onBlur | `onBlur = async (globalConfig, component) => {}` | Fires when field loses focus
 onSearchInput | `onSearchInput = async (globalConfig, component, inputVal) => {}` | Fires only on field type `'select'` when <br> `field.writable == true` (i.e. not disabled from config)
+onKeyDown | `onKeyDown = async (fbGlobal, vueComponent, value) => {} | fires on every user keydown <br> in field type `'creatable'`
+
 * globalConfig - reactive object that holds all the information about the form
 * component - reference to Vue's field component
 
@@ -145,7 +147,7 @@ Key | Default value | Expected types | Description
 type  | `"creatable"` | `"creatable"` | -
 value | `[]` | `Array` of unique `String`s | for example: ['a', 'b', 'abc']
 createOptionMsg | `Введите значение и нажмите 'enter'` | `String` | message to client
-
+onKeyDown | `undefined` | `function onKeyDown(fbGlobal, vueComponent, value) | fires on every user keydown
 
 ### Field Attachments
 You can attach different icons and buttons to various inputs. You can also add functionality to them. Field attachment is an `Object` inside field config
