@@ -63,6 +63,7 @@ Key | Default value | Expected types | Description
 type  | `"multiple"` | `"multiple"` | -
 value | `[]` | `[Object]` | Array of objects with fieldKey: fieldValue pairs <br> `{ firstName: 'Peter', lastName: 'Griffin' }`
 settings | `{}` | fieldKey: fieldConfig{} | Field configs that will be used. <br> Keys correspond to value keys
+rules | `[]` | Array of functions with following args <br> `(multipleLength, formValues, globalConfig, metaValue) => true` | validation rules 
 
 #### Date
 Key | Default value | Expected types | Description
@@ -147,7 +148,7 @@ Key | Default value | Expected types | Description
 type  | `"creatable"` | `"creatable"` | -
 value | `[]` | `Array` of unique `String`s | for example: ['a', 'b', 'abc']
 createOptionMsg | `Введите значение и нажмите 'enter'` | `String` | message to client
-onKeyDown | `undefined` | `function onKeyDown(fbGlobal, vueComponent, value) | fires on every user keydown
+onKeyDown | `undefined` | `function onKeyDown(fbGlobal, vueComponent, value)` | fires on every user keydown
 
 ### Field Attachments
 You can attach different icons and buttons to various inputs. You can also add functionality to them. Field attachment is an `Object` inside field config

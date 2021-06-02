@@ -2,16 +2,30 @@ export const formConfig = {
 
 
   fields: {
-    cb: {
-      type: 'checkbox',
-      // readonly: true,
-      value: 1
+    simpleMultiple: {
+      type: 'multiple',
+      label: "Multiple with simpleinputs",
+      value: [
+        { firstName: 'Peter', lastName: '' },
+        { firstName: 'Lois', lastName: 'Puttershmidt' }
+      ],
+      settings: {
+        firstName: {
+          label: 'First name',
+        },
+        lastName: {
+          label: 'Last name'
+        },
+      },
+      // required: true,
+      // rules: [length => Boolean(length)]
+      rules: [
+        function (a, b, c, d) {
+          return console.log(a, b, c, d);
+        }
+      ]
+
     },
-    s: {
-      
-      readonly: true,
-      value: 'sabob',
-    }
   },
 
 

@@ -34,6 +34,16 @@
         {{ addButton.tooltip || "Добавить поле" }}
       </q-tooltip>
     </q-btn>
+
+    <q-field
+      ref="validation"
+      :value="rest.value.length"
+      :rules="rules"
+      borderless
+      style="height: 1px; padding-right: 60px"
+      dense
+    >
+    </q-field>
   </div>
 </template>
 
@@ -42,7 +52,7 @@ import { fbGlobal } from "src/arguments";
 import { fieldsToRows } from "src/components/toRows";
 import { validator } from "./validator";
 import MultiMapper from "src/components/MultiMapper";
-import { commonMethods, onMountCommon } from "./common";
+import { commonMethods, computedRules, onMountCommon } from "./common";
 export default {
   name: "MultipleInput",
   props: {
@@ -64,7 +74,9 @@ export default {
       addButton: fbGlobal.buttons?.multipleAdd || {},
     };
   },
-  computed: {},
+  computed: {
+    ...computedRules,
+  },
   methods: {
     ...commonMethods,
     computeRowsEffect() {
@@ -83,7 +95,7 @@ export default {
     async addField() {
       const obj = {};
       Object.keys(this.rest.settings).forEach((key) => (obj[key] = ""));
-      await this.onInput([...this.rest.value, obj]);      
+      await this.onInput([...this.rest.value, obj]);
       this.redrawChildren();
     },
     async removeField(index) {
@@ -114,7 +126,7 @@ export default {
     // Wrap settings with reactivity
     const redrawWrap = {
       set: function (field, prop, value) {
-      // console.log("set settings updates", { ...field }, prop, value);
+        // console.log("set settings updates", { ...field }, prop, value);
         let validated =
           field.type && validator[field.type]?.[prop]?.(value, field);
 
@@ -137,7 +149,6 @@ export default {
   },
   mounted() {
     onMountCommon(this, this.rest);
-    
 
     // Styling
     const { label, wrap } = this.$refs;

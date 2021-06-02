@@ -79,7 +79,7 @@ export function wrapedUserRules(rules, fbGlobal, metaValue) {
 }
 
 // Validation Rules
-// Exeptions: Multiple, TODO Calendar
+// Exeptions: none, TODO Calendar
 export const computedRules = {
   rules() {
     return getRules(
@@ -122,6 +122,7 @@ function getRules(rules, required, requiredMessage, metaValue, rest) {
       }
 
     if (type === 'slider') baseCheckFunction = val => Number(val) > 0 || reqMsg
+    if (type === 'multiple') baseCheckFunction = val => Number(val) > 0 || reqMsg
 
     baseCheckFunction = (val) => Boolean(val) || reqMsg
 
