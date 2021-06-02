@@ -1,5 +1,9 @@
 <template>
-  <div class="q-gutter-md col fb-field-checkbox" v-if="rest.visible">
+  <div
+    class="q-gutter-md col fb-field-checkbox"
+    v-if="rest.visible"
+    ref="readonlyWrap"
+  >
     <q-field
       ref="input"
       :value="localVal"
@@ -18,6 +22,7 @@
           @input="onInputLocal"
           :rules="rules"
           class="fb-field-content"
+          ref="checkbox"
         />
       </template>
       <!-- Attachments -->
@@ -38,7 +43,13 @@
 </template>
 
 <script>
-import { attachmentMethods, commonMethods, computedAttachments, computedRules, onMountCommon } from "./common";
+import {
+  attachmentMethods,
+  commonMethods,
+  computedAttachments,
+  computedRules,
+  onMountCommon,
+} from "./common";
 import Attachment from "src/components/helpers/Attachment";
 
 export default {
@@ -76,12 +87,23 @@ export default {
   beforeMount() {
     this.localVal = this.rest.value;
   },
-  
-  mounted(){
-    onMountCommon(this, this.rest)
+
+  mounted() {
+    onMountCommon(this, this.rest);
+    if (this.rest.readonly) {
+      this.$refs.checkbox?.$el?.classList.add("readonly");
+      this.$refs.readonlyWrap?.classList.add("readonlyWrap");
+    }
   },
 };
 </script>
 
 <style>
+.fb-field-checkbox .readonly {
+  pointer-events: none;
+  opacity: 0.65;
+}
+.readonlyWrap .q-field__native.row {
+  cursor: pointer;
+}
 </style>

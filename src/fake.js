@@ -2,8 +2,15 @@ export const formConfig = {
 
 
   fields: {
-    sel: {
-      type: 'creatable',
+    cb: {
+      type: 'checkbox',
+      // readonly: true,
+      value: 1
+    },
+    s: {
+      
+      readonly: true,
+      value: 'sabob',
     }
   },
 
