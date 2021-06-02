@@ -169,8 +169,8 @@ export default {
 
       this.localOptions = newOptions;
       this.$emit("optionInput", val);
-      if (this.rest?.onSearchInput) {
-        await this.rest.onSearchInput(fbGlobal, this, val);
+      if (this.rest?.onKeyDown) {
+        await this.rest.onKeyDown(fbGlobal, this, val);
       }
       this.$nextTick(function () {
         this.$refs.input?.resetValidation?.();
