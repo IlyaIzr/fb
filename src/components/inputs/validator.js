@@ -284,3 +284,8 @@ export const serviceFields = new Set([
   "html",
   "button",
 ]);
+
+export const smallFields = new Set([
+  "checkbox",
+  "button",
+]);

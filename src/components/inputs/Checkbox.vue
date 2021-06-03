@@ -1,6 +1,6 @@
 <template>
   <div
-    class="q-gutter-md col fb-field-checkbox"
+    class="fb-field-checkbox"
     v-if="rest.visible"
     ref="readonlyWrap"
   >
@@ -87,7 +87,6 @@ export default {
   },
   beforeMount() {
     this.localVal = Boolean(this.rest.value);
-    console.log('%c⧭', 'color: #00b300', this.localVal)
   },
 
   mounted() {

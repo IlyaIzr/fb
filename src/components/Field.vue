@@ -1,13 +1,16 @@
 <template>
   <div
     :class="
-      'fb-service-visibility-trigger' + (inputType == 'button' ? '' : ' col')
+      'fb-service-visibility-trigger' +
+      (smallFields.has(inputType) ? '' : ' col')
     "
     :key="visibleTrigger"
     :style="!fieldInfo.visible && 'display: none'"
   >
     <div
-      v-if="fieldInfo.visible && inputType !== 'button'"
+      v-if="
+        fieldInfo.visible && !smallFields.has(inputType)
+      "
       :class="
         'fb-field-container col ' + `${!fieldInfo.multiKey ? ' q-mx-md' : ''}`
       "
@@ -43,11 +46,6 @@
           :keyName="fieldInfo.key"
           :rest="rest"
         />
-        <Checkbox
-          v-if="inputType === 'checkbox'"
-          :keyName="fieldInfo.key"
-          :rest="rest"
-        />
         <File
           v-if="inputType === 'file'"
           :keyName="fieldInfo.key"
@@ -76,6 +74,16 @@
         :rest="rest"
       />
     </div>
+    <div
+      v-else-if="inputType === 'checkbox'"
+      class="fb-field-checkbox-container"
+    >
+      <Checkbox
+        v-if="inputType === 'checkbox'"
+        :keyName="fieldInfo.key"
+        :rest="rest"
+      />
+    </div>
   </div>
 </template>
 
@@ -92,7 +100,12 @@ import Html from "./helpers/Html";
 import Editor from "./inputs/Editor";
 import Button from "./helpers/Button";
 import { fbGlobal, prevVisibility } from "src/arguments";
-import { allowedTypes, simpleTypes, validator } from "./inputs/validator";
+import {
+  allowedTypes,
+  simpleTypes,
+  smallFields,
+  validator,
+} from "./inputs/validator";
 
 export default {
   name: "FieldSorter",
@@ -100,6 +113,7 @@ export default {
     return {
       trigger: 1,
       visibleTrigger: 1,
+      smallFields: smallFields,
     };
   },
   props: {
@@ -127,7 +141,7 @@ export default {
     Editor,
     Button,
     File,
-    Creatable
+    Creatable,
   },
   computed: {
     inputType() {
