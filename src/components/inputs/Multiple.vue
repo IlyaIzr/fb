@@ -42,6 +42,7 @@
       borderless
       style="height: 1px; padding-right: 60px"
       dense
+      class="fb-multiple-validation"
     >
     </q-field>
   </div>
@@ -219,5 +220,16 @@ export default {
   right: 15px;
   font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
+}
+.fb-multiple-validation{
+  margin: 0;
+  margin-bottom: -12px;
+  margin-left: 4px;
+  align-items: center;
+  text-align: center;
+}
+.fb-multiple-validation .q-field__append {
+  height: 26px;
+  margin-left: auto;
 }
 </style>
