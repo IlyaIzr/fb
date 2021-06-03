@@ -17,6 +17,7 @@
       <template v-slot:control>
         <q-checkbox
           v-bind="rest"
+          :value="Boolean(rest.value)"
           @focus="onFocus"
           @blur="onBlur"
           @input="onInputLocal"
@@ -85,7 +86,8 @@ export default {
     },
   },
   beforeMount() {
-    this.localVal = this.rest.value;
+    this.localVal = Boolean(this.rest.value);
+    console.log('%c⧭', 'color: #00b300', this.localVal)
   },
 
   mounted() {

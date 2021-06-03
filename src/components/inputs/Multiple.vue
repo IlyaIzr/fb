@@ -4,7 +4,7 @@
     ref="wrap"
     v-if="rest.visible"
   >
-    <h5 class="fb-field-label q-mx-none absolute-center q-px-xs" ref="label">
+    <h5 class="fb-multiple-label fb-field-label q-mx-none absolute-center q-px-xs" ref="label">
       {{ rest.label }}
     </h5>
 
@@ -201,7 +201,7 @@ export default {
   position: relative;
   padding: 24px 8px;
 }
-.fb-multiple .fb-field-label {
+.fb-multiple .fb-multiple-label {
   left: 50%;
   transform: translateX(-50%);
   top: -27px;

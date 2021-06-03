@@ -12,18 +12,13 @@ export const formConfig = {
       settings: {
         firstName: {
           label: 'First name',
+          row: 1
         },
         lastName: {
-          label: 'Last name'
+          label: 'Last name',
+          type: 'checkbox'
         },
       },
-      // required: true,
-      // rules: [length => Boolean(length)]
-      rules: [
-        function (a, b, c, d) {
-          return console.log(a, b, c, d);
-        }
-      ]
 
     },
   },
