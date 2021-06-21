@@ -200,6 +200,7 @@ export default {
           return self;
         },
       });
+    if (fbGlobal.modal) document.querySelector('.q-panel.scroll').style.height = 'unset'
   },
 
   watch: {
