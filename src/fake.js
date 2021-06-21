@@ -1,5 +1,6 @@
 export const formConfig = {
 
+  title: 'Simple text inputs',
 
   fields: {
     peps: {
@@ -40,8 +41,6 @@ export const formConfig = {
       console.log(values);
     }
   },
-
-  title: '',
 }
 
 export const values = {}

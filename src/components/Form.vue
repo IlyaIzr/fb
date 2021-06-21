@@ -311,5 +311,8 @@ export default {
 </script>
 
 <style>
+.fb-form-title{
+  margin-left: 12px;
+}
 </style>
 
