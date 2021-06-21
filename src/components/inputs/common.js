@@ -12,14 +12,14 @@ export const commonMethods = {
 
     if (this.rest?.onInput) {
       if (extraVal !== undefined) val = extraVal
-      await this.rest.onInput(fbGlobal, this, val);
+      await this.rest.onInput(fbGlobal, this, val, this.rest.multiIndex);
     }
   },
 
   // Exeption: Multiple
   async onFocus() {
     if (this.rest.onFocus) {
-      await this.rest.onFocus(fbGlobal, this, this.rest);
+      await this.rest.onFocus(fbGlobal, this, this.rest, this.rest.multiIndex);
     }
   },
 
@@ -27,7 +27,7 @@ export const commonMethods = {
   // Exeption: Multiple
   async onBlur(e) {
     if (this.rest?.onBlur) {
-      await this.rest.onBlur(fbGlobal, this, this.rest);
+      await this.rest.onBlur(fbGlobal, this, this.rest, this.rest.multiIndex);
     }
   },
 

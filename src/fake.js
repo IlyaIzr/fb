@@ -1,35 +1,36 @@
 export const formConfig = {
 
-  title: 'Simple text inputs',
 
   fields: {
-    peps: {
+    simpleMultiple: {
+      type: 'multiple',
       label: "Multiple with simpleinputs",
-      row: 1
-    },
-    asa: {
-      label: 'a',
-      row: 1,
-      innerLeft: {
-        type: 'button',
-        icon: 'warning',
-        onClick: (fb, component, field) => {
-          field.value = 'New value'
-        }
+      value: [
+        { firstName: 'Peter', lastName: '' },
+        { firstName: 'Lois', lastName: 'Puttershmidt' }
+      ],
+      settings: {
+        firstName: {
+          label: 'First name',
+          onInput(a,b,val, som){
+    
+            console.log('%c⧭', 'color: #f200e2',b, val, som);
+          }
+        },
+        lastName: {
+          label: 'Last name'
+        },
       },
     },
-    password: {
-      label: 'password',
-      type: 'password',
-      outerRight: {
-        type: 'button',
-        icon: 'warning',
-        onClick: (fb, component, field) => {
-          field.value = 'New value'
-        }
-      },
-    }
 
+    
+    firstName1: {
+      label: 'First name',
+      onInput(a,b,val, som){
+
+        console.log('%c⧭', 'color: #f200e2',b, val, som);
+      }
+    },
   },
 
 

@@ -24,9 +24,9 @@ groupLabel | `undefined` | `String`  | label of the group, if one needed
 #### Field event handlers (functions)
 Name  | With arguments  | Description
 --- | --- | --- 
-onInput | `onInput = async (globalConfig, component, value) => {}` | Fires when field's value changes
-onFocus | `onFocus = async (globalConfig, component) => {}` | Fires when field gets focus on it
-onBlur | `onBlur = async (globalConfig, component) => {}` | Fires when field loses focus
+onInput | `onInput = async (globalConfig, component, value, ?multipleIndex) => {}` | Fires when field's value changes
+onFocus | `onFocus = async (globalConfig, component, fieldSettings, ?multipleIndex) => {}` | Fires when field gets focus on it
+onBlur | `onBlur = async (globalConfig, component, fieldSettings, ?multipleIndex) => {}` | Fires when field loses focus
 onKeyDown | `onKeyDown = async (globalConfig, component, inputVal) => {}` | fires on every user keydown <br> in field types `'creatable'` and `'select'`
 
 * globalConfig - reactive object that holds all the information about the form
