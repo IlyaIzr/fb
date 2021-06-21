@@ -49,8 +49,8 @@ export const commonMethods = {
 
 export const attachmentMethods = {
   async outerLeftClick() {
-    if (this.outerLeftClick?.onClick)
-      await this.outerLeftClick.onClick?.(fbGlobal, this, this.rest);
+    if (this.outerLeft.onClick)
+      await this.outerLeft.onClick?.(fbGlobal, this, this.rest);
   },
   async innerLeftClick() {
     if (this.innerLeft?.onClick)
@@ -61,8 +61,8 @@ export const attachmentMethods = {
       await this.innerRight.onClick?.(fbGlobal, this, this.rest);
   },
   async outerRightClick() {
-    if (this.outerRightClick?.onClick)
-      await this.outerRightClick.onClick?.(fbGlobal, this, this.rest);
+    if (this.outerRight?.onClick)
+      await this.outerRight.onClick?.(fbGlobal, this, this.rest);
   },
 }
 

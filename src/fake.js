@@ -18,11 +18,10 @@ export const formConfig = {
         }
       },
     },
-    pword: {
-      label: 'pword',
+    password: {
+      label: 'password',
       type: 'password',
-      row: 1,
-      innerLeft: {
+      outerRight: {
         type: 'button',
         icon: 'warning',
         onClick: (fb, component, field) => {
@@ -32,7 +31,6 @@ export const formConfig = {
     }
 
   },
-
 
 
 
