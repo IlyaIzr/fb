@@ -2,14 +2,35 @@ export const formConfig = {
 
 
   fields: {
-    simpleMultiple: {
+    peps: {
       label: "Multiple with simpleinputs",
+      row: 1
     },
-    asa: {}
+    asa: {
+      label: 'a',
+      row: 1,
+      innerLeft: {
+        type: 'button',
+        icon: 'warning',
+        onClick: (fb, component, field) => {
+          field.value = 'New value'
+        }
+      },
+    },
+    pword: {
+      label: 'pword',
+      type: 'password',
+      row: 1,
+      innerLeft: {
+        type: 'button',
+        icon: 'warning',
+        onClick: (fb, component, field) => {
+          field.value = 'New value'
+        }
+      },
+    }
 
   },
-  modal: true,
-  tabs: true,
 
 
 

@@ -32,4 +32,7 @@ export default {
 </script>
 
 <style>
+.fb-attachment{
+  padding: 0;
+}
 </style>
