@@ -100,6 +100,8 @@ export const fieldsToRows = (fields, values = {}, multiKey = false, multiValues 
         if (globalValue) field.value = globalValue
         const userValue = values?.[index]?.[field.key]
         if (userValue) field.value = userValue
+        // Validate again, 'cause it wouldn't fire otherwise
+        field.value = validator[field.type].value(field.value, field)     
 
         // Assign the field
         return { ...field } // It BREAKS without {...} I mean WTF am i missing

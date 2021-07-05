@@ -2,6 +2,20 @@ export const formConfig = {
 
 
   fields: {
+
+    
+    webmoney: {
+      label: "Аккаунты Webmoney",
+      type: "multiple",
+      value: [],
+      settings: {
+        wallets: {
+          label: "Кошельки",
+          type: "creatable",
+          row: 1,
+        },
+      },
+    },
   },
 
 
