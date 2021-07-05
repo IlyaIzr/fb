@@ -18,10 +18,10 @@
           :label="remButton.label || 'X'"
           :color="remButton.color || 'red'"
           :text-color="remButton.textColor"
-          :disable="remButton.disable"
+          :disable="disabled"
           @click="$emit('remove', multiIndex)"
         >
-          <q-tooltip anchor="top middle" self="bottom middle" :offset="[5, 5]"> 
+          <q-tooltip anchor="top middle" self="bottom middle" :offset="[5, 5]">
             {{ remButton.tooltip || "Убрать" }}
           </q-tooltip>
         </q-btn>
@@ -51,6 +51,13 @@ export default {
     return {
       remButton: fbGlobal.buttons?.multipleRemove || {},
     };
+  },
+  computed: {
+    disabled() {
+      if (this.remButton?.disable) return true;
+      if (fbGlobal.fields[this.multiKey].disable) return true;
+      return false;
+    },
   },
   beforeMount() {
     this.multiRows.forEach((multiRow) => {
@@ -91,7 +98,7 @@ export default {
   margin: 8px 0;
   padding: 8px;
   border: 1px solid #e4e4e4;
-  box-shadow: 3px 3px 3px aliceblue ;
+  box-shadow: 3px 3px 3px aliceblue;
   border-radius: 8px;
   position: static;
 }

@@ -7,7 +7,8 @@ export const formConfig = {
     webmoney: {
       label: "Аккаунты Webmoney",
       type: "multiple",
-      value: [],
+      disable: true,
+      value: [{simp: 'asos'}],
       settings: {
         simp: {
           label: "Кошельки",
@@ -19,7 +20,11 @@ export const formConfig = {
     sim: {}
   },
 
-
+global: {
+fields: {
+  // disable: true
+}
+},
 
   methods: {
     onSubmit(fb, formComp, values) {

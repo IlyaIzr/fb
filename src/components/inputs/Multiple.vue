@@ -4,7 +4,10 @@
     ref="wrap"
     v-if="rest.visible"
   >
-    <h5 class="fb-multiple-label fb-field-label q-mx-none absolute-center q-px-xs" ref="label">
+    <h5
+      class="fb-multiple-label fb-field-label q-mx-none absolute-center q-px-xs"
+      ref="label"
+    >
       {{ rest.label }}
     </h5>
 
@@ -21,7 +24,7 @@
       :label="addButton.label || 'Добавить'"
       :color="addButton.color || 'green'"
       :text-color="addButton.textColor"
-      :disable="addButton.disable"
+      :disable="disabled"
       @click="addField"
     >
       <i>+</i>
@@ -77,6 +80,11 @@ export default {
   },
   computed: {
     ...computedRules,
+    disabled(){
+      if (this.addButton.disable) return true
+      if (this.rest.disable) return true
+      return false
+    }
   },
   methods: {
     ...commonMethods,
@@ -221,7 +229,7 @@ export default {
   font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
 }
-.fb-multiple-validation{
+.fb-multiple-validation {
   margin: 0;
   margin-bottom: -12px;
   margin-left: 4px;
