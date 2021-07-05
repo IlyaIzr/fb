@@ -7,7 +7,7 @@ export const formConfig = {
     webmoney: {
       label: "Аккаунты Webmoney",
       type: "multiple",
-      disable: true,
+      // readonly: true,
       value: [{simp: 'asos'}],
       settings: {
         simp: {
@@ -22,7 +22,7 @@ export const formConfig = {
 
 global: {
 fields: {
-  // disable: true
+  readonly: true
 }
 },
 

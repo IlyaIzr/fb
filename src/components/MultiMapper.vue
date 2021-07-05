@@ -56,6 +56,7 @@ export default {
     disabled() {
       if (this.remButton?.disable) return true;
       if (fbGlobal.fields[this.multiKey].disable) return true;
+      if (fbGlobal.fields[this.multiKey].readonly) return true;
       return false;
     },
   },

@@ -83,6 +83,7 @@ export default {
     disabled(){
       if (this.addButton.disable) return true
       if (this.rest.disable) return true
+      if (this.rest.readonly) return true
       return false
     }
   },
