@@ -9,13 +9,14 @@ export const formConfig = {
       type: "multiple",
       value: [],
       settings: {
-        wallets: {
+        simp: {
           label: "Кошельки",
-          type: "creatable",
+          // type: "creatable",
           row: 1,
         },
       },
     },
+    sim: {}
   },
 
 

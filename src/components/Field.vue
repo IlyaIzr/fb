@@ -8,9 +8,7 @@
     :style="!fieldInfo.visible && 'display: none'"
   >
     <div
-      v-if="
-        fieldInfo.visible && !smallFields.has(inputType)
-      "
+      v-if="fieldInfo.visible && !smallFields.has(inputType)"
       :class="
         'fb-field-container col ' + `${!fieldInfo.multiKey ? ' q-mx-md' : ''}`
       "
@@ -114,6 +112,8 @@ export default {
       trigger: 1,
       visibleTrigger: 1,
       smallFields: smallFields,
+              // I dont know why, but it's working...
+      proxied: 0,
     };
   },
   props: {
@@ -163,16 +163,13 @@ export default {
       // Case multifield children
       if (i.multiKey) {
         const field = fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key];
-
-        // Why have i aded this? It ruins multiple.value bonding
-        // if (field.watcher) {
-        //   res = field;
-        //   return res;
-        // }
+        // I dont know why, but it's working...
+        if (this.proxied > 1) return field;
 
         // Assignment of reactive wrap
         const reactiveFieldWrap = {
           set: function (field, prop, value) {
+            if (prop === "watcher") return true;
             // Make changes and additions observable
             field.watcher += 1;
             // And reactive
@@ -196,11 +193,13 @@ export default {
         const reactive = new Proxy(field, reactiveFieldWrap);
         fbGlobal.fields[i.multiKey].fields[i.multiIndex][i.key] = reactive;
         res = reactive;
+        this.proxied += 1;
         return res;
       }
 
       const reactiveFieldWrap = {
         set: function (field, prop, value) {
+          if (prop === "watcher") return true;
           // Make changes and additions observable
           field.watcher += 1;
           // And reactive
