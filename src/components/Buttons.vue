@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="!fbGlobal.noButtons || fbGlobal.buttons === false"
+    v-if="!fbGlobal.noButtons && fbGlobal.buttons !== false && !customButtons"
     class="fb-form-buttons q-my-md q-px-md"
   >
     <!-- Reset -->
@@ -54,6 +54,20 @@
       v-bind="buttons.submit"
     />
   </div>
+  <div
+    v-else-if="customButtons && typeof customButtons === 'object'"
+    class="fb-form-buttons q-my-md q-px-md"
+  >
+    <q-btn
+      v-for="[key, buttonSettings] in Object.entries(customButtons)"
+      v-bind:key="key"
+      type="button"
+      :class="common + buttonSettings.class"
+      v-bind="buttonSettings"
+      @click="onCustomClick(buttonSettings)"
+    >
+    </q-btn>
+  </div>
 </template>
 
 <script>
@@ -69,6 +83,7 @@ export default {
       step: stepperStore.step,
       tabLength: stepperStore.tabLength,
       validated: stepperStore.validated,
+      customButtons: fbGlobal.customButtons,
     };
   },
   computed: {
@@ -101,6 +116,24 @@ export default {
       const s = this.validated.find((e) => e === false);
       if (s === undefined) return res;
       else return false;
+    },
+  },
+  methods: {
+    async onCustomClick(setting) {
+      if (setting.onClick)
+        await setting.onClick(
+          fbGlobal,
+          fbGlobal.getFormValues(),
+          setting,
+          fbGlobal.form.ref
+        );
+      else if (setting.onInput)
+        await setting.onInput(
+          fbGlobal,
+          fbGlobal.getFormValues(),
+          setting,
+          fbGlobal.form.ref
+        );
     },
   },
   beforeMount() {
