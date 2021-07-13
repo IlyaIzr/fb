@@ -204,3 +204,35 @@ Global field keys are assigned to each field inside form if they're not specifie
 Key |  Expected types | Description
 --- | --- | --- 
 submitInvisible | `Boolean` | allows you to submit invisible fields. Affects `field.service` option
+
+### Custom buttons
+Custom buttons overrides standart submit buttons, therefore methods described in 'methods' global keys won't work
+
+> usage example
+```javascript
+const formConfig = {  
+  fields: {
+    simple: {
+      required: true
+    }
+  },
+  
+  customButtons: {
+    custom1: {
+      label: 'Im custom button',
+      color: 'orange',
+      async onClick(globalConfig, formData, buttonSetting, formRef) {
+        console.log('%c⧭', 'color: #364cd9', formData);
+        // Validate form
+        await formRef.validate()
+        buttonSetting.label = 'reactive self change'
+      }
+    },
+    custom2: {
+      label: 'Custom btn #2',
+      color: 'green'
+    },
+  },
+}
+```
+You can use [more button settings](https://quasar.dev/vue-components/button#qbtn-api) 
