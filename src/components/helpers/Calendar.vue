@@ -44,6 +44,10 @@ export default {
       type: String,
       required: false,
     },
+    setCalendarState: {
+      type: Function,
+      required: true,
+    }
   },
   data() {
     return {};
@@ -91,6 +95,9 @@ export default {
   },
   methods: {
     async onInput(val) {
+      console.log('%c⧭', 'color: #f27999', val)
+      if (val) this.setCalendarState(false)
+      // console.log('%c⧭', 'color: #5200cc', this.$refs.calendar  )
       this.$emit("input", val);
     },
   },

@@ -43,8 +43,11 @@
               ref="qDateProxy"
               transition-show="scale"
               transition-hide="scale"
+              @click="setCalendarState(true)"
             >
               <CalendarInput
+                v-if="calendarOpen"
+                :setCalendarState="setCalendarState"
                 :keyName="keyName"
                 :rest="rest"
                 :textInputValue="inputValue"
@@ -102,6 +105,7 @@ export default {
   data() {
     return {
       inputValue: "",
+      calendarOpen: true,
     };
   },
   computed: {
@@ -144,6 +148,9 @@ export default {
         to: val.substr(13, 10),
       });
     },
+    setCalendarState(state) {
+      this.calendarOpen = state;
+    },
   },
   beforeMount() {
     const field = this.rest;
@@ -152,6 +159,15 @@ export default {
   },
   mounted() {
     onMountCommon(this, this.rest);
+  },
+  watch: {
+    rest: {
+      handler(field) {
+        if (field.value != this.inputValue)
+          field.value === this.onInputLocal(field.value);
+      },
+      deep: true,
+    },
   },
 };
 </script>

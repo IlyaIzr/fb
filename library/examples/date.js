@@ -11,6 +11,7 @@ const formConfig = {
       withInput: false,
       value: '12.12.2012',
     },
+    // In BETA, TBD
     rangeInput: {
       type: 'date',
       range: true,

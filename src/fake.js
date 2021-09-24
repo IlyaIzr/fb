@@ -1,38 +1,34 @@
-export const formConfig = {
-  modal: true,
-  fields: {
 
-    s: {
-      required: true
-    }
-  },
-  
-  // customButtons key turns-off standard method buttons
-  customButtons: {
-    testo: {
-      label: 'Test btn #1',
-      color: 'red'
+const def = () => {
+  let month = new Date().getMonth() + 1;
+  return new Date().getFullYear().toString() + "/" + (month < 10 ? 0 : "") + month
+}
+export const formConfig = {
+  fields: {
+    from: {
+      label: "@(Начало периода)",
+      type: "date",
+      inputMask: "##.##.####",
+      value: '11.11.1111',
+      defaultYearMonth: def(),
+      navigationMinYearMonth: "2020/01",
     },
-    testo2: {
-      label: 'Test btn #2',
-      color: 'green'
-    },
-    testo3: {
-      label: 'Test btn #3',
-      color: 'orange',
-      async onClick(fb, data, setting, formRef) {
-        console.log('%c⧭', 'color: #364cd9', data);
-        await formRef.validate()
-        setting.label = 'reactive self change'
+    ctrl: {
+      onInput(fb, field, val) {
+        // console.log('%c⧭', 'color: #514080', fb.fields.from.value);
+        fb.fields.from.value = '12.12.2012'
+        // fb.fields.from.label = '12.12.2012'
+        // console.log('%c⧭ new value', 'color: #514080', fb.fields.from.value);
       }
     },
   },
 
-  // methods: {
-  //   onSubmit(fb, formComp, values) {
-  //     console.log(values);
-  //   }
-  // },
+
+  methods: {
+    onSubmit(fb, formComp, values) {
+      console.log(values);
+    }
+  },
 }
 
 export const values = {}
