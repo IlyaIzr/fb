@@ -2,6 +2,9 @@ export const formConfig = {
 
 
   fields: {
+    s: {
+      value: 'aabob'
+    }
   },
 
 

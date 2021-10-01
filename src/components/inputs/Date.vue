@@ -133,6 +133,7 @@ export default {
       await this.onInput(finalVal);
     },
     async onTextInput(val) {
+      console.log('%c⧭', 'color: #00e600', val)
       if (!this.rest.range) return await this.onInputLocal(val);
       // Case reset on range value
       if (!val) {

@@ -6,12 +6,12 @@
     @input="onInput"
     :mask="mask"
     class="fb-field-content fb-field-date-calendar"
-    :value="rest.value || today"
+    :model-value="rest.value || today"
   >
     <div v-if="rest.withInput" class="row items-center justify-end">
       <q-btn v-close-popup label="Close" color="primary" flat ref="btn" />
     </div>
-    <template v-slot:default class="q-ma-none">
+    <div class="q-ma-none">
       <q-icon name="cancel" @click="onInput('')" class="cursor-pointer" />
       <q-field
         v-if="!rest.withInput"
@@ -22,7 +22,7 @@
         dense
         class="fb-field-hint"
       />
-    </template>
+    </div>
   </q-date>
 </template>
 
@@ -91,6 +91,7 @@ export default {
   },
   methods: {
     async onInput(val) {
+      console.log('%c⧭', 'color: #ff0000', val)
       this.$emit("input", val);
     },
   },
