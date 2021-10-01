@@ -96,7 +96,7 @@ export default {
       });
       const rows = fieldsToRows(
         { ...clearSettings },
-        fbGlobal.values?.[this.keyName],
+        {},
         this.keyName,
         this.rest.value
       );
@@ -109,8 +109,7 @@ export default {
       this.redrawChildren();
     },
     async removeField(index) {
-      const newVals = [...this.rest.value];
-      newVals.splice(index, 1);
+      const newVals = this.rest.value.filter((_, i) => i !== index);
       await this.onInput(newVals);
       this.redrawChildren();
     },

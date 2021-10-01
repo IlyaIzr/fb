@@ -1,24 +1,22 @@
-
-const def = () => {
-  let month = new Date().getMonth() + 1;
-  return new Date().getFullYear().toString() + "/" + (month < 10 ? 0 : "") + month
-}
 export const formConfig = {
   fields: {
-    from: {
-      label: "@(Начало периода)",
-      type: "date",
-      inputMask: "##.##.####",
-      defaultYearMonth: def(),
-      navigationMinYearMonth: "2020/01",
-    },
-    ctrl: {
-      onInput(fb, field, val) {
-        console.log('%c⧭', 'color: #514080', fb.fields.from.value);
-        fb.fields.from.value = '12.12.2012'
-        // fb.fields.from.label = '12.12.2012'
-        // console.log('%c⧭ new value', 'color: #514080', fb.fields.from.value);
-      }
+    simpleMultiple: {
+      type: 'multiple',
+      label: "Multiple with simpleinputs",
+      value: [
+        { firstName: 'Lois1', lastName: 'Puttershmidt' },
+        { firstName: 'Lois2', lastName: 'Puttershmidt' },
+        { firstName: 'Lois3', lastName: 'Puttershmidt' },
+        { firstName: 'Lois4', lastName: 'Puttershmidt' }
+      ],
+      settings: {
+        firstName: {
+          label: 'First name', row: 1
+        },
+        lastName: {
+          label: 'Last name', row: 1
+        },
+      },
     },
   },
 
@@ -26,8 +24,26 @@ export const formConfig = {
   methods: {
     onSubmit(fb, formComp, values) {
       console.log(values);
-    }
+    },
+    async onReset(formGlobal, component) {
+      // Callback functions availible for all event handlers
+      return async (formGlobal) => {
+        // do something AFTER reset
+        formGlobal.title = 'Warning, form has been reseted'
+      }
+    },
   },
+  buttons: {
+    reset: {label: 'res'}
+  }
 }
 
-export const values = {}
+export const values = {
+  simpleMultiple: [
+    { firstName: 'Lois1', lastName: 'Puttershmidt' },
+    { firstName: 'Lois2', lastName: 'Puttershmidt' },
+    { firstName: 'Lois3', lastName: 'Puttershmidt' },
+    { firstName: 'Lois4', lastName: 'Puttershmidt' }
+
+  ],
+}
