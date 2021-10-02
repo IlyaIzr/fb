@@ -44,10 +44,10 @@ export default {
       type: String,
       required: false,
     },
-    setCalendarState: {
+    setCalendarOpen: {
       type: Function,
-      required: true,
-    }
+      required: false,
+    },
   },
   data() {
     return {};
@@ -95,16 +95,19 @@ export default {
   },
   methods: {
     async onInput(val) {
-      console.log('%c⧭', 'color: #f27999', val)
-      if (val) this.setCalendarState(false)
-      // console.log('%c⧭', 'color: #5200cc', this.$refs.calendar  )
-      this.$emit("input", val);
+      if (val) this.$emit("input", val);
+      const n  = setTimeout(() => {
+        this.setCalendarOpen?.(false);
+      }, 400);
+      // clearTimeout(n)
     },
   },
-  mounted(){
-    const todayIcon = document.querySelector('.fb-field-date-calendar .q-date__header button span i')
-    todayIcon.title = 'Сегодня'
-  }
+  mounted() {
+    const todayIcon = document.querySelector(
+      ".fb-field-date-calendar .q-date__header button span i"
+    );
+    todayIcon.title = "Сегодня";
+  },
 };
 </script>
 

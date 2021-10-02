@@ -38,16 +38,15 @@
             :config="innerLeft"
             :f="innerLeftClick"
           />
-          <q-icon v-else name="event" class="cursor-pointer">
+          <q-icon v-else name="event" class="cursor-pointer" @click="runCalendar">
             <q-popup-proxy
               ref="qDateProxy"
               transition-show="scale"
               transition-hide="scale"
-              @click="setCalendarState(true)"
             >
               <CalendarInput
                 v-if="calendarOpen"
-                :setCalendarState="setCalendarState"
+                :setCalendarOpen="setCalendarOpen"
                 :keyName="keyName"
                 :rest="rest"
                 :textInputValue="inputValue"
@@ -105,7 +104,7 @@ export default {
   data() {
     return {
       inputValue: "",
-      calendarOpen: true,
+      calendarOpen: false,
     };
   },
   computed: {
@@ -148,9 +147,13 @@ export default {
         to: val.substr(13, 10),
       });
     },
-    setCalendarState(state) {
+    setCalendarOpen(state = false) {
       this.calendarOpen = state;
     },
+    runCalendar() {
+      if (this.calendarOpen) return this.setCalendarOpen(false)
+      this.setCalendarOpen(true)
+    }
   },
   beforeMount() {
     const field = this.rest;
