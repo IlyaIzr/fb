@@ -96,10 +96,9 @@ export default {
   methods: {
     async onInput(val) {
       if (val) this.$emit("input", val);
-      const n  = setTimeout(() => {
+      setTimeout(() => {
         this.setCalendarOpen?.(false);
       }, 400);
-      // clearTimeout(n)
     },
   },
   mounted() {
